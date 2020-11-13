@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class SchoolYearsController extends Controller
 {
+    
+    public function validateData(){
+        return [
+            'name' => 'required',
+            'description' => 'required',
+        ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +27,7 @@ class SchoolYearsController extends Controller
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = SchoolYear::select('name', 'description')->orderBy($columns[$column], $dir);
+        $query = SchoolYear::select('*')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue) {
@@ -51,7 +58,8 @@ class SchoolYearsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate($this->validateData());
+        return SchoolYear::create($request->all());
     }
 
     /**
@@ -71,9 +79,8 @@ class SchoolYearsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
     }
 
     /**
@@ -85,7 +92,14 @@ class SchoolYearsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = request()->validate($this->validateData());
+
+        $data = SchoolYear::find($id);
+
+        $data->name = $request->name;
+        $data->description = $request->description;
+
+        return $data->save();
     }
 
     /**
@@ -96,7 +110,7 @@ class SchoolYearsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return SchoolYear::find($id)->delete();
     }
 
     public function schoolYearHome(){

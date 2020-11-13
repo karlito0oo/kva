@@ -23,20 +23,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // advisers
 Route::resource('/api/advisers', 'AdvisersController');
-
 Route::get('/home/advisers', 'AdvisersController@AdviserHome');
-
-Route::get('/home/adviser-add', 'AdvisersController@addAdviser');
 
 // school-years
 Route::resource('/api/school-years', 'SchoolYearsController');
-
 Route::get('/home/school-years', 'SchoolYearsController@schoolYearHome');
-
-//Route::get('/home/adviser-add', 'AdvisersController@addAdviser');
-
 
 // Levels
 Route::resource('/api/levels', 'LevelsController');
-
 Route::get('/home/levels', 'LevelsController@levelsHome');
+
+// Students
+Route::resource('/api/students', 'StudentsController');
+Route::get('/home/students', 'StudentsController@studentsHome');

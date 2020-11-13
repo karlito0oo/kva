@@ -46,7 +46,10 @@
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.name}}</td>
                                         <td>{{project.description}}</td>
-                                        <td><button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button></td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
+                                            <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </datatable>
@@ -64,7 +67,7 @@
                 <div class="col-md-4">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Add Levels</h2>
+                            <h2><span style="color:black;" v-html="todo"></span> Levels</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -103,7 +106,7 @@
 										<div class="form-group">
 											<div class="col-md-9 col-sm-9  offset-md-3">
 												<button type="reset" class="btn btn-primary" @click="clearFields()">Reset</button>
-												<button type="submit" class="btn btn-success">Submit</button>
+												<button type="submit" class="btn btn-success" v-html="todo">Submit</button>
 											</div>
 										</div>
 
@@ -192,40 +195,60 @@ export default {
                 description: '',
 
             },
-            todo: 'add',
+            todo: 'Add',
+            editableId: '',
             errors: new Errors(),
         }
     },
     methods: {
 
         clearFields(){
-            this.datas.name = '';
-            this.datas.description = '';
+            const keys = Object.keys(this.datas);
+            for (var a = 0; a < keys.length; a++) {
+                this.datas[keys[a]] = '';
+            }
+            this.todo = 'Add';
         },
 
         saveData(){
-            axios.post('../api/levels', this.datas)
-            .then((res) => {
-                new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
-                this.getProjects();
-                this.clearFields();
-            })
-            .catch((err) => {
-                this.errors.record(err.response.data);
-                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
-            });
+            if(this.todo == 'Add'){
+                axios.post('../api/levels', this.datas)
+                .then((res) => {
+                    new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                    this.getProjects();
+                    this.clearFields();
+                })
+                .catch((err) => {
+                    this.errors.record(err.response.data);
+                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                });
+            }
+            else if(this.todo == 'Edit'){
+                axios.patch('../api/levels/'+this.editableId, this.datas)
+                .then((res) => {
+                    new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
+                    this.getProjects();
+                    this.clearFields();
+                })
+                .catch((err) => {
+                    this.errors.record(err.response.data);
+                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                });
+            }
+            
         },
 
         deleteData(dataDelete){
+            var self = this;
             new Noty({
                 text: 'Do you want to delete this?',
                 type: 'warning', 
                 buttons: [
                     {
-                        addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty, $self = this) {
+                        addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty) {
                             axios.delete('../api/levels/'+dataDelete.id)
                             .then((res) => {
-                                $self.getProjects();
+                                self.getProjects();
                                 new Noty({type: 'success', text: 'Successfully removed.', layout: 'topRight'}).show();
                             })
                             .catch((err) => {
@@ -242,6 +265,16 @@ export default {
             });
 
             
+        },
+        editData(dataEdit){
+
+            const keys = Object.keys(this.datas);
+            for (var a = 0; a < keys.length; a++) {
+                this.datas[keys[a]] = dataEdit[keys[a]];
+            }
+
+            this.editableId = dataEdit.id;
+            this.todo = 'Edit';
         },
 
         getProjects(url = '/api/levels') {

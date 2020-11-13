@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-        <school-year-datatable></school-year-datatable>
+
+    <students-datatable></students-datatable>
 @endsection

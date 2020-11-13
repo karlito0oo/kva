@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Advisers;
+use App\Adviser;
 use Illuminate\Http\Request;
 
 class AdvisersController extends Controller
 {
     
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function validateData(){
+        return [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required',
+            'email' => 'email',
+        ];
     }
     /**
      * Display a listing of the resource.
@@ -18,19 +23,20 @@ class AdvisersController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['firstName', 'lastName', 'birthday', 'email', 'mobileNumber'];
+        $columns = ['firstName', 'lastName', 'gender', 'birthday', 'email', 'mobileNumber'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Advisers::select('firstName', 'lastName', 'birthday', 'email', 'mobileNumber')->orderBy($columns[$column], $dir);
+        $query = Adviser::select('*')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue) {
-                $query->where('firstName', 'like', '%' . $searchValue . '%')
-                ->orWhere('lastName', 'like', '%' . $searchValue . '%');
+            $query->where(function($query) use ($searchValue, $columns) {
+                foreach(array_keys($columns) as $key){
+                    $query->orWhere($columns[$key], 'like', '%' . $searchValue . '%');
+                }
             });
         }
 
@@ -56,7 +62,8 @@ class AdvisersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate($this->validateData());
+        return Adviser::create($request->all());
     }
 
     /**
@@ -76,9 +83,8 @@ class AdvisersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
     }
 
     /**
@@ -90,7 +96,18 @@ class AdvisersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = request()->validate($this->validateData());
+
+        $data = Adviser::find($id);
+
+        $data->lastName = $request->lastName;
+        $data->firstName = $request->firstName;
+        $data->email = $request->email;
+        $data->birthday = $request->birthday;
+        $data->gender = $request->gender;
+        $data->mobileNumber = $request->mobileNumber;
+
+        return $data->save();
     }
 
     /**
@@ -101,15 +118,10 @@ class AdvisersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Adviser::find($id)->delete();
     }
 
-    public function addAdviser(){
-        
-        return view('admin/adviser-add-edit');
-    }
-
-    public function AdviserHome(){
+    public function adviserHome(){
         return view('admin/advisers');
     }
 }

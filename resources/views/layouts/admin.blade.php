@@ -28,6 +28,12 @@
 
     <!-- Custom Theme Style -->
     <link href="{{asset('template/build/css/custom.min.css')}}" rel="stylesheet">
+
+    <style>
+     h2 {
+      color:black;
+     }
+    </style>
   </head>
 
   <body class="nav-md">

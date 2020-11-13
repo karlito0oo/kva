@@ -18,9 +18,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('advisers-component', require('./components/AdvisersComponent.vue').default);
-
 Vue.component('advisers-datatable', require('./components/AdvisersDatatable.vue').default);
+
+Vue.component('students-datatable', require('./components/StudentsDatatable.vue').default);
 
 Vue.component('school-year-datatable', require('./components/SchoolYearDatatable.vue').default);
 

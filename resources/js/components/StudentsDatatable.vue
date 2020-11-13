@@ -236,8 +236,8 @@ export default {
             },
             todo: 'Add',
             editableId: '',
-            endPoint: '/api/advisers/',
-            pageName: 'Adviser',
+            endPoint: '/api/students/',
+            pageName: 'Student',
             errors: new Errors(),
         }
     },

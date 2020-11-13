@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 
 class LevelsController extends Controller
 {
+
+    public function validateData(){
+        return [
+            'name' => 'required',
+            'description' => 'required',
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,10 +59,7 @@ class LevelsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $data = request()->validate($this->validateData());
         return Level::create($request->all());
     }
 
@@ -75,7 +80,7 @@ class LevelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         //
     }
@@ -87,9 +92,16 @@ class LevelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $data = request()->validate($this->validateData());
+
+        $data = Level::find($id);
+
+        $data->name = $request->name;
+        $data->description = $request->description;
+
+        return $data->save();
     }
 
     /**
