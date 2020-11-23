@@ -33,7 +33,12 @@ Route::get('/home/school-years', 'SchoolYearsController@schoolYearHome');
 // Levels
 Route::resource('/api/levels', 'LevelsController');
 Route::get('/home/levels', 'LevelsController@levelsHome');
+Route::post('/api/levels/fetch', 'LevelsController@fetch');
 
 // Students
 Route::resource('/api/students', 'StudentsController');
 Route::get('/home/students', 'StudentsController@studentsHome');
+
+// Subjects
+Route::resource('/api/subjects', 'SubjectsController');
+Route::get('/home/subjects', 'SubjectsController@pageHome');

@@ -26,6 +26,8 @@ Vue.component('school-year-datatable', require('./components/SchoolYearDatatable
 
 Vue.component('levels-datatable', require('./components/LevelsDatatable.vue').default);
 
+Vue.component('subjects-datatable', require('./components/SubjectsDatatable.vue').default);
+
 Vue.component('user-info', require('./components/UsersInfoComponent.vue').default);
 
 /**

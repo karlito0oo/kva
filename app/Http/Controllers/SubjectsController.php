@@ -1,19 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Level;
+
+use App\Subject;
 use Illuminate\Http\Request;
 
-class LevelsController extends Controller
+class SubjectsController extends Controller
 {
-
-    public function validateData(){
+    public function validateData($id = null){
+        $ext = '';
+        if($id != null){
+            $ext = ',' . $id;
+        }
         return [
             'name' => 'required',
             'description' => 'required',
+            'level_id' => 'required',
+            'code' => 'required|unique:subjects,code' . $ext,
         ];
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,19 +26,20 @@ class LevelsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'description'];
+        $columns = ['code', 'name', 'description', 'level_id'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Level::select('*')->orderBy($columns[$column], $dir);
+        $query = Subject::select('*')->with('levels')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue) {
-                $query->where('name', 'like', '%' . $searchValue . '%')
-                ->orWhere('description', 'like', '%' . $searchValue . '%');
+            $query->where(function($query) use ($searchValue, $columns) {
+                foreach(array_keys($columns) as $key){
+                    $query->orWhere($columns[$key], 'like', '%' . $searchValue . '%');
+                }
             });
         }
 
@@ -60,7 +66,7 @@ class LevelsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate($this->validateData());
-        return Level::create($request->all());
+        return Subject::create($request->all());
     }
 
     /**
@@ -82,7 +88,6 @@ class LevelsController extends Controller
      */
     public function edit($id, Request $request)
     {
-        //
     }
 
     /**
@@ -92,12 +97,14 @@ class LevelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = request()->validate($this->validateData());
+        $data = request()->validate($this->validateData($id));
 
-        $data = Level::find($id);
+        $data = Subject::find($id);
 
+        $data->code = $request->code;
+        $data->level_id = $request->level_id;
         $data->name = $request->name;
         $data->description = $request->description;
 
@@ -112,14 +119,10 @@ class LevelsController extends Controller
      */
     public function destroy($id)
     {
-        return Level::find($id)->delete();
+        return Subject::find($id)->delete();
     }
 
-    public function levelsHome(){
-        return view('admin/levels');
-    }
-    
-    public function fetch(){
-        return Level::all();
+    public function pageHome(){
+        return view('admin/subjects');
     }
 }
