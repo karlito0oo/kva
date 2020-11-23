@@ -26,6 +26,8 @@ Vue.component('school-year-datatable', require('./components/SchoolYearDatatable
 
 Vue.component('levels-datatable', require('./components/LevelsDatatable.vue').default);
 
+Vue.component('user-info', require('./components/UsersInfoComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

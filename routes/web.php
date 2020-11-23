@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/api/loggedinUser', 'HomeController@loggedinUser');
 
 // advisers
 Route::resource('/api/advisers', 'AdvisersController');
