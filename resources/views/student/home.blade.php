@@ -1,0 +1,20 @@
+@extends('layouts.student')
+
+@section('content')
+<!-- page content -->
+        <div class="right_col" role="main">
+
+          <div class="row">
+
+          <student-profile baseurl="{{ asset('images/StudentImage') }}"></student-profile>
+
+
+          <student-basic user="{{ $user }}"></student-basic>
+
+            
+
+
+          </div>
+        </div>
+        <!-- /page content -->
+@endsection

@@ -24,7 +24,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin/home');
+        $user = Auth::user();
+
+        if(!$user){
+            abort(404);
+        }
+        //get home page
+        if($user->roles->name == 'Student'){
+            return view('student/home', [
+                'user' => $user,
+            ]);
+        }
+        elseif($user->roles->name == 'Super Admin'){
+            return view('admin/home', [
+                'user' => $user,
+            ]);
+        }
     }
     
     public function loggedinUser()

@@ -30,6 +30,10 @@ Vue.component('subjects-datatable', require('./components/SubjectsDatatable.vue'
 
 Vue.component('user-info', require('./components/UsersInfoComponent.vue').default);
 
+Vue.component('student-profile', require('./components/StudentProfileComponent.vue').default);
+
+Vue.component('student-basic', require('./components/StudentBasicComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

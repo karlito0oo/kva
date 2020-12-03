@@ -32,7 +32,7 @@
     <style>
      h2 {
       color:black;
-     }
+     },
     </style>
   </head>
 
@@ -52,25 +52,19 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
+                <h3>Information</h3>
+                <ul class="nav side-menu">
+                    <li><a href="{{ url('/home') }}"><i class="fa fa-user"></i> Profile</a></li>
+                </ul>
+              </div>
+
+              
+              <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-edit"></i> Datas <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{ url('home/students') }}">Students</a></li>
-                      <li><a href="{{ url('home/advisers') }}">Advisers</a></li>
-                      <li><a href="{{ url('home/school-years') }}">School Years</a></li>
-                      <li><a href="{{ url('home/levels') }}">Levels</a></li>
-                      <li><a href="{{ url('home/subjects') }}">Subjects</a></li>
-                    </ul>
-                  </li>
-                  
+                    <li><a href="{{ url('/homee') }}"><i class="fa fa-calendar"></i> Schedule</a></li>
+                    <li><a href="{{ url('/home/registration') }}"><i class="fa fa-file"></i> Registration</a></li>
+                    <li><a href="{{ url('/homee') }}"><i class="fa fa-bar-chart"></i> Grades</a></li>
                 </ul>
               </div>
 
@@ -178,6 +172,9 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{{asset('template/build/js/custom.min.js')}}"></script>
+
+    
+    <script src="{{asset('template/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js')}}"></script>
 	
   </body>
 </html>

@@ -20,7 +20,13 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//users
+Route::resource('/api/users', 'UsersController');
+
+//framework
 Route::post('/api/loggedinUser', 'HomeController@loggedinUser');
+Route::post('/api/uploadImage/{do}', 'ImageUploadController@index');
 
 // advisers
 Route::resource('/api/advisers', 'AdvisersController');
@@ -42,3 +48,9 @@ Route::get('/home/students', 'StudentsController@studentsHome');
 // Subjects
 Route::resource('/api/subjects', 'SubjectsController');
 Route::get('/home/subjects', 'SubjectsController@pageHome');
+
+
+//--------------------Students
+
+//registration
+Route::get('/home/registration', 'RegistrationsController@pageHome');
