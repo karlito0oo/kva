@@ -116,4 +116,8 @@ class SchoolYearsController extends Controller
     public function schoolYearHome(){
         return view('admin/school-years');
     }
+    
+    public function fetch(){
+        return SchoolYear::all();
+    }
 }

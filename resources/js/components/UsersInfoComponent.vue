@@ -16,15 +16,34 @@
 </template>
 
 <script>
+class Errors{
+    constructor(){
+        this.errors = {};
+    }
+    get(field){
+        const keys = Object.keys(this.errors);
+
+        var err = '';
+        for (var a = 0; a < keys.length; a++) {
+            err += this.errors[keys[a]] + "<br>";
+        }
+        return err;
+    }
+    record(errors){
+        this.errors = errors.errors
+    }
+}
+
 import Noty from 'noty';
     export default {
 
-        props: ['baseurl'],
+        props: ['baseurl', 'accessing'],
 
         data() {
             return {
                 defaultImage: 'default.png',
                 user:{},
+                errors: new Errors(),
             }
         },
         
@@ -33,6 +52,17 @@ import Noty from 'noty';
                 axios.post('/api/loggedinUser')
                 .then((res) => {
                     this.user = res.data;
+
+                    if(this.accessing == 'student'){
+                        console.log(this.user.name);
+                        axios.patch('../api/users/'+this.user.id, this.user)
+                            .then((res) => {
+                            })
+                            .catch((err) => {
+                                this.errors.record(err.response.data);
+                                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                            });
+                    }
                 })
                 .catch((err) => {
                     alert(err);
@@ -49,7 +79,7 @@ import Noty from 'noty';
                 fileReader.onload = (e) => {
                     this.user.image = e.target.result;
 
-                        axios.post('../api/uploadImage/StudentImage', this.user)
+                        axios.post('/api/uploadImage/StudentImage', this.user)
                         .then((res) => {
                             new Noty({type: 'success', text: 'Successfully changed picture.', layout: 'topRight'}).show();
                             this.getLoggedinUser();
@@ -58,11 +88,13 @@ import Noty from 'noty';
                             console.log(err);
                         });
                 }
-            }
+            },
+            
         },
 
         mounted() {
             this.getLoggedinUser();
         }
+
     }
 </script>

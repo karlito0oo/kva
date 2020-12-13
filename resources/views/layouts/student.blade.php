@@ -44,7 +44,7 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-              <user-info baseurl="{{ asset('images/StudentImage') }}"></user-info>
+              <user-info baseurl="{{ asset('images/StudentImage') }}" accessing="student"></user-info>
             <!-- /menu profile quick info -->
 
             <br />
@@ -63,7 +63,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="{{ url('/homee') }}"><i class="fa fa-calendar"></i> Schedule</a></li>
-                    <li><a href="{{ url('/home/registration') }}"><i class="fa fa-file"></i> Registration</a></li>
+                    <li><a href="{{ url('/home/enrollments') }}"><i class="fa fa-file"></i> Registration</a></li>
                     <li><a href="{{ url('/homee') }}"><i class="fa fa-bar-chart"></i> Grades</a></li>
                 </ul>
               </div>

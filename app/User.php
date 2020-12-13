@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Setting;
+use App\User;
+use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,7 +40,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['currentEnrollment'];
+
     public function roles(){
         return $this->hasOne('App\Role', 'id', 'role_id');
+    }
+
+    public function getCurrentEnrollmentAttribute(){
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+
+        return Enrollment::select('status')
+            ->where('schoolyear_id', $schoolyear_id)
+            ->where('student_id', $this->id)
+            ->get();
     }
 }

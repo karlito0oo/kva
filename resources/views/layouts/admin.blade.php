@@ -61,10 +61,14 @@
                       <li><a href="index3.html">Dashboard3</a></li>
                     </ul>
                   </li>
+                  
+                  <li><a href="{{ url('/home/admin/enrollment') }}"><i class="fa fa-user-plus"></i> Enrollment</a></li>
+
                   <li><a><i class="fa fa-edit"></i> Datas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ url('home/students') }}">Students</a></li>
                       <li><a href="{{ url('home/advisers') }}">Advisers</a></li>
+                      <li><a href="{{ url('home/sections') }}">Section</a></li>
                       <li><a href="{{ url('home/school-years') }}">School Years</a></li>
                       <li><a href="{{ url('home/levels') }}">Levels</a></li>
                       <li><a href="{{ url('home/subjects') }}">Subjects</a></li>
@@ -79,7 +83,7 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
+              <a href="{{ url('home/settings') }}" data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
               </a>
               <a data-toggle="tooltip" data-placement="top" title="FullScreen">

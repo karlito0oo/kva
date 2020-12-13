@@ -35,6 +35,7 @@ Route::get('/home/advisers', 'AdvisersController@AdviserHome');
 // school-years
 Route::resource('/api/school-years', 'SchoolYearsController');
 Route::get('/home/school-years', 'SchoolYearsController@schoolYearHome');
+Route::post('/api/school-years/fetch', 'SchoolYearsController@fetch');
 
 // Levels
 Route::resource('/api/levels', 'LevelsController');
@@ -45,12 +46,29 @@ Route::post('/api/levels/fetch', 'LevelsController@fetch');
 Route::resource('/api/students', 'StudentsController');
 Route::get('/home/students', 'StudentsController@studentsHome');
 
+// Settings
+Route::resource('/api/settings', 'SettingsController');
+Route::get('/home/settings', 'SettingsController@pageHome');
+
 // Subjects
 Route::resource('/api/subjects', 'SubjectsController');
 Route::get('/home/subjects', 'SubjectsController@pageHome');
+Route::post('/api/subjects/fetch', 'SubjectsController@fetch');
+
+// Enrollment
+Route::resource('/api/admin/enrollment', 'EnrollmentAdminController');
+Route::get('/home/admin/enrollment', 'EnrollmentAdminController@pageHome');
+
+// Sections
+Route::resource('/api/sections', 'SectionsController');
+Route::get('/home/sections', 'SectionsController@pageHome');
+Route::post('/api/sections/fetch', 'SectionsController@fetch');
 
 
 //--------------------Students
 
-//registration
-Route::get('/home/registration', 'RegistrationsController@pageHome');
+//Enrollment
+Route::resource('/api/enrollments', 'EnrollmentsController');
+Route::get('/home/enrollments', 'EnrollmentsController@pageHome');
+Route::patch('/api/enrollments/submitEnrollment/{id}', 'EnrollmentsController@submitEnrollment');
+Route::post('/api/enrollments/checkEnrollmentDetails', 'EnrollmentsController@checkEnrollmentDetails');

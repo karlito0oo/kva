@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
-use App\User;
+use App\Section;
+use App\Setting;
 use Illuminate\Http\Request;
 
-class StudentsController extends Controller
+class SectionsController extends Controller
 {
-    public function validateData(){
+    public function validateData($id = null){
+        $ext = '';
+        if($id != null){
+            $ext = ',' . $id;
+        }
         return [
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required',
-            'email' => 'email',
+            'code' => 'required',
+            'description' => 'required',
+            'level_id' => 'required',
+            'code' => 'required|unique:subjects,code' . $ext,
         ];
     }
     /**
@@ -24,14 +27,14 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['firstName', 'lastName', 'gender', 'birthday', 'email', 'mobileNumber'];
+        $columns = ['level_id', 'code', 'description'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Student::select('*')->orderBy($columns[$column], $dir);
+        $query = Section::select('*')->with('levels')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {
@@ -64,7 +67,15 @@ class StudentsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate($this->validateData());
-        return Student::create($request->all());
+        
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+
+        $data = new Section();
+        $data->level_id = $request->level_id;
+        $data->code = $request->code;
+        $data->description = $request->description;
+        $data->schoolyear_id = $schoolyear_id;
+        $data->save();
     }
 
     /**
@@ -73,13 +84,14 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($level_id)
     {
-        $user = User::find($id);
-
-        return view('admin/student-edit', [
-            'user' => $user,
-        ]);
+        
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+        return Section::select('*')
+            ->with('enrolledStudents')
+            ->where('schoolyear_id', $schoolyear_id)
+            ->get();
     }
 
     /**
@@ -101,16 +113,13 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = request()->validate($this->validateData());
+        $data = request()->validate($this->validateData($id));
 
-        $data = Student::find($id);
+        $data = Section::find($id);
 
-        $data->lastName = $request->lastName;
-        $data->firstName = $request->firstName;
-        $data->email = $request->email;
-        $data->birthday = $request->birthday;
-        $data->gender = $request->gender;
-        $data->mobileNumber = $request->mobileNumber;
+        $data->code = $request->code;
+        $data->level_id = $request->level_id;
+        $data->description = $request->description;
 
         return $data->save();
     }
@@ -123,10 +132,22 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        return Student::find($id)->delete();
+        return Section::find($id)->delete();
     }
 
-    public function studentsHome(){
-        return view('admin/students');
+    public function pageHome(){
+        return view('admin/sections');
+    }
+
+    
+    
+    public function fetch(Request $request){
+
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+        dd($request->Level);
+        return Section::select('*')
+            ->with('enrolledStudents')
+            ->where('schoolyear_id', $schoolyear_id)
+            ->get();
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnrolledSubjectsTable extends Migration
+class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateEnrolledSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('enrolled_subjects', function (Blueprint $table) {
+        Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('enrollment_id');
-            $table->unsignedInteger('subject_id');
+            $table->string('code')->unique();
+            $table->string('description');
+            $table->unsignedInteger('schoolyear_id');
+            $table->unsignedInteger('level_id');
             $table->timestamps();
-            $table->softdeletes();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +31,6 @@ class CreateEnrolledSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enrolled_subjects');
+        Schema::dropIfExists('sections');
     }
 }

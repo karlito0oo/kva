@@ -29,9 +29,27 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $columns = ['name', 'lname', 'gender', 'birthday', 'email', 'mobileNumber'];
+
+        $length = $request->input('length');
+        $column = $request->input('column'); //Index
+        $dir = $request->input('dir');
+        $searchValue = $request->input('search');
+
+        $query = User::select('*')->where('role_id', '1')->orderBy($columns[$column], $dir);
+
+        if ($searchValue) {
+            $query->where(function($query) use ($searchValue, $columns) {
+                foreach(array_keys($columns) as $key){
+                    $query->orWhere($columns[$key], 'like', '%' . $searchValue . '%');
+                }
+            });
+        }
+
+        $projects = $query->paginate($length);
+        return ['data' => $projects, 'draw' => $request->input('draw')];
     }
 
     /**
@@ -52,7 +70,9 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $data = request()->validate($this->validateData());
+        return User::create($request->all());
     }
 
     /**
@@ -125,6 +145,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return User::find($id)->delete();
+    }
+
+    public function pagesHome(){
+        return view('admin/students');
     }
 }

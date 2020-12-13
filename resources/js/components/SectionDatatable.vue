@@ -5,10 +5,10 @@
         <div class="right_col" role="main">
         <div class="">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="pageName"></span> Table</h2>
+                            <h2>Section Table</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -43,16 +43,13 @@
                             </div>
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
-                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment[0].status == 'Enrolled' ? 'alert-success' : project.currentEnrollment[0].status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning')">
-                                        <td>{{project.name}}</td>
-                                        <td>{{project.lname}}</td>
-                                        <td>{{project.gender}}</td>
-                                        <td>{{project.birthday}}</td>
-                                        <td>{{project.email}}</td>
-                                        <td>{{project.mobileNumber}}</td>
+                                    <tr v-for="project in projects" :key="project.id">
+                                        <td>{{project.levels.name}}</td>
+                                        <td>{{project.code}}</td>
+                                        <td>{{project.description}}</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
-                                            <a :href="'/api/students/' + project.id" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></a>
+                                            <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -68,10 +65,10 @@
 
 
                 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Legends</h2>
+                            <h2><span style="color:black;" v-html="todo"></span> Section</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -90,19 +87,43 @@
                         <div class="x_content">
                             <br />
                             
-									<div class="alert alert-success alert-dismissible " role="alert">
-                                        <strong>Student is enrolled this school year.</strong>
-                                    </div>
-                                    <br>
+									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
+                                        
+                                        <div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Level</label>
+											<div class="col-md-9 col-sm-9 ">
+												<select class="form-control" v-model="datas.level_id">
+                                                    <option selected disabled value="">Choose option</option>
+                                                    <option v-for="level in levels" :key="level.name" :value="level.id">
+                                                        {{ level.name }}
+                                                    </option>
+                                                </select>
+											</div>
+										</div>
 
-									<div class="alert alert-info alert-dismissible " role="alert">
-                                        <strong>Student is pre-enrolled this school year.</strong>
-                                    </div>
-                                    <br>
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Section Code</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" placeholder="Level Name" v-model="datas.code">
+											</div>
+										</div>
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Description</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" placeholder="Description" v-model="datas.description">
+											</div>
+										</div>
+										
 
-									<div class="alert alert-warning alert-dismissible " role="alert">
-                                        <strong>Student does not have transaction this school year.</strong>
-                                    </div>
+										<div class="ln_solid"></div>
+										<div class="form-group">
+											<div class="col-md-9 col-sm-9  offset-md-3">
+												<button type="reset" class="btn btn-primary" @click="clearFields()">Reset</button>
+												<button type="submit" class="btn btn-success" v-html="todo">Submit</button>
+											</div>
+										</div>
+
+									</form>
                         </div>
                     </div>
 
@@ -151,12 +172,9 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { name: 'firstName', label: 'First Name' },
-            { name: 'lastName', label: 'Last Name'},
-            { name: 'gender', label: 'Gender'},
-            { name: 'birthday', label: 'Birthday'},
-            { name: 'email', label: 'Email'},
-            { name: 'mobileNumber', label: 'Mobile Number'},
+            { label: 'Level', name: 'level' },
+            { label: 'Code', name: 'code' },
+            { label: 'Description', name: 'description'},
         ];
 
         columns.forEach((column) => {
@@ -165,7 +183,7 @@ export default {
         return {
             projects: [],
             columns: columns,
-            sortKey: 'name',
+            sortKey: 'code',
             sortOrders: sortOrders,
             showActionTable: true,
             perPage: ['10', '20', '30'],
@@ -187,22 +205,29 @@ export default {
                 to: ''
             },
             datas: {
-                firstName: '',
-                lastName: '',
-                gender: '',
-                email: '',
-                mobileNumber: '',
-                birthday: '',
+                code: '',
+                description: '',
+                level_id: '',
 
             },
             todo: 'Add',
             editableId: '',
-            endPoint: '/api/users/',
-            pageName: 'Student',
+            endPoint: '/api/sections/',
             errors: new Errors(),
+            levels: this.levelsFetch(),
         }
     },
     methods: {
+        
+        levelsFetch(){
+            axios.post('/api/levels/fetch')
+            .then((res) => {
+                this.levels = res.data
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        },
 
         clearFields(){
             const keys = Object.keys(this.datas);
@@ -216,25 +241,25 @@ export default {
             if(this.todo == 'Add'){
                 axios.post(this.endPoint, this.datas)
                 .then((res) => {
-                    new Noty({killer: true, type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                    new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
                     this.getProjects();
                     this.clearFields();
                 })
                 .catch((err) => {
                     this.errors.record(err.response.data);
-                    new Noty({killer: true, type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                 });
             }
             else if(this.todo == 'Edit'){
                 axios.patch(this.endPoint+this.editableId, this.datas)
                 .then((res) => {
-                    new Noty({killer: true, type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
+                    new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                     this.getProjects();
                     this.clearFields();
                 })
                 .catch((err) => {
                     this.errors.record(err.response.data);
-                    new Noty({killer: true, type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                 });
             }
             
@@ -242,19 +267,16 @@ export default {
 
         deleteData(dataDelete){
             var self = this;
-            var endPoint = this.endPoint;
             new Noty({
-                killer: true, 
                 text: 'Do you want to delete this?',
                 type: 'warning', 
                 buttons: [
                     {
                         addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty) {
-                            axios.delete(endPoint+dataDelete.id)
+                            axios.delete(self.endPoint+dataDelete.id)
                             .then((res) => {
                                 self.getProjects();
-                                self.clearFields();
-                                new Noty({killer: true, type: 'success', text: 'Successfully removed.', layout: 'topRight'}).show();
+                                new Noty({type: 'success', text: 'Successfully removed.', layout: 'topRight'}).show();
                             })
                             .catch((err) => {
                                 console.log(err); 
@@ -282,18 +304,14 @@ export default {
             this.todo = 'Edit';
         },
 
-        getProjects() {
+        getProjects(url = this.endPoint) {
             this.tableData.draw++;
-            axios.get(this.endPoint, {params: this.tableData})
+            axios.get(url, {params: this.tableData})
                 .then(response => {
                     let data = response.data;
                     if (this.tableData.draw == data.draw) {
                         this.projects = data.data.data;
                         this.configPagination(data.data);
-                    }
-
-                    if(this.pagination.total == 0){
-                        new Noty({killer: true, type: 'warning', text: 'No data found.', layout: 'topRight'}).show();
                     }
                 })
                 .catch(errors => {
@@ -313,7 +331,7 @@ export default {
         sortBy(key) {
             this.sortKey = key;
             this.sortOrders[key] = this.sortOrders[key] * -1;
-            this.tableData.column = this.getIndex(this.columns, 'name', key);
+            this.tableData.column = this.getIndex(this.columns, 'code', key);
             this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
             this.getProjects();
         },

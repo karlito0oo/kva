@@ -34,6 +34,6 @@ class ImageUploadController extends Controller
             $user->save();
         }
 
-        return true;
+        return $fileName;
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
+use App\Settings;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnrollsTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,16 @@ class CreateEnrollsTable extends Migration
      */
     public function up()
     {
-        Schema::create('enrolls', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('schoolyear_id');
-            $table->unsignedInteger('student_id');
+            $table->unsignedInteger('schoolyear_id')->nullable();
             $table->timestamps();
-            $table->softdeletes();
         });
+
+        $templateData = [
+            'schoolyear_id' => null,
+        ];
+        DB::table('settings')->insert($templateData);
     }
 
     /**
@@ -29,6 +33,6 @@ class CreateEnrollsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enrolls');
+        Schema::dropIfExists('settings');
     }
 }

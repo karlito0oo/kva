@@ -245,7 +245,7 @@ import Noty from 'noty';
         
         methods: {
             saveData(){
-                axios.patch('../api/users/'+this.student.id, this.student)
+                axios.patch('/api/users/'+this.student.id, this.student)
                 .then((res) => {
                     new Noty({killer: true,type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                 })

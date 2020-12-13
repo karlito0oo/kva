@@ -2,21 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
-use App\User;
+use App\Enrollment;
 use Illuminate\Http\Request;
 
-class StudentsController extends Controller
+class EnrollmentAdminController extends Controller
 {
-    public function validateData(){
-        return [
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required',
-            'email' => 'email',
-        ];
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,21 +14,23 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['firstName', 'lastName', 'gender', 'birthday', 'email', 'mobileNumber'];
+        $columns = ['student_id', 'level_id', 'student_type', 'status'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Student::select('*')->orderBy($columns[$column], $dir);
+        $query = Enrollment::select('*')
+        ->with('student')
+        ->with('level')
+        ->with('schoolyear')
+        ->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue, $columns) {
-                foreach(array_keys($columns) as $key){
-                    $query->orWhere($columns[$key], 'like', '%' . $searchValue . '%');
-                }
-            });
+            foreach(array_keys($columns) as $key){
+                $query->orWhere($columns[$key], 'like', '%' . $searchValue . '%');
+            }
         }
 
         $projects = $query->paginate($length);
@@ -63,8 +55,7 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate($this->validateData());
-        return Student::create($request->all());
+        //
     }
 
     /**
@@ -75,10 +66,8 @@ class StudentsController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-
-        return view('admin/student-edit', [
-            'user' => $user,
+        return view('admin/enrollment-check', [
+            'enrollment_id' => $id
         ]);
     }
 
@@ -88,8 +77,9 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
+        //
     }
 
     /**
@@ -101,18 +91,7 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = request()->validate($this->validateData());
-
-        $data = Student::find($id);
-
-        $data->lastName = $request->lastName;
-        $data->firstName = $request->firstName;
-        $data->email = $request->email;
-        $data->birthday = $request->birthday;
-        $data->gender = $request->gender;
-        $data->mobileNumber = $request->mobileNumber;
-
-        return $data->save();
+        //
     }
 
     /**
@@ -123,10 +102,10 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        return Student::find($id)->delete();
+        //
     }
 
-    public function studentsHome(){
-        return view('admin/students');
+    public function pageHome(){
+        return view('admin/enrollment');
     }
 }

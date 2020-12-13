@@ -23,11 +23,11 @@
                   
                     <div class="profile clearfix">
 						<div class="profile_pic">
-							<img  v-bind:src="baseurl + '/' + (user.image ? user.image : defaultImage)" alt="..." class="img-circle profile_img" style="cursor: pointer;" onclick="$('#imageFile').click()">
+							<img  v-bind:src="baseurl + '/' + (user.image ? user.image : defaultImage)" alt="..." class="img-circle profile_img" style="cursor: pointer;" onclick="$('#imageFilee').click()">
 
                             <form @submit.prevent="uploadImage">
 
-                                <input id="imageFile" type="file" @change="imageChanged" accept="image/*" style="display:none;">
+                                <input id="imageFilee" type="file" @change="imageChangedd" accept="image/*" style="display:none;">
 
                             </form>
 						</div>
@@ -66,28 +66,18 @@
 import Noty from 'noty';
     export default {
 
-        props: ['baseurl'],
+        props: ['baseurl', 'student'],
         
         data() {
             return {
                 defaultImage: 'default.png',
-                user:{},
+                user: JSON.parse(this.student),
             }
         },
         
         methods: {
-            getLoggedinUser(){
-                axios.post('/api/loggedinUser')
-                .then((res) => {
-                    this.user = res.data;
-                })
-                .catch((err) => {
-                    alert(err);
-                    console.log(err);
-                });
-            },
 
-            imageChanged(e){
+            imageChangedd(e){
 
                 var fileReader = new FileReader();
 
@@ -96,10 +86,11 @@ import Noty from 'noty';
                 fileReader.onload = (e) => {
                     this.user.image = e.target.result;
 
-                        axios.post('../api/uploadImage/StudentImage', this.user)
+                        axios.post('/api/uploadImage/StudentImage', this.user)
                         .then((res) => {
+                            alert(res.data);
+                            this.user.image = res.data;
                             new Noty({type: 'success', text: 'Successfully changed picture.', layout: 'topRight'}).show();
-                            this.getLoggedinUser();
                         })
                         .catch((err) => {
                             console.log(err);
@@ -109,7 +100,6 @@ import Noty from 'noty';
         },
 
         mounted() {
-            this.getLoggedinUser();
         }
     }
 </script>
