@@ -40,20 +40,20 @@
 
 
                             <h2 style="color:black;">Current Level</h2>
-                            <span>{{ (user.currentLevel ? user.currentLevel : 'N/a') }}</span>
+                            <span>{{ (user.currentEnrollment[0] ? user.currentEnrollment[0].levelName : 'N/a') }}</span>
 
                             <br>
                             <br>
 
 
                             <h2 style="color:black;">Current Section</h2>
-                            <span>{{ (user.currentSection ? user.currentSection : 'N/a') }}</span>
+                            <span>{{ (user.currentEnrollment[0] ? user.currentEnrollment[0].sectionName : 'N/a') }}</span>
 
                             <br>
                             <br>
 
                             <h2 style="color:black;">Student No.</h2>
-                            <span>{{ (user.studentNo ? user.studentNo : 'N/a') }}</span>
+                            <span>{{ (user.id ? 'KVA-21-' + user.id : 'N/a') }}</span>
 						</div>
 					</div>
                 </div>

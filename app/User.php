@@ -48,10 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getCurrentEnrollmentAttribute(){
         $schoolyear_id = Setting::find(1)->schoolyear_id;
-
-        return Enrollment::select('status')
-            ->where('schoolyear_id', $schoolyear_id)
-            ->where('student_id', $this->id)
+        return Enrollment::select('enrollments.*', 'sections.code as sectionName', 'levels.name as levelName')
+            ->leftJoin('sections', 'sections.id', 'enrollments.section_id')
+            ->leftJoin('levels', 'levels.id', 'enrollments.level_id')
+            ->where('enrollments.schoolyear_id', $schoolyear_id)
+            ->where('enrollments.student_id', $this->id)
             ->get();
     }
 }

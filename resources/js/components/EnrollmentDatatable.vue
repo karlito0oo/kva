@@ -194,6 +194,10 @@ export default {
                         this.projects = data.data.data;
                         this.configPagination(data.data);
                     }
+
+                    if(this.pagination.total == 0){
+                        new Noty({type: 'warning', text: 'No data found.', layout: 'topRight'}).show();
+                    }
                 })
                 .catch(errors => {
                     console.log(errors);

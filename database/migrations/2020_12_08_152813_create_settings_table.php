@@ -17,6 +17,8 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('schoolyear_id')->nullable();
+            $table->date('enrollmentStart')->nullable();
+            $table->date('enrollmentEnd')->nullable();
             $table->timestamps();
         });
 

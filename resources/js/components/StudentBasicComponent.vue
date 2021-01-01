@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input type="tel" class="form-control" id="inputSuccess5" placeholder="Contact No. *" v-model="student.contactno">
+                                <input type="number" class="form-control" id="inputSuccess5" placeholder="Contact No. *" v-model="student.contactno">
                                 <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                             </div>
 
@@ -139,7 +139,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">Guardian Contact No. * </label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input type="text" class="form-control" placeholder="Guardian Contact No." v-model="student.guardianContactNo">
+                                    <input type="integer" class="form-control" placeholder="Guardian Contact No." v-model="student.guardianContactNo">
                                 </div>
                             </div>
                             <div class="form-group row">

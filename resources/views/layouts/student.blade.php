@@ -1,3 +1,6 @@
+<?php
+$settings = \App\Setting::first();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -63,7 +66,9 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="{{ url('/homee') }}"><i class="fa fa-calendar"></i> Schedule</a></li>
-                    <li><a href="{{ url('/home/enrollments') }}"><i class="fa fa-file"></i> Registration</a></li>
+                    @if($settings->enrollmentStart <= date('Y-m-d') && $settings->enrollmentEnd >= date('Y-m-d'))
+                    <li><a href="{{ url('/home/enrollments') }}"><i class="fa fa-file"></i> Enrollment</a></li>
+                    @endif
                     <li><a href="{{ url('/homee') }}"><i class="fa fa-bar-chart"></i> Grades</a></li>
                 </ul>
               </div>

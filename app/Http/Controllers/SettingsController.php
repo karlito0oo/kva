@@ -76,6 +76,8 @@ class SettingsController extends Controller
         $data = Setting::find(1);
 
         $data->schoolyear_id = $request->schoolyear_id;
+        $data->enrollmentStart = $request->enrollmentStart;
+        $data->enrollmentEnd = $request->enrollmentEnd;
 
         return $data->save();
     }

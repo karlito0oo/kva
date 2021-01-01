@@ -2637,6 +2637,14 @@ var Errors = /*#__PURE__*/function () {
 
           _this.configPagination(data.data);
         }
+
+        if (_this.pagination.total == 0) {
+          new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
+            type: 'warning',
+            text: 'No data found.',
+            layout: 'topRight'
+          }).show();
+        }
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -3895,6 +3903,54 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -4560,7 +4616,7 @@ var Errors = /*#__PURE__*/function () {
       },
       enrollmentDetails: {},
       errors: new Errors(),
-      disableButton: true,
+      disableButton: false,
       editableEnrollment: '',
       sections: {}
     };
@@ -4690,11 +4746,12 @@ var Errors = /*#__PURE__*/function () {
         });
       }
 
-      this.checkEnrollmentDetails();
+      this.checkEnrollmentDetails('hide');
     },
     checkEnrollmentDetails: function checkEnrollmentDetails() {
       var _this6 = this;
 
+      var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       //datas needed for enrollment
       axios.post('/api/enrollments/checkEnrollmentDetails/', this.datas).then(function (res) {
         _this6.enrollmentDetails = res.data;
@@ -4710,7 +4767,7 @@ var Errors = /*#__PURE__*/function () {
             _this6.datas.Subjects.push(_this6.enrollmentDetails.enrolled_subjects[i].subject_id);
           }
 
-          if (_this6.accessing == 'admin') {} else {
+          if (_this6.accessing == 'admin') {} else if (status == null) {
             new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
               killer: true,
               type: 'error',
@@ -46514,6 +46571,92 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "label",
+                    { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                    [_vm._v("Enrollment Starts ")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.datas.enrollmentStart,
+                          expression: "datas.enrollmentStart"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "Enrollment start" },
+                      domProps: { value: _vm.datas.enrollmentStart },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.datas,
+                            "enrollmentStart",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "label",
+                    { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                    [_vm._v("Enrollment Ends ")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.datas.enrollmentEnd,
+                          expression: "datas.enrollmentEnd"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "Enrollment end" },
+                      domProps: { value: _vm.datas.enrollmentEnd },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.datas,
+                            "enrollmentEnd",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "x_panel" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "x_content" }, [
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
                 _c(
                   "label",
                   { staticClass: "col-form-label col-md-3 col-sm-3 " },
@@ -46580,26 +46723,26 @@ var render = function() {
                     2
                   )
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "ln_solid" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group row" }, [
-                _c("div", { staticClass: "col-md-9 col-sm-9  offset-md-3" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { type: "submit" },
-                      on: { click: _vm.updateSettings }
-                    },
-                    [_vm._v("Update")]
-                  )
-                ])
               ])
             ])
           ])
         ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "ln_solid" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-md-9 col-sm-9  offset-md-3" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info",
+            attrs: { type: "submit" },
+            on: { click: _vm.updateSettings }
+          },
+          [_vm._v("Update")]
+        )
       ])
     ])
   ])
@@ -46610,7 +46753,64 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("Settings")]),
+      _c("h2", [_vm._v("Enrollment Settings")]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
+        _c("li", [
+          _c("a", { staticClass: "collapse-link" }, [
+            _c("i", { staticClass: "fa fa-chevron-up" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "dropdown" }, [
+          _c(
+            "a",
+            {
+              staticClass: "dropdown-toggle",
+              attrs: {
+                href: "#",
+                "data-toggle": "dropdown",
+                role: "button",
+                "aria-expanded": "false"
+              }
+            },
+            [_c("i", { staticClass: "fa fa-wrench" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenuButton" }
+            },
+            [
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 1")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 2")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { staticClass: "close-link" }, [
+            _c("i", { staticClass: "fa fa-close" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h2", [_vm._v("General Settings")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
@@ -46956,7 +47156,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "tel",
+                            type: "number",
                             id: "inputSuccess5",
                             placeholder: "Contact No. *"
                           },
@@ -47321,7 +47521,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
-                            type: "text",
+                            type: "integer",
                             placeholder: "Guardian Contact No."
                           },
                           domProps: { value: _vm.student.guardianContactNo },
@@ -48547,7 +48747,11 @@ var render = function() {
             _vm._v(" "),
             _c("span", [
               _vm._v(
-                _vm._s(_vm.user.currentLevel ? _vm.user.currentLevel : "N/a")
+                _vm._s(
+                  _vm.user.currentEnrollment[0]
+                    ? _vm.user.currentEnrollment[0].levelName
+                    : "N/a"
+                )
               )
             ]),
             _vm._v(" "),
@@ -48562,7 +48766,9 @@ var render = function() {
             _c("span", [
               _vm._v(
                 _vm._s(
-                  _vm.user.currentSection ? _vm.user.currentSection : "N/a"
+                  _vm.user.currentEnrollment[0]
+                    ? _vm.user.currentEnrollment[0].sectionName
+                    : "N/a"
                 )
               )
             ]),
@@ -48576,7 +48782,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", [
-              _vm._v(_vm._s(_vm.user.studentNo ? _vm.user.studentNo : "N/a"))
+              _vm._v(_vm._s(_vm.user.id ? "KVA-21-" + _vm.user.id : "N/a"))
             ])
           ])
         ])

@@ -253,7 +253,7 @@ import Noty from 'noty';
                 },
                 enrollmentDetails: {},
                 errors: new Errors(),
-                disableButton: true,
+                disableButton: false,
                 editableEnrollment: '',
                 sections: {},
             }
@@ -354,10 +354,10 @@ import Noty from 'noty';
                         new Noty({killer: true, type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                     });
                 }
-                this.checkEnrollmentDetails();
+                this.checkEnrollmentDetails('hide');
             },
 
-            checkEnrollmentDetails(){
+            checkEnrollmentDetails(status = null){
               //datas needed for enrollment
                 axios.post('/api/enrollments/checkEnrollmentDetails/', this.datas)
                 .then((res) => {
@@ -375,7 +375,7 @@ import Noty from 'noty';
                       if(this.accessing == 'admin'){
 
                       }
-                      else{
+                      else if(status == null){
                         new Noty({killer: true, type: 'error', text: 'You already have pending enrollment. Please proceed to registrars office.', layout: 'topRight'}).show();
                       }
                     }

@@ -54,7 +54,7 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="{{ url('/home') }}"><i class="fa fa-ome"></i> Home</a></li>
+                  <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
                   
                   <li><a href="{{ url('/home/admin/enrollment') }}"><i class="fa fa-user-plus"></i> Enrollment</a></li>
 
