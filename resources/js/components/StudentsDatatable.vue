@@ -8,7 +8,7 @@
                 <div class="col-md-9">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="pageName"></span> Table</h2>
+                            <h2><span style="color:black;" v-html="pageName"></span> List</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>

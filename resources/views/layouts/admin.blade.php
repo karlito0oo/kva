@@ -58,7 +58,7 @@
                   
                   <li><a href="{{ url('/home/admin/enrollment') }}"><i class="fa fa-user-plus"></i> Enrollment</a></li>
 
-                  <li><a><i class="fa fa-edit"></i> Datas <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ url('home/students') }}">Students</a></li>
                       <li><a href="{{ url('home/advisers') }}">Advisers</a></li>
