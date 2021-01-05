@@ -43,7 +43,7 @@
                             </div>
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
-                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment[0].status == 'Enrolled' ? 'alert-success' : project.currentEnrollment[0].status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning')">
+                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment[0] ? project.currentEnrollment[0].status == 'Enrolled' ? 'alert-success' : project.currentEnrollment[0].status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning' : '')">
                                         <td>{{project.name}}</td>
                                         <td>{{project.lname}}</td>
                                         <td>{{project.gender}}</td>

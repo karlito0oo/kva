@@ -49030,14 +49030,15 @@ var render = function() {
                             "tr",
                             {
                               key: project.id,
-                              class:
-                                project.currentEnrollment[0].status ==
-                                "Enrolled"
+                              class: project.currentEnrollment[0]
+                                ? project.currentEnrollment[0].status ==
+                                  "Enrolled"
                                   ? "alert-success"
                                   : project.currentEnrollment[0].status ==
                                     "Pre-Enrolled"
                                   ? "alert-info"
                                   : "alert-warning"
+                                : ""
                             },
                             [
                               _c("td", [_vm._v(_vm._s(project.name))]),
