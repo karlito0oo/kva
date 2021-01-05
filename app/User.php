@@ -55,4 +55,22 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('enrollments.student_id', $this->id)
             ->get();
     }
+
+    public static function enrolledStudents(){
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+        return Enrollment::select('enrollments.*', 'levels.name as levelName')
+        ->join('levels', 'levels.id', 'enrollments.level_id')
+        ->where('enrollments.schoolyear_id', $schoolyear_id)
+        ->where('enrollments.status', 'Enrolled')
+        ->get();
+    }
+
+    public static function preEnrolledStudents(){
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+        return Enrollment::select('enrollments.*', 'levels.name as levelName')
+        ->join('levels', 'levels.id', 'enrollments.level_id')
+        ->where('enrollments.schoolyear_id', $schoolyear_id)
+        ->where('enrollments.status', 'Pre-Enrolled')
+        ->get();
+    }
 }
