@@ -127,7 +127,7 @@ class EnrollmentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Enrollment::find($id)->delete();
     }
 
     public function pageHome(){

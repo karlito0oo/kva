@@ -164,7 +164,7 @@ export default {
                 buttons: [
                     {
                         addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty) {
-                            axios.delete('../api/levels/'+dataDelete.id)
+                            axios.delete('/api/enrollments/'+dataDelete.id)
                             .then((res) => {
                                 self.getProjects();
                                 new Noty({type: 'success', text: 'Successfully removed.', layout: 'topRight'}).show();

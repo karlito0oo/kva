@@ -2602,7 +2602,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"]('../api/levels/' + dataDelete.id).then(function (res) {
+            axios["delete"]('/api/enrollments/' + dataDelete.id).then(function (res) {
               self.getProjects();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
                 type: 'success',
