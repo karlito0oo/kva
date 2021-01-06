@@ -69,7 +69,7 @@ $settings = \App\Setting::first();
                     @if($settings->enrollmentStart <= date('Y-m-d') && $settings->enrollmentEnd >= date('Y-m-d'))
                     <li><a href="{{ url('/home/enrollments') }}"><i class="fa fa-file"></i> Enrollment</a></li>
                     @endif
-                    <li><a href="{{ url('/homee') }}"><i class="fa fa-bar-chart"></i> Grades</a></li>
+                    <!-- <li><a href="{{ url('/homee') }}"><i class="fa fa-bar-chart"></i> Grades</a></li> -->
                 </ul>
               </div>
 
