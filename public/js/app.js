@@ -2077,6 +2077,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -2135,8 +2141,8 @@ var Errors = /*#__PURE__*/function () {
       name: 'email',
       label: 'Email'
     }, {
-      name: 'mobileNumber',
-      label: 'Mobile Number'
+      name: 'contactno',
+      label: 'Contact Number'
     }];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
@@ -2166,12 +2172,13 @@ var Errors = /*#__PURE__*/function () {
         to: ''
       },
       datas: {
-        firstName: '',
-        lastName: '',
+        name: '',
+        lname: '',
         gender: '',
         email: '',
-        mobileNumber: '',
-        birthday: ''
+        contactno: '',
+        birthday: '',
+        password: ''
       },
       todo: 'Add',
       editableId: '',
@@ -2279,6 +2286,7 @@ var Errors = /*#__PURE__*/function () {
         this.datas[keys[a]] = dataEdit[keys[a]];
       }
 
+      this.datas.password = '12345678';
       this.editableId = dataEdit.id;
       this.todo = 'Edit';
     },
@@ -4055,19 +4063,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -44118,9 +44113,9 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.projects, function(project) {
                           return _c("tr", { key: project.id }, [
-                            _c("td", [_vm._v(_vm._s(project.firstName))]),
+                            _c("td", [_vm._v(_vm._s(project.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(project.lastName))]),
+                            _c("td", [_vm._v(_vm._s(project.lname))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(project.gender))]),
                             _vm._v(" "),
@@ -44128,7 +44123,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(project.email))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(project.mobileNumber))]),
+                            _c("td", [_vm._v(_vm._s(project.contactno))]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -44229,23 +44224,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.datas.firstName,
-                              expression: "datas.firstName"
+                              value: _vm.datas.name,
+                              expression: "datas.name"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { type: "text" },
-                          domProps: { value: _vm.datas.firstName },
+                          domProps: { value: _vm.datas.name },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.datas,
-                                "firstName",
-                                $event.target.value
-                              )
+                              _vm.$set(_vm.datas, "name", $event.target.value)
                             }
                           }
                         })
@@ -44265,23 +44256,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.datas.lastName,
-                              expression: "datas.lastName"
+                              value: _vm.datas.lname,
+                              expression: "datas.lname"
                             }
                           ],
                           staticClass: "form-control",
                           attrs: { type: "text" },
-                          domProps: { value: _vm.datas.lastName },
+                          domProps: { value: _vm.datas.lname },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.datas,
-                                "lastName",
-                                $event.target.value
-                              )
+                              _vm.$set(_vm.datas, "lname", $event.target.value)
                             }
                           }
                         })
@@ -44329,31 +44316,13 @@ var render = function() {
                             }
                           },
                           [
-                            _c(
-                              "option",
-                              { attrs: { selected: "", disabled: "" } },
-                              [_vm._v("Choose option")]
-                            ),
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Choose option")
+                            ]),
                             _vm._v(" "),
-                            _c(
-                              "option",
-                              {
-                                domProps: {
-                                  selected: _vm.datas.gender === "Female"
-                                }
-                              },
-                              [_vm._v("Female")]
-                            ),
+                            _c("option", [_vm._v("Female")]),
                             _vm._v(" "),
-                            _c(
-                              "option",
-                              {
-                                domProps: {
-                                  selected: _vm.datas.gender === "Male"
-                                }
-                              },
-                              [_vm._v("Male")]
-                            )
+                            _c("option", [_vm._v("Male")])
                           ]
                         )
                       ])
@@ -44399,6 +44368,42 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
+                        [_vm._v("Contact Number")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.datas.contactno,
+                              expression: "datas.contactno"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.datas.contactno },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.datas,
+                                "contactno",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row " }, [
+                      _c(
+                        "label",
+                        { staticClass: "control-label col-md-3 col-sm-3 " },
                         [_vm._v("Email")]
                       ),
                       _vm._v(" "),
@@ -44427,41 +44432,43 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group row " }, [
-                      _c(
-                        "label",
-                        { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Mobile Number")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.datas.mobileNumber,
-                              expression: "datas.mobileNumber"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.datas.mobileNumber },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                    _vm.todo == "Add"
+                      ? _c("div", { staticClass: "form-group row " }, [
+                          _c(
+                            "label",
+                            { staticClass: "control-label col-md-3 col-sm-3 " },
+                            [_vm._v("Password")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.datas.password,
+                                  expression: "datas.password"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "password" },
+                              domProps: { value: _vm.datas.password },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.datas,
+                                    "password",
+                                    $event.target.value
+                                  )
+                                }
                               }
-                              _vm.$set(
-                                _vm.datas,
-                                "mobileNumber",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ]),
+                            })
+                          ])
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("div", { staticClass: "ln_solid" }),
                     _vm._v(" "),
@@ -47730,80 +47737,6 @@ var render = function() {
                               _vm.$set(
                                 _vm.student,
                                 "highschoolAddress",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        { staticClass: "col-form-label col-md-3 col-sm-3 " },
-                        [_vm._v("College ")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.student.college,
-                              expression: "student.college"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "College" },
-                          domProps: { value: _vm.student.college },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.student,
-                                "college",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "label",
-                        { staticClass: "col-form-label col-md-3 col-sm-3 " },
-                        [_vm._v("Address ")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.student.collegeAddress,
-                              expression: "student.collegeAddress"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Address" },
-                          domProps: { value: _vm.student.collegeAddress },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.student,
-                                "collegeAddress",
                                 $event.target.value
                               )
                             }
@@ -63175,8 +63108,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\Laravel App\kva\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\Laravel App\kva\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

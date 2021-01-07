@@ -44,12 +44,12 @@
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
-                                        <td>{{project.firstName}}</td>
-                                        <td>{{project.lastName}}</td>
+                                        <td>{{project.name}}</td>
+                                        <td>{{project.lname}}</td>
                                         <td>{{project.gender}}</td>
                                         <td>{{project.birthday}}</td>
                                         <td>{{project.email}}</td>
-                                        <td>{{project.mobileNumber}}</td>
+                                        <td>{{project.contactno}}</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
@@ -95,22 +95,22 @@
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">First Name</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.firstName">
+												<input type="text" class="form-control" v-model="datas.name">
 											</div>
 										</div>
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Last Name</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.lastName">
+												<input type="text" class="form-control" v-model="datas.lname">
 											</div>
 										</div>
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Gender</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select class="form-control" v-model="datas.gender">
-                                                    <option selected disabled>Choose option</option>
-                                                    <option :selected="datas.gender === 'Female'">Female</option>
-                                                    <option :selected="datas.gender === 'Male'">Male</option>
+                                                    <option value="">Choose option</option>
+                                                    <option>Female</option>
+                                                    <option>Male</option>
                                                 </select>
 											</div>
 										</div>
@@ -121,15 +121,21 @@
 											</div>
 										</div>
 										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Contact Number</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" v-model="datas.contactno">
+											</div>
+										</div>
+										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Email</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="email" class="form-control" v-model="datas.email">
 											</div>
 										</div>
-										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Mobile Number</label>
+										<div class="form-group row " v-if="todo == 'Add'">
+											<label class="control-label col-md-3 col-sm-3 ">Password</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.mobileNumber">
+												<input type="password" class="form-control" v-model="datas.password">
 											</div>
 										</div>
 										
@@ -195,7 +201,7 @@ export default {
             { name: 'gender', label: 'Gender'},
             { name: 'birthday', label: 'Birthday'},
             { name: 'email', label: 'Email'},
-            { name: 'mobileNumber', label: 'Mobile Number'},
+            { name: 'contactno', label: 'Contact Number'},
         ];
 
         columns.forEach((column) => {
@@ -226,12 +232,13 @@ export default {
                 to: ''
             },
             datas: {
-                firstName: '',
-                lastName: '',
+                name: '',
+                lname: '',
                 gender: '',
                 email: '',
-                mobileNumber: '',
+                contactno: '',
                 birthday: '',
+                password: '',
 
             },
             todo: 'Add',
@@ -311,11 +318,11 @@ export default {
             
         },
         editData(dataEdit){
-
             const keys = Object.keys(this.datas);
             for (var a = 0; a < keys.length; a++) {
                 this.datas[keys[a]] = dataEdit[keys[a]];
             }
+            this.datas.password = '12345678';
 
             this.editableId = dataEdit.id;
             this.todo = 'Edit';

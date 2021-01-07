@@ -180,19 +180,6 @@
                                 </div>
                             </div>
 
-                            <br>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">College </label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <input type="text" class="form-control" placeholder="College" v-model="student.college">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Address </label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <input type="text" class="form-control" placeholder="Address" v-model="student.collegeAddress">
-                                </div>
-                            </div>
                       </div>
                      
 

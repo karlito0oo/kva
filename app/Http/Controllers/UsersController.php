@@ -131,8 +131,6 @@ class UsersController extends Controller
         $data->elementaryAddress = $request->elementaryAddress;
         $data->highschool = $request->highschool;
         $data->highschoolAddress = $request->highschoolAddress;
-        $data->college = $request->college;
-        $data->collegeAddress = $request->collegeAddress;
 
         return $data->save();
     }

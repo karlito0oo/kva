@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 use App\Adviser;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdvisersController extends Controller
 {
     
     public function validateData(){
         return [
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'name' => 'required',
+            'lname' => 'required',
             'gender' => 'required',
             'birthday' => 'required',
             'email' => 'email',
+            'contactno' => 'required',
+            'password' => 'required',
         ];
     }
     /**
@@ -23,14 +27,14 @@ class AdvisersController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['firstName', 'lastName', 'gender', 'birthday', 'email', 'mobileNumber'];
+        $columns = ['name', 'lname', 'gender', 'birthday', 'email', 'contactno'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Adviser::select('*')->orderBy($columns[$column], $dir);
+        $query = User::select('*')->orderBy($columns[$column], $dir)->where('role_id', '4');
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {
@@ -63,7 +67,18 @@ class AdvisersController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate($this->validateData());
-        return Adviser::create($request->all());
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->lname = $request->lname;
+        $user->birthday = $request->birthday;
+        $user->gender = $request->gender;
+        $user->contactno = $request->contactno;
+        $user->email = $request->email;
+        $user->role_id = '4';
+        $user->password = Hash::make($request->password);
+
+        return $user->save();
     }
 
     /**
@@ -98,16 +113,16 @@ class AdvisersController extends Controller
     {
         $data = request()->validate($this->validateData());
 
-        $data = Adviser::find($id);
+        $user = User::find($id);
 
-        $data->lastName = $request->lastName;
-        $data->firstName = $request->firstName;
-        $data->email = $request->email;
-        $data->birthday = $request->birthday;
-        $data->gender = $request->gender;
-        $data->mobileNumber = $request->mobileNumber;
+        $user->name = $request->name;
+        $user->lname = $request->lname;
+        $user->birthday = $request->birthday;
+        $user->gender = $request->gender;
+        $user->contactno = $request->contactno;
+        $user->email = $request->email;
 
-        return $data->save();
+        return $user->save();
     }
 
     /**
@@ -118,7 +133,7 @@ class AdvisersController extends Controller
      */
     public function destroy($id)
     {
-        return Adviser::find($id)->delete();
+        return User::find($id)->delete();
     }
 
     public function adviserHome(){
