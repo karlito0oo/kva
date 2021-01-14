@@ -149,4 +149,8 @@ class UsersController extends Controller
     public function pagesHome(){
         return view('admin/students');
     }
+
+    public function fetchAdvisers(){
+        return User::where('role_id', '4')->get();
+    }
 }

@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //users
 Route::resource('/api/users', 'UsersController');
+Route::post('/api/users/fetchAdvisers', 'UsersController@fetchAdvisers');
 
 //framework
 Route::post('/api/loggedinUser', 'HomeController@loggedinUser');
@@ -63,6 +64,7 @@ Route::get('/home/admin/enrollment', 'EnrollmentAdminController@pageHome');
 Route::resource('/api/sections', 'SectionsController');
 Route::get('/home/sections', 'SectionsController@pageHome');
 Route::post('/api/sections/fetch', 'SectionsController@fetch');
+Route::post('/api/sections/updateAdvisers', 'SectionsController@updateAdvisers');
 
 
 //--------------------Students

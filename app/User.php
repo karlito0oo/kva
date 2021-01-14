@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->leftJoin('levels', 'levels.id', 'enrollments.level_id')
             ->where('enrollments.schoolyear_id', $schoolyear_id)
             ->where('enrollments.student_id', $this->id)
-            ->get();
+            ->first();
     }
 
     public static function enrolledStudents(){

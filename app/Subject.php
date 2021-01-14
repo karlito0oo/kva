@@ -15,4 +15,9 @@ class Subject extends Model
     {
         return $this->hasOne('App\Level', 'id', 'level_id');
     }
+
+    public function adviser()
+    {
+        return $this->hasOne('App\User', 'id', 'adviser_id');
+    }
 }

@@ -315,9 +315,9 @@ export default {
             });
         },
 
-        getProjects() {
+        getProjects(url = this.endPoint) {
             this.tableData.draw++;
-            axios.get(this.endPoint, {params: this.tableData})
+            axios.get(url, {params: this.tableData})
                 .then(response => {
                     let data = response.data;
                     if (this.tableData.draw == data.draw) {

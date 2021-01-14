@@ -33,6 +33,9 @@
                       <li class="nav-item">
                         <a class="nav-link" id="school-tab" data-toggle="tab" href="#school" role="tab" aria-controls="profile" aria-selected="false">Prev. Schools</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="requirements-tab" data-toggle="tab" href="#requirements" role="tab" aria-controls="profile" aria-selected="false">Requirements</a>
+                      </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                       <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
@@ -181,6 +184,67 @@
                             </div>
 
                       </div>
+
+                      <div class="tab-pane fade" id="requirements" role="tabpanel" aria-labelledby="requirements-tab">
+                            
+                            <input id="requirementsImage" type="file" @change="requirementChanged" accept="image/*" style="display:none;">
+
+                            <div class="row">
+                                <div class="col-md-4" style="height:100%;">
+                                    <div class="thumbnail" style="height:100%;">
+                                    <div class="image view view-first" style="height:100%;">
+                                        <img style="width: 100%; display: block;" v-bind:src=" (student.birthCertificate ? '/images/studentPSA/' + student.birthCertificate : '/images/noimageavailable.jpg')" alt="image" />
+                                        <div class="mask"  style="height:100%;">
+                                        <p> </p>
+                                        <div class="tools tools-bottom" style="height:100%;">
+                                            <a href="#"><i class="fa fa-eye"></i></a>
+                                            <a href="#" @click.prevent="uploadImage('studentPSA')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>PSA Birth Certificate</p>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" style="height:100%;">
+                                    <div class="thumbnail" style="height:100%;">
+                                    <div class="image view view-first" style="height:100%;">
+                                        <img style="width: 100%; display: block;" v-bind:src=" (student.goodmoral ? '/images/studentGoodMoral/' + student.goodmoral : '/images/noimageavailable.jpg')" alt="image" />
+                                        <div class="mask"  style="height:100%;">
+                                        <p> </p>
+                                        <div class="tools tools-bottom" style="height:100%;">
+                                            <a href="#"><i class="fa fa-eye"></i></a>
+                                            <a href="#" @click.prevent="uploadImage('studentGoodMoral')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Good Moral</p>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4" style="height:100%;">
+                                    <div class="thumbnail" style="height:100%;">
+                                    <div class="image view view-first" style="height:100%;">
+                                        <img style="width: 100%; display: block;" v-bind:src=" (student.reportCard ? '/images/studentReportCard/' + student.reportCard : '/images/noimageavailable.jpg')" alt="image" />
+                                        <div class="mask"  style="height:100%;">
+                                        <p> </p>
+                                        <div class="tools tools-bottom" style="height:100%;">
+                                            <a href="#"><i class="fa fa-eye"></i></a>
+                                            <a href="#" @click.prevent="uploadImage('studentReportCard')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>Report Card</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
                      
 
                       
@@ -227,6 +291,7 @@ import Noty from 'noty';
             return {
                 student: JSON.parse(this.user),
                 errors: new Errors(),
+                type: '',
             }
         },
         
@@ -240,6 +305,38 @@ import Noty from 'noty';
                     this.errors.record(err.response.data);
                     new Noty({killer: true,type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                 });
+            },
+
+            uploadImage(type){
+                this.type = type;
+            },
+
+            requirementChanged(e){
+
+                var fileReader = new FileReader();
+
+                fileReader.readAsDataURL(e.target.files[0]);
+
+                fileReader.onload = (e) => {
+                    this.student.image = e.target.result;
+
+                        axios.post('/api/uploadImage/'+this.type, this.student)
+                        .then((res) => {
+                            if(this.type == 'studentPSA'){
+                                this.student.birthCertificate = res.data;
+                            }
+                            if(this.type == 'studentGoodMoral'){
+                                this.student.goodmoral = res.data;
+                            }
+                            if(this.type == 'studentReportCard'){
+                                this.student.reportCard = res.data;
+                            }
+                            new Noty({type: 'success', text: 'Successfully uploaded requirement.', layout: 'topRight'}).show();
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }
             },
         },
 

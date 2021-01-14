@@ -5,7 +5,7 @@
           <div class="col-md-5 col-sm-5 ">
               <div class="x_panel tile fixed_height_400">
                 <div class="x_title">
-                  <h2>Registrations <small v-if="enrollmentDetails.student">{{ enrollmentDetails.student.lname }}, {{ enrollmentDetails.student.name }}</small></h2>
+                  <h2>Registrations <small>{{ currentStudent.lname }}, {{ currentStudent.name }}</small></h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -30,7 +30,8 @@
                                     <select class="form-control" v-model="datas.StudentType" :disabled="disableButton">
                                         <option :value=null disabled>Select Student Type</option>
                                         <option>Old Student</option>
-                                        <option>Transferee</option>
+                                        <option>Returnee</option>
+                                        <option>New Student</option>
                                     </select>
                                 </div>
                             </div>
@@ -84,8 +85,8 @@
                 <div class="">
                         <ul class="to_do">
                           <li v-for="subject in subjects" :key="subject.id">
-                            <p>
-                              <input :disabled="disableButton" type="checkbox" :id="subject.id" :value="subject.id" v-model="datas.Subjects"> [{{ subject.code }}] - {{ subject.name }} </p>
+                            <p class="ml-2">
+                              [{{ subject.code }}] - {{ subject.name }} </p>
                           </li> 
                         </ul>
                       </div>
@@ -239,7 +240,7 @@ class Errors{
 import Noty from 'noty';
     export default {
         
-    props: ['enrollment_id', 'accessing'],
+    props: ['student', 'accessing'],
         data() {
             return {
                 levels: this.levelsFetch(),
@@ -248,10 +249,11 @@ import Noty from 'noty';
                     StudentType: null,
                     Level: null,
                     Subjects: [],
-                    enrollment_ids: this.enrollment_id,
+                    student_id: '',
                     Section: '',
                 },
                 enrollmentDetails: {},
+                currentStudent:JSON.parse(this.student),
                 errors: new Errors(),
                 disableButton: false,
                 editableEnrollment: '',
@@ -260,13 +262,14 @@ import Noty from 'noty';
         },
 
         mounted() {
+            this.datas.student_id = this.currentStudent.id;
             this.checkEnrollmentDetails()
         },
 
         methods: {
 
             enrollStudent(){
-              axios.patch('/api/enrollments/submitEnrollment/'+this.datas.enrollment_ids, this.datas)
+              axios.patch('/api/enrollments/submitEnrollment/'+this.enrollmentDetails.id, this.datas)
               .then((res) => {
                   new Noty({type: 'success', text: 'Successfully enrolled student.', layout: 'topRight'}).show();
                   window.setTimeout(function(){
@@ -285,7 +288,7 @@ import Noty from 'noty';
             },
 
             sectionsFetch(){
-                axios.get('/api/sections/'+this.datas.Level)
+                axios.get('/api/sections/'+this.enrollmentDetails.level_id)
                 .then((res) => {
                     this.sections = res.data
                 })
@@ -322,6 +325,7 @@ import Noty from 'noty';
                 axios.post('/api/subjects/fetch', this.datas)
                 .then((res) => {
                     this.subjects = res.data;
+                    this.datas.Subjects = res.data;
                     if(res.data.length == 0){
                         new Noty({type: 'warning', text: 'No data found.', layout: 'topRight'}).show();
                     }
@@ -337,7 +341,13 @@ import Noty from 'noty';
                 if(this.editableEnrollment == ''){
                     axios.post('/api/enrollments', this.datas)
                     .then((res) => {
-                        new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                        console.log(res.data);
+                        if(!res.data.result){
+                          new Noty({killer: true, type: 'error', text: res.data.message, layout: 'topRight'}).show();
+                        }
+                        else{
+                          new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                        }
                     })
                     .catch((err) => {
                         this.errors.record(err.response.data);

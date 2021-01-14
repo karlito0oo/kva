@@ -43,7 +43,7 @@
                             </div>
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
-                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment[0] ? project.currentEnrollment[0].status == 'Enrolled' ? 'alert-success' : project.currentEnrollment[0].status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning' : 'alert-warning')">
+                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment ? project.currentEnrollment.status == 'Enrolled' ? 'alert-success' : project.currentEnrollment.status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning' : 'alert-warning')">
                                         <td>{{project.name}}</td>
                                         <td>{{project.lname}}</td>
                                         <td>{{project.gender}}</td>
@@ -51,7 +51,7 @@
                                         <td>{{project.email}}</td>
                                         <td>{{project.mobileNumber}}</td>
                                         <td>
-                                            <a v-show="!project.currentEnrollment[0]" :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> Enroll</span></a>
+                                            <a :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> {{(!project.currentEnrollment ? 'Enroll' : 'Edit Enrollment')}}</span></a>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <a :href="'/api/students/' + project.id" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></a>
                                         </td>

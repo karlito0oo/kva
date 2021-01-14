@@ -7,6 +7,7 @@ use App\Enrollment;
 use App\EnrolledSubject;
 use App\Setting;
 use App\User;
+use App\Level;
 use Illuminate\Http\Request;
 
 class EnrollmentsController extends Controller
@@ -40,28 +41,76 @@ class EnrollmentsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $student = User::find($request->student_id);
         $data = request()->validate([
             'StudentType' => 'required',
             'Level' => 'required',
             'Subjects' => 'required',
         ]);
+        //check requirements if new student
+        if($request->StudentType != 'Old Student'){
+            if($student->birthCertificate == '' || $student->goodmoral == '' || $student->reportCard == ''){
+                return [
+                    'result' => false,
+                    'message' => 'Incomplete requirements for the student.',
+                ];
+            }
+        }
+
+        //check prerequisite
+        if($request->StudentType == 'Old Student'){
+            $level = Level::where('id', $request->Level)->with('prerequisite')->first();
+            if($level->prerequisite_id){
+
+                $prevEnroll = Enrollment::where('student_id', $student->id)
+                ->where('level_id', $level->prerequisite_id)
+                ->where('status', 'Enrolled')
+                ->latest()
+                ->first();
+
+                if(empty($prevEnroll)){
+                    return [
+                        'result' => false,
+                        'message' => 'No data found for pre-requisite ' . $level->prerequisite->name . ' .',
+                    ];
+                }
+
+                $prevEnrolledSubj = EnrolledSubject::where('enrollment_id', $prevEnroll->id)
+                    ->where('grade', 'Failed')
+                    ->get();
+
+                if(count($prevEnrolledSubj) >= 2){
+                    return [
+                        'result' => false,
+                        'message' => 'Student did not pass the pre-requisite level.',
+                    ];
+                }
+            }
+            
+        }
+        
+
+
         $schoolyear_id = Setting::find(1)->schoolyear_id;
 
         $data = new Enrollment();
         $data->schoolyear_id = $schoolyear_id;
         $data->level_id = $request->Level;
         $data->student_type = $request->StudentType;
-        $data->student_id = $user->id;
+        $data->student_id = $student->id;
         $data->status = 'Pre-Enrolled';
 
         $data->save();
-
         foreach ($request->Subjects as $subject){
             $enrolledSubject = new EnrolledSubject();
             $enrolledSubject->enrollment_id = $data->id;
-            $enrolledSubject->subject_id = $subject;
+            $enrolledSubject->subject_id = $subject['id'];
             $enrolledSubject->save();
         }
+
+        return [
+            'result' => true,
+        ];;
     }
 
     /**
@@ -111,12 +160,13 @@ class EnrollmentsController extends Controller
             ->where('enrollment_id', $id)
             ->delete();
 
-        foreach ($request->Subjects as $subject){
-            $enrolledSubject = new EnrolledSubject();
-            $enrolledSubject->enrollment_id = $data->id;
-            $enrolledSubject->subject_id = $subject;
-            $enrolledSubject->save();
-        }
+        
+            foreach ($request->Subjects as $subject){
+                $enrolledSubject = new EnrolledSubject();
+                $enrolledSubject->enrollment_id = $data->id;
+                $enrolledSubject->subject_id = $subject['id'];
+                $enrolledSubject->save();
+            }
     }
 
     /**
@@ -135,21 +185,13 @@ class EnrollmentsController extends Controller
     }
 
     public function checkEnrollmentDetails(Request $request){
-        $user = Auth::user();
         $schoolyear_id = Setting::find(1)->schoolyear_id;
-
-        if($request->enrollment_ids){
-            return Enrollment::select('*')
-            ->with('EnrolledSubjects')
-            ->with('student')
-            ->find($request->enrollment_ids);
-        }
         
         return Enrollment::select('*')
             ->with('EnrolledSubjects')
             ->where('schoolyear_id', $schoolyear_id)
             ->with('student')
-            ->where('student_id', $user->id)->first();
+            ->where('student_id', $request->student_id)->first();
 
             
     }

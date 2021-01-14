@@ -34,6 +34,24 @@ class ImageUploadController extends Controller
             $user->save();
         }
 
+        if($uploadTo == 'studentPSA'){
+            $user = User::find($request->id);
+            $user->birthcertificate = $fileName;
+            $user->save();
+        }
+
+        if($uploadTo == 'studentGoodMoral'){
+            $user = User::find($request->id);
+            $user->goodmoral = $fileName;
+            $user->save();
+        }
+
+        if($uploadTo == 'studentReportCard'){
+            $user = User::find($request->id);
+            $user->reportCard = $fileName;
+            $user->save();
+        }
+
         return $fileName;
     }
 }

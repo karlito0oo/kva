@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Section;
 use App\Setting;
+use App\Subject;
 use Illuminate\Http\Request;
 
 class SectionsController extends Controller
@@ -86,11 +87,11 @@ class SectionsController extends Controller
      */
     public function show($level_id)
     {
-        
         $schoolyear_id = Setting::find(1)->schoolyear_id;
         return Section::select('*')
             ->with('enrolledStudents')
             ->where('schoolyear_id', $schoolyear_id)
+            ->where('level_id', $level_id)
             ->get();
     }
 
@@ -141,13 +142,23 @@ class SectionsController extends Controller
 
     
     
-    public function fetch(Request $request){
+    public function fetch($level_id){
 
         $schoolyear_id = Setting::find(1)->schoolyear_id;
-        dd($request->Level);
         return Section::select('*')
             ->with('enrolledStudents')
             ->where('schoolyear_id', $schoolyear_id)
+            ->where('schoolyear_id', $level_id)
             ->get();
+    }
+
+    public function updateAdvisers(Request $request){
+        foreach ($request->subjects as $subject){
+            $currentSubject = Subject::find($subject['id']);
+            $currentSubject->adviser_id = $subject['adviser_id'];
+            $currentSubject->save();
+        }
+        
+        return true;
     }
 }

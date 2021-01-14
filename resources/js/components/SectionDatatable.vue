@@ -50,6 +50,7 @@
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
+                                            <button class="btn btn-info btn-sm" @click="showSubjects(project)">Subjects</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -134,7 +135,41 @@
     </div>
 
         
+<!-- Subjects modal -->
+     <div class="modal fade bs-example-modal-md" id="subjectsModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
 
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel2">SUBJECTS</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                
+										<div class="form-group row" v-for="subject in section.subjects" :key="subject.id">
+											<label class="control-label col-md-3 col-sm-3 ">[{{subject.code}}] {{subject.name}}</label>
+											<div class="col-md-9 col-sm-9 ">
+												 <select  class="form-control" v-model="subject.adviser_id">
+                                                    <option :value=null disabled>Select Adviser</option>
+                                                    <option v-for="adviser in advisers" :value="adviser.id" :key="adviser.id">
+                                                        {{ adviser.lname + ', ' + adviser.name}}
+                                                    </option>
+                                                </select>
+										</div>
+            </div>
+
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="updateAdvisers">Save</button>
+            </div>
+
+            </div>
+        </div>
+      </div>
+
+     </div>
 
     </div>
 </template>
@@ -215,10 +250,37 @@ export default {
             endPoint: '/api/sections/',
             errors: new Errors(),
             levels: this.levelsFetch(),
+            advisers: this.fetchAdvisers(),
+            section: {
+                subjects: '',
+            },
         }
     },
     methods: {
-        
+        updateAdvisers(){
+            axios.post(this.endPoint+'updateAdvisers', this.section)
+            .then((res) => {
+                new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
+                $('#subjectsModal').modal('hide');
+            })
+            .catch((err) => {
+                this.errors.record(err.response.data);
+                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+            });
+        },
+        showSubjects(section){
+            this.section.subjects = section.subjects;
+            $('#subjectsModal').modal('show');
+        },
+        fetchAdvisers(){
+            axios.post('/api/users/fetchAdvisers')
+            .then((res) => {
+                this.advisers = res.data
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        },
         levelsFetch(){
             axios.post('/api/levels/fetch')
             .then((res) => {

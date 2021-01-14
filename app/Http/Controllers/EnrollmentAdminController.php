@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enrollment;
+use App\User;
 use Illuminate\Http\Request;
 
 class EnrollmentAdminController extends Controller
@@ -66,8 +67,9 @@ class EnrollmentAdminController extends Controller
      */
     public function show($id)
     {
+        $student = User::find($id);
         return view('admin/enrollment-check', [
-            'enrollment_id' => $id
+            'student' => $student
         ]);
     }
 

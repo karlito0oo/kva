@@ -3626,6 +3626,41 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -3714,15 +3749,52 @@ var Errors = /*#__PURE__*/function () {
       editableId: '',
       endPoint: '/api/sections/',
       errors: new Errors(),
-      levels: this.levelsFetch()
+      levels: this.levelsFetch(),
+      advisers: this.fetchAdvisers(),
+      section: {
+        subjects: ''
+      }
     };
   },
   methods: {
-    levelsFetch: function levelsFetch() {
+    updateAdvisers: function updateAdvisers() {
       var _this = this;
 
+      axios.post(this.endPoint + 'updateAdvisers', this.section).then(function (res) {
+        new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
+          type: 'success',
+          text: 'Successfully updated.',
+          layout: 'topRight'
+        }).show();
+        $('#subjectsModal').modal('hide');
+      })["catch"](function (err) {
+        _this.errors.record(err.response.data);
+
+        new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
+          type: 'error',
+          text: _this.errors.get('name'),
+          layout: 'topRight'
+        }).show();
+      });
+    },
+    showSubjects: function showSubjects(section) {
+      this.section.subjects = section.subjects;
+      $('#subjectsModal').modal('show');
+    },
+    fetchAdvisers: function fetchAdvisers() {
+      var _this2 = this;
+
+      axios.post('/api/users/fetchAdvisers').then(function (res) {
+        _this2.advisers = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    levelsFetch: function levelsFetch() {
+      var _this3 = this;
+
       axios.post('/api/levels/fetch').then(function (res) {
-        _this.levels = res.data;
+        _this3.levels = res.data;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -3737,7 +3809,7 @@ var Errors = /*#__PURE__*/function () {
       this.todo = 'Add';
     },
     saveData: function saveData() {
-      var _this2 = this;
+      var _this4 = this;
 
       if (this.todo == 'Add') {
         axios.post(this.endPoint, this.datas).then(function (res) {
@@ -3747,15 +3819,15 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this2.getProjects();
+          _this4.getProjects();
 
-          _this2.clearFields();
+          _this4.clearFields();
         })["catch"](function (err) {
-          _this2.errors.record(err.response.data);
+          _this4.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'error',
-            text: _this2.errors.get('name'),
+            text: _this4.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -3767,15 +3839,15 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this2.getProjects();
+          _this4.getProjects();
 
-          _this2.clearFields();
+          _this4.clearFields();
         })["catch"](function (err) {
-          _this2.errors.record(err.response.data);
+          _this4.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'error',
-            text: _this2.errors.get('name'),
+            text: _this4.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -3821,7 +3893,7 @@ var Errors = /*#__PURE__*/function () {
       this.todo = 'Edit';
     },
     getProjects: function getProjects() {
-      var _this3 = this;
+      var _this5 = this;
 
       var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.endPoint;
       this.tableData.draw++;
@@ -3830,10 +3902,10 @@ var Errors = /*#__PURE__*/function () {
       }).then(function (response) {
         var data = response.data;
 
-        if (_this3.tableData.draw == data.draw) {
-          _this3.projects = data.data.data;
+        if (_this5.tableData.draw == data.draw) {
+          _this5.projects = data.data.data;
 
-          _this3.configPagination(data.data);
+          _this5.configPagination(data.data);
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -4291,6 +4363,70 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -4326,7 +4462,8 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     return {
       student: JSON.parse(this.user),
-      errors: new Errors()
+      errors: new Errors(),
+      type: ''
     };
   },
   methods: {
@@ -4350,6 +4487,40 @@ var Errors = /*#__PURE__*/function () {
           layout: 'topRight'
         }).show();
       });
+    },
+    uploadImage: function uploadImage(type) {
+      this.type = type;
+    },
+    requirementChanged: function requirementChanged(e) {
+      var _this2 = this;
+
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(e.target.files[0]);
+
+      fileReader.onload = function (e) {
+        _this2.student.image = e.target.result;
+        axios.post('/api/uploadImage/' + _this2.type, _this2.student).then(function (res) {
+          if (_this2.type == 'studentPSA') {
+            _this2.student.birthCertificate = res.data;
+          }
+
+          if (_this2.type == 'studentGoodMoral') {
+            _this2.student.goodmoral = res.data;
+          }
+
+          if (_this2.type == 'studentReportCard') {
+            _this2.student.reportCard = res.data;
+          }
+
+          new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+            type: 'success',
+            text: 'Successfully uploaded requirement.',
+            layout: 'topRight'
+          }).show();
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      };
     }
   },
   mounted: function mounted() {
@@ -4594,6 +4765,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -4625,7 +4797,7 @@ var Errors = /*#__PURE__*/function () {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['enrollment_id', 'accessing'],
+  props: ['student', 'accessing'],
   data: function data() {
     return {
       levels: this.levelsFetch(),
@@ -4634,10 +4806,11 @@ var Errors = /*#__PURE__*/function () {
         StudentType: null,
         Level: null,
         Subjects: [],
-        enrollment_ids: this.enrollment_id,
+        student_id: '',
         Section: ''
       },
       enrollmentDetails: {},
+      currentStudent: JSON.parse(this.student),
       errors: new Errors(),
       disableButton: false,
       editableEnrollment: '',
@@ -4645,13 +4818,14 @@ var Errors = /*#__PURE__*/function () {
     };
   },
   mounted: function mounted() {
+    this.datas.student_id = this.currentStudent.id;
     this.checkEnrollmentDetails();
   },
   methods: {
     enrollStudent: function enrollStudent() {
       var _this = this;
 
-      axios.patch('/api/enrollments/submitEnrollment/' + this.datas.enrollment_ids, this.datas).then(function (res) {
+      axios.patch('/api/enrollments/submitEnrollment/' + this.enrollmentDetails.id, this.datas).then(function (res) {
         new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
           type: 'success',
           text: 'Successfully enrolled student.',
@@ -4678,7 +4852,7 @@ var Errors = /*#__PURE__*/function () {
     sectionsFetch: function sectionsFetch() {
       var _this2 = this;
 
-      axios.get('/api/sections/' + this.datas.Level).then(function (res) {
+      axios.get('/api/sections/' + this.enrollmentDetails.level_id).then(function (res) {
         _this2.sections = res.data;
       })["catch"](function (err) {
         console.log(err);
@@ -4711,6 +4885,7 @@ var Errors = /*#__PURE__*/function () {
 
       axios.post('/api/subjects/fetch', this.datas).then(function (res) {
         _this4.subjects = res.data;
+        _this4.datas.Subjects = res.data;
 
         if (res.data.length == 0) {
           new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -4735,11 +4910,22 @@ var Errors = /*#__PURE__*/function () {
 
       if (this.editableEnrollment == '') {
         axios.post('/api/enrollments', this.datas).then(function (res) {
-          new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
-            type: 'success',
-            text: 'Successfully saved.',
-            layout: 'topRight'
-          }).show();
+          console.log(res.data);
+
+          if (!res.data.result) {
+            new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+              killer: true,
+              type: 'error',
+              text: res.data.message,
+              layout: 'topRight'
+            }).show();
+          } else {
+            new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+              type: 'success',
+              text: 'Successfully saved.',
+              layout: 'topRight'
+            }).show();
+          }
         })["catch"](function (err) {
           _this5.errors.record(err.response.data);
 
@@ -5689,8 +5875,9 @@ var Errors = /*#__PURE__*/function () {
     getProjects: function getProjects() {
       var _this3 = this;
 
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.endPoint;
       this.tableData.draw++;
-      axios.get(this.endPoint, {
+      axios.get(url, {
         params: this.tableData
       }).then(function (response) {
         var data = response.data;
@@ -46305,6 +46492,19 @@ var render = function() {
                                   }
                                 },
                                 [_c("span", { staticClass: "fa fa-edit" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-info btn-sm",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showSubjects(project)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Subjects")]
                               )
                             ])
                           ])
@@ -46541,7 +46741,133 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bs-example-modal-md",
+        attrs: {
+          id: "subjectsModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-md" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _vm._l(_vm.section.subjects, function(subject) {
+                  return _c(
+                    "div",
+                    { key: subject.id, staticClass: "form-group row" },
+                    [
+                      _c(
+                        "label",
+                        { staticClass: "control-label col-md-3 col-sm-3 " },
+                        [
+                          _vm._v(
+                            "[" +
+                              _vm._s(subject.code) +
+                              "] " +
+                              _vm._s(subject.name)
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: subject.adviser_id,
+                                expression: "subject.adviser_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  subject,
+                                  "adviser_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { disabled: "" },
+                                domProps: { value: null }
+                              },
+                              [_vm._v("Select Adviser")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.advisers, function(adviser) {
+                              return _c(
+                                "option",
+                                {
+                                  key: adviser.id,
+                                  domProps: { value: adviser.id }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                                        " +
+                                      _vm._s(
+                                        adviser.lname + ", " + adviser.name
+                                      ) +
+                                      "\n                                                    "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.updateAdvisers }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ])
+              ],
+              2
+            )
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -46651,6 +46977,29 @@ var staticRenderFns = [
           _c("i", { staticClass: "fa fa-close" })
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title", attrs: { id: "myModalLabel2" } }, [
+        _vm._v("SUBJECTS")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -47855,9 +48204,301 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: {
+                      id: "requirements",
+                      role: "tabpanel",
+                      "aria-labelledby": "requirements-tab"
+                    }
+                  },
+                  [
+                    _c("input", {
+                      staticStyle: { display: "none" },
+                      attrs: {
+                        id: "requirementsImage",
+                        type: "file",
+                        accept: "image/*"
+                      },
+                      on: { change: _vm.requirementChanged }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-4",
+                          staticStyle: { height: "100%" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "thumbnail",
+                              staticStyle: { height: "100%" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "image view view-first",
+                                  staticStyle: { height: "100%" }
+                                },
+                                [
+                                  _c("img", {
+                                    staticStyle: {
+                                      width: "100%",
+                                      display: "block"
+                                    },
+                                    attrs: {
+                                      src: _vm.student.birthCertificate
+                                        ? "/images/studentPSA/" +
+                                          _vm.student.birthCertificate
+                                        : "/images/noimageavailable.jpg",
+                                      alt: "image"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "mask",
+                                      staticStyle: { height: "100%" }
+                                    },
+                                    [
+                                      _c("p"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "tools tools-bottom",
+                                          staticStyle: { height: "100%" }
+                                        },
+                                        [
+                                          _vm._m(2),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "#",
+                                                onclick:
+                                                  "$('#requirementsImage').click()"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.uploadImage(
+                                                    "studentPSA"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-upload"
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._m(3)
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-4",
+                          staticStyle: { height: "100%" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "thumbnail",
+                              staticStyle: { height: "100%" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "image view view-first",
+                                  staticStyle: { height: "100%" }
+                                },
+                                [
+                                  _c("img", {
+                                    staticStyle: {
+                                      width: "100%",
+                                      display: "block"
+                                    },
+                                    attrs: {
+                                      src: _vm.student.goodmoral
+                                        ? "/images/studentGoodMoral/" +
+                                          _vm.student.goodmoral
+                                        : "/images/noimageavailable.jpg",
+                                      alt: "image"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "mask",
+                                      staticStyle: { height: "100%" }
+                                    },
+                                    [
+                                      _c("p"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "tools tools-bottom",
+                                          staticStyle: { height: "100%" }
+                                        },
+                                        [
+                                          _vm._m(4),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "#",
+                                                onclick:
+                                                  "$('#requirementsImage').click()"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.uploadImage(
+                                                    "studentGoodMoral"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-upload"
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._m(5)
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-md-4",
+                          staticStyle: { height: "100%" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "thumbnail",
+                              staticStyle: { height: "100%" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "image view view-first",
+                                  staticStyle: { height: "100%" }
+                                },
+                                [
+                                  _c("img", {
+                                    staticStyle: {
+                                      width: "100%",
+                                      display: "block"
+                                    },
+                                    attrs: {
+                                      src: _vm.student.reportCard
+                                        ? "/images/studentReportCard/" +
+                                          _vm.student.reportCard
+                                        : "/images/noimageavailable.jpg",
+                                      alt: "image"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "mask",
+                                      staticStyle: { height: "100%" }
+                                    },
+                                    [
+                                      _c("p"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "tools tools-bottom",
+                                          staticStyle: { height: "100%" }
+                                        },
+                                        [
+                                          _vm._m(6),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "#",
+                                                onclick:
+                                                  "$('#requirementsImage').click()"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.uploadImage(
+                                                    "studentReportCard"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-upload"
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._m(7)
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
                 _c("div", { staticClass: "ln_solid" }),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(8)
               ]
             )
           ])
@@ -47987,9 +48628,75 @@ var staticRenderFns = [
             },
             [_vm._v("Prev. Schools")]
           )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "requirements-tab",
+                "data-toggle": "tab",
+                href: "#requirements",
+                role: "tab",
+                "aria-controls": "profile",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Requirements")]
+          )
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-eye" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "caption" }, [
+      _c("p", [_vm._v("PSA Birth Certificate")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-eye" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "caption" }, [
+      _c("p", [_vm._v("Good Moral")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-eye" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "caption" }, [
+      _c("p", [_vm._v("Report Card")])
+    ])
   },
   function() {
     var _vm = this
@@ -48033,15 +48740,13 @@ var render = function() {
         _c("div", { staticClass: "x_title" }, [
           _c("h2", [
             _vm._v("Registrations "),
-            _vm.enrollmentDetails.student
-              ? _c("small", [
-                  _vm._v(
-                    _vm._s(_vm.enrollmentDetails.student.lname) +
-                      ", " +
-                      _vm._s(_vm.enrollmentDetails.student.name)
-                  )
-                ])
-              : _vm._e()
+            _c("small", [
+              _vm._v(
+                _vm._s(_vm.currentStudent.lname) +
+                  ", " +
+                  _vm._s(_vm.currentStudent.name)
+              )
+            ])
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -48100,7 +48805,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("option", [_vm._v("Old Student")]),
                   _vm._v(" "),
-                  _c("option", [_vm._v("Transferee")])
+                  _c("option", [_vm._v("Returnee")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("New Student")])
                 ]
               )
             ])
@@ -48217,58 +48924,9 @@ var render = function() {
               { staticClass: "to_do" },
               _vm._l(_vm.subjects, function(subject) {
                 return _c("li", { key: subject.id }, [
-                  _c("p", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.datas.Subjects,
-                          expression: "datas.Subjects"
-                        }
-                      ],
-                      attrs: {
-                        disabled: _vm.disableButton,
-                        type: "checkbox",
-                        id: subject.id
-                      },
-                      domProps: {
-                        value: subject.id,
-                        checked: Array.isArray(_vm.datas.Subjects)
-                          ? _vm._i(_vm.datas.Subjects, subject.id) > -1
-                          : _vm.datas.Subjects
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.datas.Subjects,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = subject.id,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.datas,
-                                  "Subjects",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.datas,
-                                  "Subjects",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.datas, "Subjects", $$c)
-                          }
-                        }
-                      }
-                    }),
+                  _c("p", { staticClass: "ml-2" }, [
                     _vm._v(
-                      " [" +
+                      "\r\n                              [" +
                         _vm._s(subject.code) +
                         "] - " +
                         _vm._s(subject.name) +
@@ -49071,11 +49729,10 @@ var render = function() {
                             "tr",
                             {
                               key: project.id,
-                              class: project.currentEnrollment[0]
-                                ? project.currentEnrollment[0].status ==
-                                  "Enrolled"
+                              class: project.currentEnrollment
+                                ? project.currentEnrollment.status == "Enrolled"
                                   ? "alert-success"
-                                  : project.currentEnrollment[0].status ==
+                                  : project.currentEnrollment.status ==
                                     "Pre-Enrolled"
                                   ? "alert-info"
                                   : "alert-warning"
@@ -49098,15 +49755,6 @@ var render = function() {
                                 _c(
                                   "a",
                                   {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: !project.currentEnrollment[0],
-                                        expression:
-                                          "!project.currentEnrollment[0]"
-                                      }
-                                    ],
                                     staticClass: "btn btn-success btn-sm",
                                     attrs: {
                                       href:
@@ -49115,7 +49763,14 @@ var render = function() {
                                   },
                                   [
                                     _c("span", { staticClass: "fa fa-plus" }, [
-                                      _vm._v(" Enroll")
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            !project.currentEnrollment
+                                              ? "Enroll"
+                                              : "Edit Enrollment"
+                                          )
+                                      )
                                     ])
                                   ]
                                 ),
