@@ -2831,6 +2831,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -2879,6 +2891,9 @@ var Errors = /*#__PURE__*/function () {
     }, {
       label: 'Description',
       name: 'description'
+    }, {
+      label: 'Pre-requisite',
+      name: 'prerequisite_id'
     }];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
@@ -2909,11 +2924,13 @@ var Errors = /*#__PURE__*/function () {
       },
       datas: {
         name: '',
-        description: ''
+        description: '',
+        prerequisite_id: ''
       },
       todo: 'Add',
       editableId: '',
-      errors: new Errors()
+      errors: new Errors(),
+      levels: this.levelsFetch()
     };
   },
   methods: {
@@ -2926,8 +2943,17 @@ var Errors = /*#__PURE__*/function () {
 
       this.todo = 'Add';
     },
-    saveData: function saveData() {
+    levelsFetch: function levelsFetch() {
       var _this = this;
+
+      axios.post('/api/levels/fetch').then(function (res) {
+        _this.levels = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    saveData: function saveData() {
+      var _this2 = this;
 
       if (this.todo == 'Add') {
         axios.post('../api/levels', this.datas).then(function (res) {
@@ -2937,15 +2963,17 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this.getProjects();
+          _this2.getProjects();
 
-          _this.clearFields();
+          _this2.clearFields();
+
+          _this2.levelsFetch();
         })["catch"](function (err) {
-          _this.errors.record(err.response.data);
+          _this2.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'error',
-            text: _this.errors.get('name'),
+            text: _this2.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -2957,15 +2985,15 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this.getProjects();
+          _this2.getProjects();
 
-          _this.clearFields();
+          _this2.clearFields();
         })["catch"](function (err) {
-          _this.errors.record(err.response.data);
+          _this2.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'error',
-            text: _this.errors.get('name'),
+            text: _this2.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -3011,7 +3039,7 @@ var Errors = /*#__PURE__*/function () {
       this.todo = 'Edit';
     },
     getProjects: function getProjects() {
-      var _this2 = this;
+      var _this3 = this;
 
       var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '/api/levels';
       this.tableData.draw++;
@@ -3020,10 +3048,10 @@ var Errors = /*#__PURE__*/function () {
       }).then(function (response) {
         var data = response.data;
 
-        if (_this2.tableData.draw == data.draw) {
-          _this2.projects = data.data.data;
+        if (_this3.tableData.draw == data.draw) {
+          _this3.projects = data.data.data;
 
-          _this2.configPagination(data.data);
+          _this3.configPagination(data.data);
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -4911,6 +4939,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
 //
 //
 //
@@ -45225,6 +45254,16 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(project.description))]),
                             _vm._v(" "),
                             _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  project.prerequisite
+                                    ? project.prerequisite.name
+                                    : "N/A"
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
                               _c(
                                 "button",
                                 {
@@ -45371,6 +45410,75 @@ var render = function() {
                             }
                           }
                         })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row " }, [
+                      _c(
+                        "label",
+                        { staticClass: "control-label col-md-3 col-sm-3 " },
+                        [_vm._v("Pre-requisite")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datas.prerequisite_id,
+                                expression: "datas.prerequisite_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.datas,
+                                  "prerequisite_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "", disabled: "" } },
+                              [_vm._v("Select Pre-requisite")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.levels, function(level) {
+                              return _c(
+                                "option",
+                                {
+                                  key: level.id,
+                                  domProps: { value: level.id }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                                        " +
+                                      _vm._s(level.name) +
+                                      "\n                                                    "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -48971,7 +49079,7 @@ var render = function() {
                                     "Pre-Enrolled"
                                   ? "alert-info"
                                   : "alert-warning"
-                                : ""
+                                : "alert-warning"
                             },
                             [
                               _c("td", [_vm._v(_vm._s(project.name))]),
@@ -48987,6 +49095,31 @@ var render = function() {
                               _c("td", [_vm._v(_vm._s(project.mobileNumber))]),
                               _vm._v(" "),
                               _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: !project.currentEnrollment[0],
+                                        expression:
+                                          "!project.currentEnrollment[0]"
+                                      }
+                                    ],
+                                    staticClass: "btn btn-success btn-sm",
+                                    attrs: {
+                                      href:
+                                        "/api/admin/enrollment/" + project.id
+                                    }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "fa fa-plus" }, [
+                                      _vm._v(" Enroll")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c(
                                   "button",
                                   {

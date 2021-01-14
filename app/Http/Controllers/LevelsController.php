@@ -21,19 +21,20 @@ class LevelsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'description'];
+        $columns = ['name', 'description', 'prerequisite_id'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Level::select('*')->orderBy($columns[$column], $dir);
+        $query = Level::select('*')->orderBy($columns[$column], $dir)->with('prerequisite');
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue) {
                 $query->where('name', 'like', '%' . $searchValue . '%')
-                ->orWhere('description', 'like', '%' . $searchValue . '%');
+                ->orWhere('description', 'like', '%' . $searchValue . '%')
+                ->orWhere('prerequisite_id', 'like', '%' . $searchValue . '%');
             });
         }
 
@@ -100,6 +101,7 @@ class LevelsController extends Controller
 
         $data->name = $request->name;
         $data->description = $request->description;
+        $data->prerequisite_id = $request->prerequisite_id;
 
         return $data->save();
     }

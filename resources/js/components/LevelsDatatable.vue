@@ -46,6 +46,7 @@
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.name}}</td>
                                         <td>{{project.description}}</td>
+                                        <td>{{(project.prerequisite ? project.prerequisite.name : 'N/A')}}</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
@@ -98,6 +99,17 @@
 											<label class="control-label col-md-3 col-sm-3 ">Description</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" placeholder="Description" v-model="datas.description">
+											</div>
+										</div>
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Pre-requisite</label>
+											<div class="col-md-9 col-sm-9 ">
+                                                <select  class="form-control" v-model="datas.prerequisite_id">
+                                                    <option value="" disabled>Select Pre-requisite</option>
+                                                    <option v-for="level in levels" :value="level.id" :key="level.id">
+                                                        {{ level.name }}
+                                                    </option>
+                                                </select>
 											</div>
 										</div>
 										
@@ -161,6 +173,7 @@ export default {
         let columns = [
             { label: 'Name', name: 'name' },
             { label: 'Description', name: 'description'},
+            { label: 'Pre-requisite', name: 'prerequisite_id'},
         ];
 
         columns.forEach((column) => {
@@ -193,11 +206,13 @@ export default {
             datas: {
                 name: '',
                 description: '',
+                prerequisite_id: '',
 
             },
             todo: 'Add',
             editableId: '',
             errors: new Errors(),
+            levels: this.levelsFetch(),
         }
     },
     methods: {
@@ -209,6 +224,16 @@ export default {
             }
             this.todo = 'Add';
         },
+        
+        levelsFetch(){
+            axios.post('/api/levels/fetch')
+            .then((res) => {
+                this.levels = res.data
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        },
 
         saveData(){
             if(this.todo == 'Add'){
@@ -217,6 +242,7 @@ export default {
                     new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
                     this.getProjects();
                     this.clearFields();
+                    this.levelsFetch();
                 })
                 .catch((err) => {
                     this.errors.record(err.response.data);
