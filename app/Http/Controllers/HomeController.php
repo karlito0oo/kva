@@ -49,6 +49,19 @@ class HomeController extends Controller
                 'data' => $data,
             ]);
         }
+        elseif($user->roles->name == 'Instructor'){
+            $data['schoolyear'] = Setting::first()->schoolYear->name;
+            $data['students'] = User::where('role_id', '1')->get();
+            $data['enrolledStudents'] = User::enrolledStudents();
+            $data['instructors'] = User::where('role_id', '4')->get();
+            $data['preEnrolledStudents'] = User::preEnrolledStudents();
+            $data['enrollmentDate'] = Setting::first();
+            $data['enrollmentDate'] = ($data['enrollmentDate']->enrollmentStart ? date('M d', strtotime($data['enrollmentDate']->enrollmentStart)) . ' - ' . date('M d, Y', strtotime($data['enrollmentDate']->enrollmentEnd)) : 'N/A');
+            return view('instructor/home', [
+                'user' => $user,
+                'data' => $data,
+            ]);
+        }
     }
     
     public function loggedinUser()

@@ -79,7 +79,7 @@ class EnrollmentsController extends Controller
                     ->where('grade', 'Failed')
                     ->get();
 
-                if(count($prevEnrolledSubj) >= 2){
+                if(count($prevEnrolledSubj) > 2){
                     return [
                         'result' => false,
                         'message' => 'Student did not pass the pre-requisite level.',

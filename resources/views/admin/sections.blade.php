@@ -2,5 +2,5 @@
 
 @section('content')
 
-    <sections-datatable></sections-datatable>
+    <sections-datatable user="{{ Auth::user() }}"></sections-datatable>
 @endsection

@@ -65,6 +65,8 @@ Route::resource('/api/sections', 'SectionsController');
 Route::get('/home/sections', 'SectionsController@pageHome');
 Route::post('/api/sections/fetch', 'SectionsController@fetch');
 Route::post('/api/sections/updateAdvisers', 'SectionsController@updateAdvisers');
+Route::post('/api/sections/studentSubjects', 'SectionsController@studentSubjects');
+Route::post('/api/sections/updateStudentGrade', 'SectionsController@updateStudentGrade');
 
 
 //--------------------Students

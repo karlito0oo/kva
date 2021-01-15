@@ -54,21 +54,28 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
-                  
-                  <li><a href="{{ url('/home/admin/enrollment') }}"><i class="fa fa-user-plus"></i> Enrollment</a></li>
 
-                  <li><a><i class="fa fa-edit"></i> Data <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{ url('home/students') }}">Students</a></li>
-                      <li><a href="{{ url('home/advisers') }}">Advisers</a></li>
-                      <li><a href="{{ url('home/sections') }}">Section</a></li>
-                      <li><a href="{{ url('home/school-years') }}">School Years</a></li>
-                      <li><a href="{{ url('home/levels') }}">Levels</a></li>
-                      <li><a href="{{ url('home/subjects') }}">Subjects</a></li>
-                    </ul>
-                  </li>
-                  
+                    <li><a href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a></li>
+
+                  @if(Auth::user()->role_id == 3)
+
+                    <li><a href="{{ url('/home/advisers') }}"><i class="fa fa-user-md"></i> Advisers</a></li>
+
+                    <li><a href="{{ url('/home/levels') }}"><i class="fa fa-level-up"></i> Levels</a></li>
+
+                    <li><a href="{{ url('/home/school-years') }}"><i class="fa fa-book"></i> School Years</a></li>
+
+                    <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Section</a></li>
+                    
+                    <li><a href="{{ url('/home/students') }}"><i class="fa fa-group"></i> Students</a></li>
+
+                    <li><a href="{{ url('/home/subjects') }}"><i class="fa fa-file"></i> Subjects</a></li>
+
+                  @elseif(Auth::user()->role_id == 4)
+
+                    <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Section</a></li>
+                    
+                  @endif
                 </ul>
               </div>
 

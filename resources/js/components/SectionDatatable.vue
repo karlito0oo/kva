@@ -47,10 +47,15 @@
                                         <td>{{project.levels.name}}</td>
                                         <td>{{project.code}}</td>
                                         <td>{{project.description}}</td>
-                                        <td>
+                                        <!-- Admin -->
+                                        <td v-show="accessing.role_id == 3">
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
                                             <button class="btn btn-info btn-sm" @click="showSubjects(project)">Subjects</button>
+                                        </td>
+                                        <!-- Instructor -->
+                                        <td v-show="accessing.role_id == 4">
+                                            <button class="btn btn-info btn-sm" @click="showStudents(project)">Students</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -65,8 +70,8 @@
                 </div>
 
 
-                
-                <div class="col-md-4">
+                <!-- For admin -->
+                <div class="col-md-4" v-show="accessing.role_id == 3">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="todo"></span> Section</h2>
@@ -129,13 +134,66 @@
                     </div>
 
                 </div>
+
+
+                <!-- For adviser -->
+                <div class="col-md-4" v-show="accessing.role_id == 4">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2><span style="color:black;"></span> Students <small>{{(this.section.selectedSection ? '(' + this.section.selectedSection.levels.name + ' ' + this.section.selectedSection.code + ')' : '')}}</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                    </div>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            
+							<table class="table is-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="!section.students || section.students.length == 0">
+                                        <td style="text-align: center;" colspan="2">No Data found</td>
+                                    </tr>
+                                    <tr v-for="student in section.students" :key="student.id">
+                                        <td>{{student.lname + ', ' + student.name + ' ' + (student.middlename ? student.middlename : '')}}</td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" @click="showStudentSubjects(student)">Subjects</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
         </div>
     </div>
 
         
-<!-- Subjects modal -->
+    <!-- Subjects modal -->
      <div class="modal fade bs-example-modal-md" id="subjectsModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -163,6 +221,41 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @click="updateAdvisers">Save</button>
+            </div>
+
+            </div>
+        </div>
+      </div>
+
+     </div>
+
+     <!-- Students Subjects modal -->
+     <div class="modal fade bs-example-modal-md" id="studentSubjectsModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel2">SUBJECTS</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                
+										<div class="form-group row" v-for="subject in section.selectedStudentSubject" :key="subject.id">
+											<label class="control-label col-md-3 col-sm-3 ">[{{subject.code}}] {{subject.name}}</label>
+											<div class="col-md-9 col-sm-9 ">
+												 <select  class="form-control" v-model="subject.grade">
+                                                    <option :value=null disabled>Select Grade</option>
+                                                    <option>Passed</option>
+                                                    <option>Failed</option>
+                                                </select>
+										</div>
+            </div>
+
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="updateStudentGrade">Save</button>
             </div>
 
             </div>
@@ -199,6 +292,8 @@ import Pagination from './DatatablePagination.vue';
 import Noty from 'noty';
 export default {
     components: { datatable: Datatable, pagination: Pagination },
+
+    props: ['user'],
     created() {
         this.getProjects();
 
@@ -253,10 +348,43 @@ export default {
             advisers: this.fetchAdvisers(),
             section: {
                 subjects: '',
+                students: '',
+                selectedStudent: '',
+                selectedSection: '',
+                selectedStudentSubject: '',
             },
+            accessing: JSON.parse(this.user),
         }
     },
     methods: {
+        updateStudentGrade(){
+            axios.post(this.endPoint+'updateStudentGrade', this.section)
+            .then((res) => {
+                new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
+                $('#studentSubjectsModal').modal('hide');
+            })
+            .catch((err) => {
+                this.errors.record(err.response.data);
+                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+            });
+        },
+        showStudentSubjects(student){
+            this.section.selectedStudent = student;
+
+            axios.post('/api/sections/studentSubjects', this.section)
+            .then((res) => {
+                this.section.selectedStudentSubject = res.data;
+                $('#studentSubjectsModal').modal('show');
+            })
+            .catch((err) => {
+                this.errors.record(err.response.data);
+                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+            });
+        },
+        showStudents(section){
+            this.section.students = section.adviserStudents;
+            this.section.selectedSection = section;
+        },
         updateAdvisers(){
             axios.post(this.endPoint+'updateAdvisers', this.section)
             .then((res) => {
@@ -374,6 +502,11 @@ export default {
                     if (this.tableData.draw == data.draw) {
                         this.projects = data.data.data;
                         this.configPagination(data.data);
+                    }
+
+                    
+                    if(this.pagination.total == 0){
+                        new Noty({killer: true, type: 'warning', text: 'No data found.', layout: 'topRight'}).show();
                     }
                 })
                 .catch(errors => {
