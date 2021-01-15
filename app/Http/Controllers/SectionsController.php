@@ -54,6 +54,15 @@ class SectionsController extends Controller
 
             return $query;
         })
+        //student
+        ->when($user->role_id == '1', function ($query) use ($user) {
+            $query->join('enrollments', 'enrollments.section_id', 'sections.id');
+            $query->where('enrollments.student_id', $user->id);
+            $query->where('enrollments.status', 'Enrolled');
+            $query->distinct();
+
+            return $query;
+        })
         ->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
@@ -179,16 +188,26 @@ class SectionsController extends Controller
 
     public function studentSubjects(Request $request){
 
-        $adviser = Auth::user();
+        $user = Auth::user();
         
         return User::select('subjects.*', 'enrolled_subjects.grade', 'enrolled_subjects.id as es_id')
             ->distinct()
             ->join('enrollments', 'enrollments.student_id', 'users.id')
             ->join('enrolled_subjects', 'enrolled_subjects.enrollment_id', 'enrollments.id')
             ->join('subjects', 'subjects.id', 'enrolled_subjects.subject_id')
-            ->where('subjects.adviser_id', $adviser->id)
+            
+            ->when($user->role_id == '4', function ($query) use ($user, $request) {
+                $query->where('subjects.adviser_id', $user->id);
+                $query ->where('enrollments.student_id', $request->selectedStudent['id']);
+                return $query;
+            })
+            
+            ->when($user->role_id == '1', function ($query) use ($user) {
+                return $query->where('enrollments.student_id', $user->id);
+            })
+            
             ->where('enrollments.section_id', $request->selectedSection['id'])
-            ->where('enrollments.student_id', $request->selectedStudent['id'])
+           
             ->get();
     }
 

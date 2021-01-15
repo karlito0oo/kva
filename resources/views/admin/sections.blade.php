@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends((Auth::user()->role_id == 1 ? 'layouts.student' : 'layouts.admin'))
 
 @section('content')
 

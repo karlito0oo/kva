@@ -5,7 +5,7 @@
         <div class="right_col" role="main">
         <div class="">
             <div class="row">
-                <div class="col-md-8">
+                <div :class="'col-md-'+(accessing.role_id == 1 ? '12' : '8')">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Section Table</h2>
@@ -56,6 +56,10 @@
                                         <!-- Instructor -->
                                         <td v-show="accessing.role_id == 4">
                                             <button class="btn btn-info btn-sm" @click="showStudents(project)">Students</button>
+                                        </td>
+                                        <!-- Student -->
+                                        <td v-show="accessing.role_id == 1">
+                                            <button class="btn btn-info btn-sm" @click="showStudentSubjects(project, 'student')">Subjects</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -245,7 +249,7 @@
 										<div class="form-group row" v-for="subject in section.selectedStudentSubject" :key="subject.id">
 											<label class="control-label col-md-3 col-sm-3 ">[{{subject.code}}] {{subject.name}}</label>
 											<div class="col-md-9 col-sm-9 ">
-												 <select  class="form-control" v-model="subject.grade">
+												 <select  class="form-control" v-model="subject.grade" :disabled="accessing.role_id == 1">
                                                     <option :value=null disabled>Select Grade</option>
                                                     <option>Passed</option>
                                                     <option>Failed</option>
@@ -255,7 +259,7 @@
 
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="updateStudentGrade">Save</button>
+                <button type="button" class="btn btn-primary" @click="updateStudentGrade" v-show="accessing.role_id != 1">Save</button>
             </div>
 
             </div>
@@ -368,8 +372,15 @@ export default {
                 new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
             });
         },
-        showStudentSubjects(student){
-            this.section.selectedStudent = student;
+        showStudentSubjects(student, accessing = ''){
+
+            //for students
+            if(accessing == 'student'){
+                this.section.selectedSection = student;
+            }
+            else{
+                this.section.selectedStudent = student;
+            }
 
             axios.post('/api/sections/studentSubjects', this.section)
             .then((res) => {
