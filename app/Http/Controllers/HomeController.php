@@ -37,7 +37,7 @@ class HomeController extends Controller
             ]);
         }
         elseif($user->roles->name == 'Super Admin'){
-            $data['schoolyear'] = Setting::first()->schoolYear->name;
+            $data['schoolyear'] = (Setting::first()->schoolYear ? Setting::first()->schoolYear->name : 0);
             $data['students'] = User::where('role_id', '1')->get();
             $data['enrolledStudents'] = User::enrolledStudents();
             $data['instructors'] = User::where('role_id', '4')->get();
@@ -50,7 +50,7 @@ class HomeController extends Controller
             ]);
         }
         elseif($user->roles->name == 'Instructor'){
-            $data['schoolyear'] = Setting::first()->schoolYear->name;
+            $data['schoolyear'] = (Setting::first()->schoolYear ? Setting::first()->schoolYear->name : 0);
             $data['students'] = User::where('role_id', '1')->get();
             $data['enrolledStudents'] = User::enrolledStudents();
             $data['instructors'] = User::where('role_id', '4')->get();
