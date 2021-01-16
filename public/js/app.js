@@ -50019,7 +50019,7 @@ var render = function() {
             _c("span", [
               _vm._v(
                 _vm._s(
-                  _vm.user.currentEnrollment[0]
+                  _vm.user.currentEnrollment
                     ? _vm.user.currentEnrollment[0].levelName
                     : "N/a"
                 )
@@ -50037,7 +50037,7 @@ var render = function() {
             _c("span", [
               _vm._v(
                 _vm._s(
-                  _vm.user.currentEnrollment[0]
+                  _vm.user.currentEnrollment
                     ? _vm.user.currentEnrollment[0].sectionName
                     : "N/a"
                 )
@@ -50321,7 +50321,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(project.email))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.mobileNumber))]),
+                              _c("td", [_vm._v(_vm._s(project.contactno))]),
                               _vm._v(" "),
                               _c("td", [
                                 _c(

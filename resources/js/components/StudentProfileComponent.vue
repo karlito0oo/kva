@@ -40,14 +40,14 @@
 
 
                             <h2 style="color:black;">Current Level</h2>
-                            <span>{{ (user.currentEnrollment[0] ? user.currentEnrollment[0].levelName : 'N/a') }}</span>
+                            <span>{{ (user.currentEnrollment ? user.currentEnrollment[0].levelName : 'N/a') }}</span>
 
                             <br>
                             <br>
 
 
                             <h2 style="color:black;">Current Section</h2>
-                            <span>{{ (user.currentEnrollment[0] ? user.currentEnrollment[0].sectionName : 'N/a') }}</span>
+                            <span>{{ (user.currentEnrollment ? user.currentEnrollment[0].sectionName : 'N/a') }}</span>
 
                             <br>
                             <br>

@@ -49,7 +49,7 @@
                                         <td>{{project.gender}}</td>
                                         <td>{{project.birthday}}</td>
                                         <td>{{project.email}}</td>
-                                        <td>{{project.mobileNumber}}</td>
+                                        <td>{{project.contactno}}</td>
                                         <td>
                                             <a :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> {{(!project.currentEnrollment ? 'Enroll' : 'Edit Enrollment')}}</span></a>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
