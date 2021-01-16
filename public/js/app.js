@@ -3805,7 +3805,7 @@ var Errors = /*#__PURE__*/function () {
       label: 'Level',
       name: 'level'
     }, {
-      label: 'Code',
+      label: 'Section',
       name: 'code'
     }, {
       label: 'Description',
@@ -47358,7 +47358,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("Section Table")]),
+      _c("h2", [_vm._v("Sections")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
