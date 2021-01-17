@@ -27,14 +27,14 @@ class AdvisersController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'lname', 'gender', 'birthday', 'email', 'contactno'];
+        $columns = ['name', 'middlename', 'lname', 'gender', 'birthday', 'email', 'contactno'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
-
-        $query = User::select('*')->orderBy($columns[$column], $dir)->where('role_id', '4');
+        
+        $query = User::select('*')->orderBy(($column ? $columns[$column] : 'lname'), $dir)->where('role_id', '4');
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {
@@ -70,6 +70,7 @@ class AdvisersController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->middlename = $request->middlename;
         $user->lname = $request->lname;
         $user->birthday = $request->birthday;
         $user->gender = $request->gender;
@@ -116,6 +117,7 @@ class AdvisersController extends Controller
         $user = User::find($id);
 
         $user->name = $request->name;
+        $user->middlename = $request->middlename;
         $user->lname = $request->lname;
         $user->birthday = $request->birthday;
         $user->gender = $request->gender;

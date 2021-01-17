@@ -128,7 +128,7 @@
                   <div class="dashboard-widget-content">
 
                     <ul class="list-unstyled timeline widget">
-                      <li>
+                      <!-- <li>
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
@@ -141,7 +141,7 @@
                             </p>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                       <li>
                         <div class="block">
                           <div class="block_content">
@@ -159,7 +159,7 @@
                           </div>
                         </div>
                       </li>
-                      <li>
+                      <!-- <li>
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
@@ -172,7 +172,7 @@
                             </p>
                           </div>
                         </div>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>

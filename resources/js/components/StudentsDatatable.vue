@@ -44,8 +44,9 @@
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment ? project.currentEnrollment.status == 'Enrolled' ? 'alert-success' : project.currentEnrollment.status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning' : 'alert-warning')">
-                                        <td>{{project.name}}</td>
                                         <td>{{project.lname}}</td>
+                                        <td>{{project.name}}</td>
+                                        <td>{{project.middlename}}</td>
                                         <td>{{project.gender}}</td>
                                         <td>{{project.birthday}}</td>
                                         <td>{{project.email}}</td>
@@ -152,8 +153,9 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { name: 'firstName', label: 'First Name' },
-            { name: 'lastName', label: 'Last Name'},
+            { name: 'lname', label: 'Last Name'},
+            { name: 'name', label: 'First Name' },
+            { name: 'middlename', label: 'Middle Name'},
             { name: 'gender', label: 'Gender'},
             { name: 'birthday', label: 'Birthday'},
             { name: 'email', label: 'Email'},
@@ -175,7 +177,7 @@ export default {
                 length: 10,
                 search: '',
                 column: 0,
-                dir: 'desc',
+                dir: 'asc',
             },
             pagination: {
                 lastPage: '',

@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="pageName"></span> Table</h2>
+                            <h2><span style="color:black;" v-html="pageName"></span>s</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -44,8 +44,9 @@
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
-                                        <td>{{project.name}}</td>
                                         <td>{{project.lname}}</td>
+                                        <td>{{project.name}}</td>
+                                        <td>{{project.middlename}}</td>
                                         <td>{{project.gender}}</td>
                                         <td>{{project.birthday}}</td>
                                         <td>{{project.email}}</td>
@@ -99,6 +100,12 @@
 											</div>
 										</div>
 										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Middle Name</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" v-model="datas.middlename">
+											</div>
+										</div>
+										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Last Name</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.lname">
@@ -123,7 +130,7 @@
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Contact Number</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.contactno">
+												<input type="number" class="form-control" v-model="datas.contactno">
 											</div>
 										</div>
 										<div class="form-group row ">
@@ -196,8 +203,9 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { name: 'firstName', label: 'First Name' },
-            { name: 'lastName', label: 'Last Name'},
+            { name: 'lname', label: 'Last Name'},
+            { name: 'name', label: 'First Name' },
+            { name: 'middlename', label: 'Middle Name'},
             { name: 'gender', label: 'Gender'},
             { name: 'birthday', label: 'Birthday'},
             { name: 'email', label: 'Email'},
@@ -210,7 +218,7 @@ export default {
         return {
             projects: [],
             columns: columns,
-            sortKey: 'name',
+            sortKey: 'lname',
             sortOrders: sortOrders,
             showActionTable: true,
             perPage: ['10', '20', '30'],
@@ -219,7 +227,7 @@ export default {
                 length: 10,
                 search: '',
                 column: 0,
-                dir: 'desc',
+                dir: 'asc',
             },
             pagination: {
                 lastPage: '',
@@ -234,6 +242,7 @@ export default {
             datas: {
                 name: '',
                 lname: '',
+                middlename: '',
                 gender: '',
                 email: '',
                 contactno: '',
@@ -244,7 +253,7 @@ export default {
             todo: 'Add',
             editableId: '',
             endPoint: '/api/advisers/',
-            pageName: 'Adviser',
+            pageName: 'Teacher',
             errors: new Errors(),
         }
     },
@@ -359,7 +368,7 @@ export default {
         sortBy(key) {
             this.sortKey = key;
             this.sortOrders[key] = this.sortOrders[key] * -1;
-            this.tableData.column = this.getIndex(this.columns, 'name', key);
+            this.tableData.column = this.getIndex(this.columns, 'lname', key);
             this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
             this.getProjects();
         },

@@ -142,7 +142,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">Guardian Contact No. * </label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input type="integer" class="form-control" placeholder="Guardian Contact No." v-model="student.guardianContactNo">
+                                    <input type="number" class="form-control" placeholder="Guardian Contact No." v-model="student.guardianContactNo">
                                 </div>
                             </div>
                             <div class="form-group row">

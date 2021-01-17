@@ -12,7 +12,7 @@ class UsersController extends Controller
             'name' => 'required',
             'lname' => 'required',
             'address' => 'required',
-            'contactno' => 'required|integer',
+            'contactno' => 'required|numeric|min:0',
             'email' => 'required|email|unique:users,email,'.$id,
             'birthday' => 'required|date',
             'birthplace' => 'required',
@@ -20,7 +20,7 @@ class UsersController extends Controller
             'civilStatus' => 'required',
             'nationality' => 'required',
             'guardianName' => 'required',
-            'guardianContactNo' => 'required|integer',
+            'guardianContactNo' => 'required|numeric|min:0',
             'guardianAddress' => 'required',
         ];
     }

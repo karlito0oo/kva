@@ -31,7 +31,7 @@ class StudentsController extends Controller
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Student::select('*')->orderBy($columns[$column], $dir);
+        $query = Student::select('*')->orderBy(($column ? $columns[$column] : 'lname'), $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {

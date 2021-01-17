@@ -31,10 +31,10 @@
                       <span class="count_top"><i class="fa fa-user"></i> Pre-enrolled</span>
                       <div class="count green">{{count($data['preEnrolledStudents'])}}</div>
                     </div>
-                    <div class="col-md-2 col-sm-4  tile_stats_count">
+                    <!-- <div class="col-md-2 col-sm-4  tile_stats_count">
                       <span class="count_top"><i class="fa fa-user"></i> Enrollment Date</span>
                       <div class="count green" style="font-size:24px;">{{$data['enrollmentDate']}}</div>
-                    </div>
+                    </div> -->
                   </div>
                   <!-- /top tiles -->
                 </div>
