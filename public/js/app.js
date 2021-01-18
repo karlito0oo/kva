@@ -45932,7 +45932,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("Levels Table")]),
+      _c("h2", [_vm._v("Grade Levels")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
@@ -46405,7 +46405,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("School Year Table")]),
+      _c("h2", [_vm._v("School Year")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
@@ -47411,7 +47411,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("Sections")]),
+      _c("h2", [_vm._v(" Sections")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
@@ -50027,7 +50027,7 @@ var render = function() {
                     staticStyle: { color: "black" },
                     domProps: { innerHTML: _vm._s(_vm.pageName) }
                   }),
-                  _vm._v(" List")
+                  _vm._v("s")
                 ]),
                 _vm._v(" "),
                 _vm._m(0),
@@ -50910,7 +50910,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
-      _c("h2", [_vm._v("Subject Table")]),
+      _c("h2", [_vm._v("Subjects")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [

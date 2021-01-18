@@ -6,22 +6,24 @@ use Auth;
 use App\Subject;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Section extends Model
 {
+    use SoftDeletes;
 
     
     protected $appends = ['subjects', 'adviserStudents'];
     
     public function levels()
     {
-        return $this->hasOne('App\Level', 'id', 'level_id');
+        return $this->hasOne('App\Level', 'id', 'level_id')->withTrashed();
     }
 
     
     public function enrolledStudents()
     {
-        return $this->hasMany('App\Enrollment', 'section_id', 'id');
+        return $this->hasMany('App\Enrollment', 'section_id', 'id')->withTrashed();
     }
 
     public function getSubjectsAttribute(){

@@ -90,11 +90,11 @@
 
                   <li><a href="{{ url('/home/advisers') }}"><i class="fa fa-user-md"></i> Teachers</a></li>
 
-                  <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Sections</a></li>
+                  <li><a href="{{ url('/home/levels') }}"><i class="fa fa-level-up"></i> Grade Levels</a></li>
 
                   <li><a href="{{ url('/home/subjects') }}"><i class="fa fa-file"></i> Subjects</a></li>
 
-                  <li><a href="{{ url('/home/levels') }}"><i class="fa fa-level-up"></i> Grade Levels</a></li>
+                  <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Sections</a></li>
 
                   <li><a href="{{ url('/home/school-years') }}"><i class="fa fa-book"></i> School Years</a></li>
 
