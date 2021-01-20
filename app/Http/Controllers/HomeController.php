@@ -34,6 +34,7 @@ class HomeController extends Controller
         if($user->roles->name == 'Student'){
             return view('student/home', [
                 'user' => $user,
+                'settings' => Setting::first(),
             ]);
         }
         elseif($user->roles->name == 'Super Admin'){
@@ -47,6 +48,7 @@ class HomeController extends Controller
             return view('admin/home', [
                 'user' => $user,
                 'data' => $data,
+                'settings' => Setting::first(),
             ]);
         }
         elseif($user->roles->name == 'Instructor'){
@@ -60,6 +62,7 @@ class HomeController extends Controller
             return view('instructor/home', [
                 'user' => $user,
                 'data' => $data,
+                'settings' => Setting::first(),
             ]);
         }
     }

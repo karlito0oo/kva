@@ -82,6 +82,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <br>
+                            <!-- <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">ID No. Prefix </label>
+                                <div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" v-model="datas.id_no_prefix">
+                                </div>
+                            </div> -->
 
                             
                         </div>

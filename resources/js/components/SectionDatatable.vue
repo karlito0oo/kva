@@ -44,8 +44,8 @@
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
-                                        <td>{{project.levels.name}}</td>
                                         <td>{{project.code}}</td>
+                                        <td>{{project.levels.name}}</td>
                                         <td>{{project.description}}</td>
                                         <!-- Admin -->
                                         <td v-show="accessing.role_id == 3">
@@ -199,7 +199,7 @@
         
     <!-- Subjects modal -->
      <div class="modal fade bs-example-modal-md" id="subjectsModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
             <div class="modal-header">
@@ -211,8 +211,8 @@
                 
                 
 										<div class="form-group row" v-for="subject in section.subjects" :key="subject.id">
-											<label class="control-label col-md-3 col-sm-3 ">[{{subject.code}}] {{subject.name}}</label>
-											<div class="col-md-9 col-sm-9 ">
+											<label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
+											<div class="col-md-6 col-sm-6 ">
 												 <select  class="form-control" v-model="subject.adviser_id">
                                                     <option :value=null disabled>Select Adviser</option>
                                                     <option v-for="adviser in advisers" :value="adviser.id" :key="adviser.id">
@@ -235,7 +235,7 @@
 
      <!-- Students Subjects modal -->
      <div class="modal fade bs-example-modal-md" id="studentSubjectsModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
             <div class="modal-header">
@@ -247,10 +247,10 @@
                 
                 
 										<div class="form-group row" v-for="subject in section.selectedStudentSubject" :key="subject.id">
-											<label class="control-label col-md-3 col-sm-3 ">[{{subject.code}}] {{subject.name}}</label>
-											<div class="col-md-9 col-sm-9 ">
+											<label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
+											<div class="col-md-6 col-sm-6 ">
 												 <select  class="form-control" v-model="subject.grade" :disabled="accessing.role_id == 1">
-                                                    <option :value=null disabled>Select Grade</option>
+                                                    <option :value=null disabled>{{ (accessing.role_id != 1 ? 'Select Grade' : 'No Grade') }}</option>
                                                     <option>Passed</option>
                                                     <option>Failed</option>
                                                 </select>
@@ -306,8 +306,8 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { label: 'Level', name: 'level' },
             { label: 'Section', name: 'code' },
+            { label: 'Level', name: 'level' },
             { label: 'Description', name: 'description'},
         ];
 
@@ -326,7 +326,7 @@ export default {
                 length: 10,
                 search: '',
                 column: 0,
-                dir: 'desc',
+                dir: 'asc',
             },
             pagination: {
                 lastPage: '',

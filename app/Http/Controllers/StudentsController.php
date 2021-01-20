@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use App\User;
+use App\Setting;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -77,8 +78,11 @@ class StudentsController extends Controller
     {
         $user = User::find($id);
 
+        $setting = Setting::first();
+
         return view('admin/student-edit', [
             'user' => $user,
+            'settings' => $setting,
         ]);
     }
 

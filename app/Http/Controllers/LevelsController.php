@@ -27,8 +27,10 @@ class LevelsController extends Controller
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
-
-        $query = Level::select('*')->orderBy($columns[$column], $dir)->with('prerequisite');
+        
+        $query = Level::select('*')
+        ->orderByRaw('LENGTH('.($column ? $columns[$column] : 'name').') ' . $dir)
+        ->orderBy(($column ? $columns[$column] : 'name'), $dir)->with('prerequisite');
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue) {

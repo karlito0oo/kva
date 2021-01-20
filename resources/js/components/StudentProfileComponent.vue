@@ -53,7 +53,7 @@
                             <br>
 
                             <h2 style="color:black;">Student No.</h2>
-                            <span>{{ (user.id ? 'KVA-21-' + user.id : 'N/a') }}</span>
+                            <span>{{ (currentSettings.id_no_prefix + user.id ) }}</span>
 						</div>
 					</div>
                 </div>
@@ -66,12 +66,13 @@
 import Noty from 'noty';
     export default {
 
-        props: ['baseurl', 'student'],
+        props: ['baseurl', 'student', 'settings'],
         
         data() {
             return {
                 defaultImage: 'default.png',
                 user: JSON.parse(this.student),
+                currentSettings: JSON.parse(this.settings),
             }
         },
         

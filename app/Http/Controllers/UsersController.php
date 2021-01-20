@@ -31,14 +31,14 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'lname', 'gender', 'birthday', 'email', 'mobileNumber'];
+        $columns = ['lname', 'name', 'middlename', 'gender', 'birthday', 'email', 'contactno'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
-
-        $query = User::select('*')->where('role_id', '1')->orderBy($columns[$column], $dir);
+        
+        $query = User::select('*')->where('role_id', '1')->orderBy(($column ? $columns[$column] : 'lname'), $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {

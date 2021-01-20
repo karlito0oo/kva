@@ -5,8 +5,8 @@
         <div class="right_col" role="main">
 
           <div class="row">
-
-          <student-profile baseurl="{{ asset('images/StudentImage') }}" student="{{ $user }}"></student-profile>
+          
+          <student-profile baseurl="{{ asset('images/StudentImage') }}" student="{{ $user }}" settings="{{$settings}}"></student-profile>
 
 
           <student-basic user="{{ $user }}"></student-basic>

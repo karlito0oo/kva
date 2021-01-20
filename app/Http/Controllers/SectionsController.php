@@ -34,7 +34,7 @@ class SectionsController extends Controller
         $user = Auth::user();
         $settings = Setting::find(1);
 
-        $columns = ['level_id', 'code', 'description'];
+        $columns = ['code', 'level_id', 'description'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
@@ -63,7 +63,7 @@ class SectionsController extends Controller
 
             return $query;
         })
-        ->orderBy($columns[$column], $dir);
+        ->orderBy(($column ? $columns[$column] : 'code'), $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {
@@ -189,7 +189,7 @@ class SectionsController extends Controller
     public function studentSubjects(Request $request){
 
         $user = Auth::user();
-        
+        $setting = Setting::find(1);
         return User::select('subjects.*', 'enrolled_subjects.grade', 'enrolled_subjects.id as es_id')
             ->distinct()
             ->join('enrollments', 'enrollments.student_id', 'users.id')

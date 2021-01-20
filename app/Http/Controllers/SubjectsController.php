@@ -33,7 +33,7 @@ class SubjectsController extends Controller
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Subject::select('*')->with('levels')->orderBy($columns[$column], $dir);
+        $query = Subject::select('*')->with('levels')->orderBy(($column ? $columns[$column] : 'code'), $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {

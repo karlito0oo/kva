@@ -159,7 +159,7 @@ export default {
             { name: 'gender', label: 'Gender'},
             { name: 'birthday', label: 'Birthday'},
             { name: 'email', label: 'Email'},
-            { name: 'mobileNumber', label: 'Mobile Number'},
+            { name: 'contactno', label: 'Mobile Number'},
         ];
 
         columns.forEach((column) => {
@@ -168,7 +168,7 @@ export default {
         return {
             projects: [],
             columns: columns,
-            sortKey: 'name',
+            sortKey: 'lname',
             sortOrders: sortOrders,
             showActionTable: true,
             perPage: ['10', '20', '30'],

@@ -2921,7 +2921,7 @@ var Errors = /*#__PURE__*/function () {
         length: 10,
         search: '',
         column: 0,
-        dir: 'desc'
+        dir: 'asc'
       },
       pagination: {
         lastPage: '',
@@ -3813,11 +3813,11 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     var sortOrders = {};
     var columns = [{
-      label: 'Level',
-      name: 'level'
-    }, {
       label: 'Section',
       name: 'code'
+    }, {
+      label: 'Level',
+      name: 'level'
     }, {
       label: 'Description',
       name: 'description'
@@ -3837,7 +3837,7 @@ var Errors = /*#__PURE__*/function () {
         length: 10,
         search: '',
         column: 0,
-        dir: 'desc'
+        dir: 'asc'
       },
       pagination: {
         lastPage: '',
@@ -4127,6 +4127,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5243,11 +5250,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['baseurl', 'student'],
+  props: ['baseurl', 'student', 'settings'],
   data: function data() {
     return {
       defaultImage: 'default.png',
-      user: JSON.parse(this.student)
+      user: JSON.parse(this.student),
+      currentSettings: JSON.parse(this.settings)
     };
   },
   methods: {
@@ -5480,7 +5488,7 @@ var Errors = /*#__PURE__*/function () {
       name: 'email',
       label: 'Email'
     }, {
-      name: 'mobileNumber',
+      name: 'contactno',
       label: 'Mobile Number'
     }];
     columns.forEach(function (column) {
@@ -5489,7 +5497,7 @@ var Errors = /*#__PURE__*/function () {
     return {
       projects: [],
       columns: columns,
-      sortKey: 'name',
+      sortKey: 'lname',
       sortOrders: sortOrders,
       showActionTable: true,
       perPage: ['10', '20', '30'],
@@ -5918,7 +5926,7 @@ var Errors = /*#__PURE__*/function () {
         length: 10,
         search: '',
         column: 0,
-        dir: 'desc'
+        dir: 'asc'
       },
       pagination: {
         lastPage: '',
@@ -46682,9 +46690,9 @@ var render = function() {
                           "tbody",
                           _vm._l(_vm.projects, function(project) {
                             return _c("tr", { key: project.id }, [
-                              _c("td", [_vm._v(_vm._s(project.levels.name))]),
-                              _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(project.code))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(project.levels.name))]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(project.description))]),
                               _vm._v(" "),
@@ -47171,7 +47179,7 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "modal-dialog modal-md" }, [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(4),
             _vm._v(" "),
@@ -47186,7 +47194,7 @@ var render = function() {
                     [
                       _c(
                         "label",
-                        { staticClass: "control-label col-md-3 col-sm-3 " },
+                        { staticClass: "control-label col-md-6 col-sm-6 " },
                         [
                           _vm._v(
                             "[" +
@@ -47197,7 +47205,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                      _c("div", { staticClass: "col-md-6 col-sm-6 " }, [
                         _c(
                           "select",
                           {
@@ -47297,7 +47305,7 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "modal-dialog modal-md" }, [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(5),
             _vm._v(" "),
@@ -47312,7 +47320,7 @@ var render = function() {
                     [
                       _c(
                         "label",
-                        { staticClass: "control-label col-md-3 col-sm-3 " },
+                        { staticClass: "control-label col-md-6 col-sm-6 " },
                         [
                           _vm._v(
                             "[" +
@@ -47323,7 +47331,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                      _c("div", { staticClass: "col-md-6 col-sm-6 " }, [
                         _c(
                           "select",
                           {
@@ -47364,7 +47372,15 @@ var render = function() {
                                 attrs: { disabled: "" },
                                 domProps: { value: null }
                               },
-                              [_vm._v("Select Grade")]
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.accessing.role_id != 1
+                                      ? "Select Grade"
+                                      : "No Grade"
+                                  )
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("option", [_vm._v("Passed")]),
@@ -47717,9 +47733,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                        " +
+                              "\n                                            " +
                                 _vm._s(schoolyear.name) +
-                                "\n                                    "
+                                "\n                                        "
                             )
                           ]
                         )
@@ -47728,7 +47744,9 @@ var render = function() {
                     2
                   )
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _c("br")
             ])
           ])
         ])
@@ -49927,7 +49945,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", [
-              _vm._v(_vm._s(_vm.user.id ? "KVA-21-" + _vm.user.id : "N/a"))
+              _vm._v(_vm._s(_vm.currentSettings.id_no_prefix + _vm.user.id))
             ])
           ])
         ])
