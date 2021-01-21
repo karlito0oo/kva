@@ -5387,46 +5387,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -5464,8 +5424,12 @@ var Errors = /*#__PURE__*/function () {
     datatable: _Datatables_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     pagination: _DatatablePagination_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  props: ['level'],
   created: function created() {
     this.getProjects();
+  },
+  mounted: function mounted() {
+    this.tableData.level_id = this.currentLevel ? this.currentLevel.id : null;
   },
   data: function data() {
     var sortOrders = {};
@@ -5478,6 +5442,9 @@ var Errors = /*#__PURE__*/function () {
     }, {
       name: 'middlename',
       label: 'Middle Name'
+    }, {
+      name: 'name',
+      label: 'Grade'
     }, {
       name: 'gender',
       label: 'Gender'
@@ -5506,7 +5473,8 @@ var Errors = /*#__PURE__*/function () {
         length: 10,
         search: '',
         column: 0,
-        dir: 'asc'
+        dir: 'asc',
+        level_id: ''
       },
       pagination: {
         lastPage: '',
@@ -5530,7 +5498,8 @@ var Errors = /*#__PURE__*/function () {
       editableId: '',
       endPoint: '/api/users/',
       pageName: 'Student',
-      errors: new Errors()
+      errors: new Errors(),
+      currentLevel: this.level ? JSON.parse(this.level) : null
     };
   },
   methods: {
@@ -50037,7 +50006,7 @@ var render = function() {
     _c("div", { staticClass: "right_col", attrs: { role: "main" } }, [
       _c("div", {}, [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-9" }, [
+          _c("div", { staticClass: "col-md-12" }, [
             _c("div", { staticClass: "x_panel" }, [
               _c("div", { staticClass: "x_title" }, [
                 _c("h2", [
@@ -50045,7 +50014,16 @@ var render = function() {
                     staticStyle: { color: "black" },
                     domProps: { innerHTML: _vm._s(_vm.pageName) }
                   }),
-                  _vm._v("s")
+                  _vm._v("s "),
+                  _c("small", [
+                    _vm._v(
+                      "(" +
+                        _vm._s(
+                          _vm.currentLevel ? _vm.currentLevel.name : "All"
+                        ) +
+                        ")"
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _vm._m(0),
@@ -50189,84 +50167,77 @@ var render = function() {
                       _c(
                         "tbody",
                         _vm._l(_vm.projects, function(project) {
-                          return _c(
-                            "tr",
-                            {
-                              key: project.id,
-                              class: project.currentEnrollment
-                                ? project.currentEnrollment.status == "Enrolled"
-                                  ? "alert-success"
-                                  : project.currentEnrollment.status ==
-                                    "Pre-Enrolled"
-                                  ? "alert-info"
-                                  : "alert-warning"
-                                : "alert-warning"
-                            },
-                            [
-                              _c("td", [_vm._v(_vm._s(project.lname))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.name))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.middlename))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.gender))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.birthday))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.email))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.contactno))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "btn btn-success btn-sm",
-                                    attrs: {
-                                      href:
-                                        "/api/admin/enrollment/" + project.id
-                                    }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "fa fa-plus" }, [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            !project.currentEnrollment
-                                              ? "Enroll"
-                                              : "Edit Enrollment"
-                                          )
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-danger btn-sm",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.deleteData(project)
-                                      }
-                                    }
-                                  },
-                                  [_c("span", { staticClass: "fa fa-trash" })]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "btn btn-info btn-sm",
-                                    attrs: {
-                                      href: "/api/students/" + project.id
-                                    }
-                                  },
-                                  [_c("span", { staticClass: "fa fa-edit" })]
+                          return _c("tr", { key: project.id }, [
+                            _c("td", [_vm._v(_vm._s(project.lname))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.middlename))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(
+                                  project.currentEnrollment
+                                    ? project.currentEnrollment.levelName
+                                    : "N/A"
                                 )
-                              ])
-                            ]
-                          )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.gender))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.birthday))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.email))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(project.contactno))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-success btn-sm",
+                                  attrs: {
+                                    href: "/api/admin/enrollment/" + project.id
+                                  }
+                                },
+                                [
+                                  _c("span", { staticClass: "fa fa-plus" }, [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          !project.currentEnrollment
+                                            ? "Enroll"
+                                            : "Edit Enrollment"
+                                        )
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-sm",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteData(project)
+                                    }
+                                  }
+                                },
+                                [_c("span", { staticClass: "fa fa-trash" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: { href: "/api/students/" + project.id }
+                                },
+                                [_c("span", { staticClass: "fa fa-edit" })]
+                              )
+                            ])
+                          ])
                         }),
                         0
                       )
@@ -50288,9 +50259,7 @@ var render = function() {
                 1
               )
             ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
+          ])
         ])
       ])
     ])
@@ -50344,114 +50313,6 @@ var staticRenderFns = [
       _c("li", [
         _c("a", { staticClass: "close-link" }, [
           _c("i", { staticClass: "fa fa-close" })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "x_panel" }, [
-        _c("div", { staticClass: "x_title" }, [
-          _c("h2", [_vm._v("Legends")]),
-          _vm._v(" "),
-          _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
-            _c("li", [
-              _c("a", { staticClass: "collapse-link" }, [
-                _c("i", { staticClass: "fa fa-chevron-up" })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "dropdown-toggle",
-                  attrs: {
-                    href: "#",
-                    "data-toggle": "dropdown",
-                    role: "button",
-                    "aria-expanded": "false"
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-wrench" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" }
-                },
-                [
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Settings 1")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Settings 2")]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { staticClass: "close-link" }, [
-                _c("i", { staticClass: "fa fa-close" })
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "x_content" }, [
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alert alert-success alert-dismissible ",
-              attrs: { role: "alert" }
-            },
-            [_c("strong", [_vm._v("Student is enrolled this school year.")])]
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alert alert-info alert-dismissible ",
-              attrs: { role: "alert" }
-            },
-            [
-              _c("strong", [
-                _vm._v("Student is pre-enrolled this school year.")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "alert alert-warning alert-dismissible ",
-              attrs: { role: "alert" }
-            },
-            [
-              _c("strong", [
-                _vm._v("Student does not have transaction this school year.")
-              ])
-            ]
-          )
         ])
       ])
     ])
@@ -64362,8 +64223,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\Laravel App\kva\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\Laravel App\kva\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

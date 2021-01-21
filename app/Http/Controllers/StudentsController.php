@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Student;
 use App\User;
 use App\Setting;
+use App\Level;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -25,6 +26,7 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
+
         $columns = ['firstName', 'lastName', 'gender', 'birthday', 'email', 'mobileNumber'];
 
         $length = $request->input('length');
@@ -130,7 +132,9 @@ class StudentsController extends Controller
         return Student::find($id)->delete();
     }
 
-    public function studentsHome(){
-        return view('admin/students');
+    public function studentsHome($level_id = null){
+        return view('admin/students', [
+            'level' => Level::find($level_id),
+        ]);
     }
 }

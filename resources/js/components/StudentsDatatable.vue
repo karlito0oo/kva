@@ -5,10 +5,10 @@
         <div class="right_col" role="main">
         <div class="">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="pageName"></span>s</h2>
+                            <h2><span style="color:black;" v-html="pageName"></span>s <small>({{ (currentLevel ? currentLevel.name : 'All') }})</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -43,10 +43,11 @@
                             </div>
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
-                                    <tr v-for="project in projects" :key="project.id" v-bind:class="(project.currentEnrollment ? project.currentEnrollment.status == 'Enrolled' ? 'alert-success' : project.currentEnrollment.status == 'Pre-Enrolled' ? 'alert-info' : 'alert-warning' : 'alert-warning')">
+                                    <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.lname}}</td>
                                         <td>{{project.name}}</td>
                                         <td>{{project.middlename}}</td>
+                                        <td>{{(project.currentEnrollment ? project.currentEnrollment.levelName : 'N/A')}}</td>
                                         <td>{{project.gender}}</td>
                                         <td>{{project.birthday}}</td>
                                         <td>{{project.email}}</td>
@@ -67,48 +68,7 @@
                     </div>
 
                 </div>
-
-
                 
-                <div class="col-md-3">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Legends</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <br />
-                            
-									<div class="alert alert-success alert-dismissible " role="alert">
-                                        <strong>Student is enrolled this school year.</strong>
-                                    </div>
-                                    <br>
-
-									<div class="alert alert-info alert-dismissible " role="alert">
-                                        <strong>Student is pre-enrolled this school year.</strong>
-                                    </div>
-                                    <br>
-
-									<div class="alert alert-warning alert-dismissible " role="alert">
-                                        <strong>Student does not have transaction this school year.</strong>
-                                    </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
         </div>
@@ -145,9 +105,15 @@ import Pagination from './DatatablePagination.vue';
 import Noty from 'noty';
 export default {
     components: { datatable: Datatable, pagination: Pagination },
+    
+    props: ['level'],
+
     created() {
         this.getProjects();
 
+    },
+    mounted(){
+        this.tableData.level_id = (this.currentLevel ? this.currentLevel.id : null);
     },
     data() {
         let sortOrders = {};
@@ -156,6 +122,7 @@ export default {
             { name: 'lname', label: 'Last Name'},
             { name: 'name', label: 'First Name' },
             { name: 'middlename', label: 'Middle Name'},
+            { name: 'name', label: 'Grade'},
             { name: 'gender', label: 'Gender'},
             { name: 'birthday', label: 'Birthday'},
             { name: 'email', label: 'Email'},
@@ -178,6 +145,7 @@ export default {
                 search: '',
                 column: 0,
                 dir: 'asc',
+                level_id: '',
             },
             pagination: {
                 lastPage: '',
@@ -203,6 +171,7 @@ export default {
             endPoint: '/api/users/',
             pageName: 'Student',
             errors: new Errors(),
+            currentLevel: (this.level ? JSON.parse(this.level) : null),
         }
     },
     methods: {

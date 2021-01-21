@@ -1,3 +1,8 @@
+
+@php
+  $levels = \App\Level::activeLevel();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -85,8 +90,18 @@
                 <ul class="nav side-menu">
 
                   @if(Auth::user()->role_id == 3)
+                  <li><a><i class="fa fa-group"></i> Students <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
 
-                  <li><a href="{{ url('/home/students') }}"><i class="fa fa-group"></i> Students</a></li>
+                      @foreach($levels as $level)
+                        <li><a href="{{ url('/home/students/level/' . $level->id) }}">{{$level->name}}</a></li>
+                      @endforeach
+
+                      <li><a href="{{ url('/home/students') }}">All Students</a></li>
+                    </ul>
+                  </li>
+
+                  <!-- <li><a href="{{ url('/home/students') }}"><i class="fa fa-group"></i> Students</a></li> -->
 
                   <li><a href="{{ url('/home/advisers') }}"><i class="fa fa-user-md"></i> Teachers</a></li>
 

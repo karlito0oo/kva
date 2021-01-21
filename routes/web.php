@@ -46,6 +46,7 @@ Route::post('/api/levels/fetch', 'LevelsController@fetch');
 // Students
 Route::resource('/api/students', 'StudentsController');
 Route::get('/home/students', 'StudentsController@studentsHome');
+Route::get('/home/students/level/{level_id}', 'StudentsController@studentsHome');
 
 // Settings
 Route::resource('/api/settings', 'SettingsController');

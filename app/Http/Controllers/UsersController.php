@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Setting;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -38,7 +39,19 @@ class UsersController extends Controller
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
         
-        $query = User::select('*')->where('role_id', '1')->orderBy(($column ? $columns[$column] : 'lname'), $dir);
+        $query = User::select('users.*')->where('role_id', '1')
+
+        ->when($request->level_id, function ($query) use ($request) {
+            $query->join('enrollments', 'enrollments.student_id', 'users.id');
+            $query->where('enrollments.level_id', $request->level_id);
+            $query->where('enrollments.status', 'Enrolled');
+            $query->where('enrollments.schoolyear_id', Setting::first()->schoolyear_id);
+            $query->distinct();
+
+            return $query;
+        })
+        
+        ->orderBy(($column ? $columns[$column] : 'lname'), $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {

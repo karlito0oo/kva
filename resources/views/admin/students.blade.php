@@ -2,5 +2,5 @@
 
 @section('content')
 
-    <students-datatable></students-datatable>
+    <students-datatable level="{{ $level }}"></students-datatable>
 @endsection
