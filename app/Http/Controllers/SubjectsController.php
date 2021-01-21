@@ -26,14 +26,16 @@ class SubjectsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['code', 'name', 'description', 'level_id'];
+        $columns = ['subjects.code', 'subjects.name', 'subjects.description', 'levels.name'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = Subject::select('*')->with('levels')->orderBy(($column ? $columns[$column] : 'code'), $dir);
+        $query = Subject::select('subjects.*')->with('levels')
+        ->join('levels', 'levels.id', 'subjects.level_id')
+        ->orderBy($columns[$column] , $dir);
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue, $columns) {

@@ -5974,7 +5974,7 @@ var Errors = /*#__PURE__*/function () {
       name: 'description'
     }, {
       label: 'Level',
-      name: 'level_id'
+      name: 'level_name'
     }];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
@@ -5990,7 +5990,7 @@ var Errors = /*#__PURE__*/function () {
         draw: 0,
         length: 10,
         search: '',
-        column: 0,
+        column: 3,
         dir: 'asc'
       },
       pagination: {

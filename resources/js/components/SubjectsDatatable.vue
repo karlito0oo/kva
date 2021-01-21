@@ -182,7 +182,7 @@ export default {
             { label: 'Code', name: 'code' },
             { label: 'Name', name: 'name' },
             { label: 'Description', name: 'description'},
-            { label: 'Level', name: 'level_id'},
+            { label: 'Level', name: 'level_name'},
         ];
 
         columns.forEach((column) => {
@@ -199,7 +199,7 @@ export default {
                 draw: 0,
                 length: 10,
                 search: '',
-                column: 0,
+                column: 3,
                 dir: 'asc',
             },
             pagination: {
