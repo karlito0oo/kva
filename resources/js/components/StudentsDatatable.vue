@@ -53,7 +53,7 @@
                                         <td>{{project.email}}</td>
                                         <td>{{project.contactno}}</td>
                                         <td>
-                                            <a :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> {{(!project.currentEnrollment ? 'Enroll' : 'Edit Enrollment')}}</span></a>
+                                            <a :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> {{(!project.currentEnrollment ? 'Enroll' : 'Update Enrollment')}}</span></a>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <a :href="'/api/students/' + project.id" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></a>
                                         </td>

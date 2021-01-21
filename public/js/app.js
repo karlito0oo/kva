@@ -5042,6 +5042,47 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -5083,7 +5124,8 @@ var Errors = /*#__PURE__*/function () {
         Level: null,
         Subjects: [],
         student_id: '',
-        Section: ''
+        Section: '',
+        balance: ''
       },
       enrollmentDetails: {},
       currentStudent: JSON.parse(this.student),
@@ -5122,6 +5164,7 @@ var Errors = /*#__PURE__*/function () {
       });
     },
     openEnrollmentModal: function openEnrollmentModal() {
+      this.datas.Section = this.enrollmentDetails.status == 'Enrolled' ? this.enrollmentDetails.section_id : '';
       $('#enrollmentModal').modal('show');
       this.sectionsFetch();
     },
@@ -5245,6 +5288,7 @@ var Errors = /*#__PURE__*/function () {
           _this6.disableButton = true;
           _this6.datas.StudentType = _this6.enrollmentDetails.student_type;
           _this6.datas.Level = _this6.enrollmentDetails.level_id;
+          _this6.datas.balance = _this6.enrollmentDetails.balance;
 
           _this6.showSubjects();
 
@@ -49686,7 +49730,15 @@ var render = function() {
                       attrs: { type: "submit" },
                       on: { click: _vm.openEnrollmentModal }
                     },
-                    [_vm._v("Enroll")]
+                    [
+                      _vm._v(
+                        _vm._s(
+                          _vm.enrollmentDetails.status == "Enrolled"
+                            ? "Update"
+                            : "Pre-enroll"
+                        )
+                      )
+                    ]
                   )
                 : _vm._e()
             ])
@@ -49696,6 +49748,48 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm._m(2),
+    _vm._v(" "),
+    _vm.enrollmentDetails.status == "Enrolled"
+      ? _c("div", { staticClass: "col-md-3 col-sm-3" }, [
+          _c("div", { staticClass: "x_panel" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "x_content" }, [
+              _c("div", { staticClass: "form-group row " }, [
+                _c(
+                  "label",
+                  { staticClass: "control-label col-md-3 col-sm-3 " },
+                  [_vm._v("Remaining balance")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.balance,
+                        expression: "datas.balance"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", placeholder: "0" },
+                    domProps: { value: _vm.datas.balance },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "balance", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -49711,7 +49805,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-md" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "form-group row" }, [
@@ -49792,7 +49886,15 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.enrollStudent }
                 },
-                [_vm._v("Enroll Student")]
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm.enrollmentDetails.status == "Enrolled"
+                        ? "Update"
+                        : "Pre-enroll Student"
+                    )
+                  )
+                ]
               )
             ])
           ])
@@ -50007,6 +50109,63 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h2", [_vm._v("Payment")]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
+        _c("li", [
+          _c("a", { staticClass: "collapse-link" }, [
+            _c("i", { staticClass: "fa fa-chevron-up" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "dropdown" }, [
+          _c(
+            "a",
+            {
+              staticClass: "dropdown-toggle",
+              attrs: {
+                href: "#",
+                "data-toggle": "dropdown",
+                role: "button",
+                "aria-expanded": "false"
+              }
+            },
+            [_c("i", { staticClass: "fa fa-wrench" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenuButton" }
+            },
+            [
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 1")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 2")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { staticClass: "close-link" }, [
+            _c("i", { staticClass: "fa fa-close" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
     ])
   },
   function() {
@@ -50448,7 +50607,7 @@ var render = function() {
                                         _vm._s(
                                           !project.currentEnrollment
                                             ? "Enroll"
-                                            : "Edit Enrollment"
+                                            : "Update Enrollment"
                                         )
                                     )
                                   ])

@@ -96,7 +96,7 @@
                                 <div class="col-md-9 col-sm-9  offset-md-3">
                                     <button type="submit" class="btn btn-info" @click="submitEnrollment" v-if="!disableButton">Submit</button>
                                     <button type="submit" class="btn btn-warning" @click="editEnrollment" v-if="disableButton">Edit</button>
-                                    <button type="submit" class="btn btn-success" @click="openEnrollmentModal" v-if="accessing == 'admin' && disableButton">Enroll</button>
+                                    <button type="submit" class="btn btn-success" @click="openEnrollmentModal" v-if="accessing == 'admin' && disableButton">{{(enrollmentDetails.status == 'Enrolled' ? 'Update' : 'Pre-enroll')}}</button>
                                 </div>
                             </div>
                 </div>
@@ -177,6 +177,47 @@
                   </div>
                 </div>
               </div>
+
+
+              
+            
+
+
+          </div>
+
+          <div class="col-md-3 col-sm-3" v-if="enrollmentDetails.status == 'Enrolled'">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Payment</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Settings 1</a>
+                          <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  
+                    <div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Remaining balance</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="0" v-model="datas.balance">
+											</div>
+										</div>
+
+                </div>
+              </div>
+
+
+              
             
 
 
@@ -208,7 +249,7 @@
               </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="enrollStudent">Enroll Student</button>
+                <button type="button" class="btn btn-primary" @click="enrollStudent">{{ (enrollmentDetails.status == 'Enrolled' ? 'Update' : 'Pre-enroll Student') }}</button>
             </div>
 
             </div>
@@ -251,6 +292,7 @@ import Noty from 'noty';
                     Subjects: [],
                     student_id: '',
                     Section: '',
+                    balance: '',
                 },
                 enrollmentDetails: {},
                 currentStudent:JSON.parse(this.student),
@@ -283,6 +325,7 @@ import Noty from 'noty';
             },
 
             openEnrollmentModal(){
+              this.datas.Section = (this.enrollmentDetails.status == 'Enrolled' ? this.enrollmentDetails.section_id : '');
               $('#enrollmentModal').modal('show');
               this.sectionsFetch();
             },
@@ -376,6 +419,7 @@ import Noty from 'noty';
                       this.disableButton = true;
                       this.datas.StudentType = this.enrollmentDetails.student_type;
                       this.datas.Level = this.enrollmentDetails.level_id;
+                      this.datas.balance = this.enrollmentDetails.balance;
                       this.showSubjects();
                       
                       for (let i = 0; i < this.enrollmentDetails.enrolled_subjects.length; i++) {
