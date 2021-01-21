@@ -47391,107 +47391,94 @@ var render = function() {
             _c(
               "div",
               { staticClass: "modal-body" },
-              [
-                _vm._l(_vm.section.subjects, function(subject) {
-                  return _c(
-                    "div",
-                    { key: subject.id, staticClass: "form-group row" },
-                    [
+              _vm._l(_vm.section.subjects, function(subject) {
+                return _c(
+                  "div",
+                  { key: subject.id, staticClass: "form-group row" },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "control-label col-md-6 col-sm-6 " },
+                      [
+                        _vm._v(
+                          "[" +
+                            _vm._s(subject.code) +
+                            "] " +
+                            _vm._s(subject.name)
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 col-sm-6 " }, [
                       _c(
-                        "label",
-                        { staticClass: "control-label col-md-6 col-sm-6 " },
-                        [
-                          _vm._v(
-                            "[" +
-                              _vm._s(subject.code) +
-                              "] " +
-                              _vm._s(subject.name)
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6 col-sm-6 " }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: subject.adviser_id,
-                                expression: "subject.adviser_id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  subject,
-                                  "adviser_id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: subject.adviser_id,
+                              expression: "subject.adviser_id"
                             }
-                          },
-                          [
-                            _c(
+                          ],
+                          staticClass: "form-control",
+                          attrs: { disabled: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                subject,
+                                "adviser_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "" },
+                              domProps: { value: null }
+                            },
+                            [_vm._v("No adviser")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.advisers, function(adviser) {
+                            return _c(
                               "option",
                               {
-                                attrs: { disabled: "" },
-                                domProps: { value: null }
+                                key: adviser.id,
+                                domProps: { value: adviser.id }
                               },
-                              [_vm._v("Select Adviser")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.advisers, function(adviser) {
-                              return _c(
-                                "option",
-                                {
-                                  key: adviser.id,
-                                  domProps: { value: adviser.id }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                                        " +
-                                      _vm._s(
-                                        adviser.lname + ", " + adviser.name
-                                      ) +
-                                      "\n                                                    "
-                                  )
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.updateAdvisers }
-                    },
-                    [_vm._v("Save")]
-                  )
-                ])
-              ],
-              2
+                              [
+                                _vm._v(
+                                  "\n                                                        " +
+                                    _vm._s(
+                                      adviser.lname + ", " + adviser.name
+                                    ) +
+                                    "\n                                                    "
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
             )
           ])
         ])

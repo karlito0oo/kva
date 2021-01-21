@@ -213,8 +213,8 @@
 										<div class="form-group row" v-for="subject in section.subjects" :key="subject.id">
 											<label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
 											<div class="col-md-6 col-sm-6 ">
-												 <select  class="form-control" v-model="subject.adviser_id">
-                                                    <option :value=null disabled>Select Adviser</option>
+												 <select  class="form-control" v-model="subject.adviser_id" disabled>
+                                                    <option :value=null disabled>No adviser</option>
                                                     <option v-for="adviser in advisers" :value="adviser.id" :key="adviser.id">
                                                         {{ adviser.lname + ', ' + adviser.name}}
                                                     </option>
@@ -223,9 +223,9 @@
             </div>
 
             
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @click="updateAdvisers">Save</button>
-            </div>
+            </div> -->
 
             </div>
         </div>
