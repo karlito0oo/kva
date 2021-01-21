@@ -3865,6 +3865,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -3915,7 +3916,7 @@ var Errors = /*#__PURE__*/function () {
       label: 'Level',
       name: 'level'
     }, {
-      label: 'Description',
+      label: JSON.parse(this.user).role_id != 1 ? 'Description' : 'School year',
       name: 'description'
     }];
     columns.forEach(function (column) {
@@ -46899,7 +46900,23 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(project.levels.name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(project.description))]),
+                              _vm.accessing.role_id != 1
+                                ? _c("td", [
+                                    _vm._v(_vm._s(project.description))
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.accessing.role_id == 1
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        project.studentSchoolyear
+                                          ? project.studentSchoolyear.name
+                                          : "N/A"
+                                      )
+                                    )
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
                                 "td",

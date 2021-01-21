@@ -5,6 +5,7 @@ namespace App;
 use Auth;
 use App\Subject;
 use App\User;
+use App\Enrollment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,7 +14,7 @@ class Section extends Model
     use SoftDeletes;
 
     
-    protected $appends = ['subjects', 'adviserStudents'];
+    protected $appends = ['subjects', 'adviserStudents', 'studentSchoolyear'];
     
     public function levels()
     {
@@ -29,6 +30,16 @@ class Section extends Model
     public function getSubjectsAttribute(){
         return Subject::where('level_id', $this->level_id)->with('adviser')
             ->get();
+    }
+
+    public function getStudentSchoolyearAttribute(){
+        $student_id = Auth::user()->id;
+        return Enrollment::select('school_years.*')
+            ->join('school_years', 'school_years.id', 'enrollments.schoolyear_id')
+            ->where('enrollments.student_id', $student_id)
+            ->where('enrollments.level_id', $this->level_id)
+            ->where('enrollments.section_id', $this->id)
+            ->first();
     }
 
     public function getAdviserStudentsAttribute(){

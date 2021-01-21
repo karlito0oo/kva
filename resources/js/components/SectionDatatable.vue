@@ -46,7 +46,8 @@
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.code}}</td>
                                         <td>{{project.levels.name}}</td>
-                                        <td>{{project.description}}</td>
+                                        <td v-if="accessing.role_id != 1">{{project.description}}</td>
+                                        <td v-if="accessing.role_id == 1">{{(project.studentSchoolyear ? project.studentSchoolyear.name : 'N/A')}}</td>
                                         <!-- Admin -->
                                         <td v-show="accessing.role_id == 3">
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
@@ -308,7 +309,7 @@ export default {
         let columns = [
             { label: 'Section', name: 'code' },
             { label: 'Level', name: 'level' },
-            { label: 'Description', name: 'description'},
+            { label: (JSON.parse(this.user).role_id != 1 ? 'Description' : 'School year'), name: 'description'},
         ];
 
         columns.forEach((column) => {
