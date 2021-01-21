@@ -4,6 +4,7 @@ namespace App;
 
 use App\Setting;
 use App\User;
+use App\Subject;
 use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = ['currentEnrollment'];
+    protected $appends = ['currentEnrollment', 'instructorSubjects'];
 
     public function roles(){
         return $this->hasOne('App\Role', 'id', 'role_id');
@@ -56,6 +57,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('enrollments.schoolyear_id', $schoolyear_id)
             ->where('enrollments.student_id', $this->id)
             ->first();
+    }
+
+    public function getInstructorSubjectsAttribute(){
+        return Subject::where('adviser_id', $this->id)->with('levels')->get();
     }
 
     public static function enrolledStudents(){

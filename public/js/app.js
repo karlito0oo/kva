@@ -2090,6 +2090,43 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -2189,16 +2226,57 @@ var Errors = /*#__PURE__*/function () {
         email: '',
         contactno: '',
         birthday: '',
-        password: ''
+        password: '',
+        subjects: ''
       },
       todo: 'Add',
       editableId: '',
       endPoint: '/api/advisers/',
       pageName: 'Teacher',
-      errors: new Errors()
+      errors: new Errors(),
+      currentSubject: {
+        subjects: [],
+        selectedSubject: ''
+      },
+      subjects: this.fetchSujects()
     };
   },
   methods: {
+    addSubject: function addSubject() {
+      if (!this.containsObject(this.currentSubject.selectedSubject, this.currentSubject.subjects) && this.currentSubject.selectedSubject != '') {
+        this.currentSubject.subjects.push(this.currentSubject.selectedSubject);
+        this.currentSubject.selectedSubject = '';
+      } else if (this.containsObject(this.currentSubject.selectedSubject, this.currentSubject.subjects)) {
+        new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
+          killer: true,
+          type: 'error',
+          text: 'Subject already added.',
+          layout: 'topRight'
+        }).show();
+      } else {
+        new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
+          killer: true,
+          type: 'error',
+          text: 'No subject selected.',
+          layout: 'topRight'
+        }).show();
+      }
+    },
+    removeSubject: function removeSubject(subject) {
+      var removeIndex = this.currentSubject.subjects.map(function (item) {
+        return item.id;
+      }).indexOf(subject.id);
+      this.currentSubject.subjects.splice(removeIndex, 1);
+    },
+    fetchSujects: function fetchSujects() {
+      var _this = this;
+
+      axios.post('/api/subjects/fetch').then(function (res) {
+        _this.subjects = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
     clearFields: function clearFields() {
       var keys = Object.keys(this.datas);
 
@@ -2207,9 +2285,12 @@ var Errors = /*#__PURE__*/function () {
       }
 
       this.todo = 'Add';
+      this.currentSubject.subjects = [];
     },
     saveData: function saveData() {
-      var _this = this;
+      var _this2 = this;
+
+      this.datas.subjects = this.currentSubject.subjects;
 
       if (this.todo == 'Add') {
         axios.post(this.endPoint, this.datas).then(function (res) {
@@ -2220,16 +2301,16 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this.getProjects();
+          _this2.getProjects();
 
-          _this.clearFields();
+          _this2.clearFields();
         })["catch"](function (err) {
-          _this.errors.record(err.response.data);
+          _this2.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             killer: true,
             type: 'error',
-            text: _this.errors.get('name'),
+            text: _this2.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -2242,16 +2323,16 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
 
-          _this.getProjects();
+          _this2.getProjects();
 
-          _this.clearFields();
+          _this2.clearFields();
         })["catch"](function (err) {
-          _this.errors.record(err.response.data);
+          _this2.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             killer: true,
             type: 'error',
-            text: _this.errors.get('name'),
+            text: _this2.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -2300,9 +2381,10 @@ var Errors = /*#__PURE__*/function () {
       this.datas.password = '12345678';
       this.editableId = dataEdit.id;
       this.todo = 'Edit';
+      this.currentSubject.subjects = dataEdit.instructorSubjects;
     },
     getProjects: function getProjects() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.tableData.draw++;
       axios.get(this.endPoint, {
@@ -2310,13 +2392,13 @@ var Errors = /*#__PURE__*/function () {
       }).then(function (response) {
         var data = response.data;
 
-        if (_this2.tableData.draw == data.draw) {
-          _this2.projects = data.data.data;
+        if (_this3.tableData.draw == data.draw) {
+          _this3.projects = data.data.data;
 
-          _this2.configPagination(data.data);
+          _this3.configPagination(data.data);
         }
 
-        if (_this2.pagination.total == 0) {
+        if (_this3.pagination.total == 0) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             killer: true,
             type: 'warning',
@@ -2349,6 +2431,20 @@ var Errors = /*#__PURE__*/function () {
       return array.findIndex(function (i) {
         return i[key] == value;
       });
+    },
+    containsObject: function containsObject(obj, list) {
+      var result = false;
+
+      if (list.length > 0) {
+        list.forEach(function (object) {
+          if (object.id == obj.id) {
+            result = true;
+            return true;
+          }
+        });
+      }
+
+      return result;
     }
   }
 });
@@ -44879,6 +44975,132 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "ln_solid" }),
                     _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        { staticClass: "control-label col-md-3 col-sm-3 " },
+                        [_vm._v("Select Level")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-sm-4 " }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentSubject.selectedSubject,
+                                expression: "currentSubject.selectedSubject"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.currentSubject,
+                                  "selectedSubject",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Select Subject")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.subjects, function(subject) {
+                              return _c(
+                                "option",
+                                {
+                                  key: subject.id,
+                                  domProps: { value: subject }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                                        [" +
+                                      _vm._s(subject.levels.name) +
+                                      "] " +
+                                      _vm._s(subject.name) +
+                                      "\n                                                    "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3 col-sm-3" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.addSubject()
+                              }
+                            }
+                          },
+                          [_vm._v("Add")]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "table",
+                        { staticClass: "table is-bordered data-table" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.currentSubject.subjects, function(
+                              subject
+                            ) {
+                              return _c("tr", { key: subject.id }, [
+                                _c("td", [_vm._v(_vm._s(subject.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(subject.levels.name))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-danger btn-sm",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removeSubject(subject)
+                                        }
+                                      }
+                                    },
+                                    [_c("span", { staticClass: "fa fa-trash" })]
+                                  )
+                                ])
+                              ])
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ln_solid" }),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c(
                         "div",
@@ -45020,6 +45242,20 @@ var staticRenderFns = [
         _c("a", { staticClass: "close-link" }, [
           _c("i", { staticClass: "fa fa-close" })
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Subject")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Level")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
       ])
     ])
   }

@@ -145,6 +145,43 @@
 												<input type="password" class="form-control" v-model="datas.password">
 											</div>
 										</div>
+
+                                        
+										<div class="ln_solid"></div>
+										<div class="form-group row">
+                                            
+											<label class="control-label col-md-3 col-sm-3 ">Select Level</label>
+											<div class="col-md-6 col-sm-4 ">
+												<select  class="form-control" v-model="currentSubject.selectedSubject">
+                                                    <option value="">Select Subject</option>
+                                                    <option v-for="subject in subjects" :value="subject" :key="subject.id">
+                                                        [{{ subject.levels.name }}] {{ subject.name }}
+                                                    </option>
+                                                </select>
+											</div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <button type="button" class="btn btn-primary" @click="addSubject()">Add</button>
+                                            </div>
+											
+										</div>
+                                        <div class="row">
+                                            <table class="table is-bordered data-table">
+                                                <thead>
+                                                    <tr>
+                                                       <th>Subject</th>
+                                                       <th>Level</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="subject in currentSubject.subjects" :key="subject.id">
+                                                        <td>{{ subject.name }}</td>
+                                                        <td>{{ subject.levels.name }}</td>
+                                                        <td> <a class="btn btn-danger btn-sm" @click="removeSubject(subject)"><span class="fa fa-trash"></span></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 										
 										<div class="ln_solid"></div>
 										<div class="form-group">
@@ -248,6 +285,7 @@ export default {
                 contactno: '',
                 birthday: '',
                 password: '',
+                subjects: '',
 
             },
             todo: 'Add',
@@ -255,19 +293,50 @@ export default {
             endPoint: '/api/advisers/',
             pageName: 'Teacher',
             errors: new Errors(),
+            currentSubject: {
+                subjects: [],
+                selectedSubject: '',
+            },
+            subjects: this.fetchSujects(),
         }
     },
     methods: {
-
+        addSubject(){
+             if(!this.containsObject(this.currentSubject.selectedSubject, this.currentSubject.subjects) && this.currentSubject.selectedSubject != ''){
+                this.currentSubject.subjects.push(this.currentSubject.selectedSubject);
+                this.currentSubject.selectedSubject = '';
+            }
+            else if(this.containsObject(this.currentSubject.selectedSubject, this.currentSubject.subjects)){
+                    new Noty({killer: true, type: 'error', text: 'Subject already added.', layout: 'topRight'}).show();
+            }
+            else{
+                    new Noty({killer: true, type: 'error', text: 'No subject selected.', layout: 'topRight'}).show();
+            }
+        },
+        removeSubject(subject){
+            var removeIndex = this.currentSubject.subjects.map(function(item) { return item.id; }).indexOf(subject.id);
+            this.currentSubject.subjects.splice(removeIndex, 1);
+        },
+        fetchSujects(){
+            axios.post('/api/subjects/fetch')
+            .then((res) => {
+                this.subjects = res.data
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        },
         clearFields(){
             const keys = Object.keys(this.datas);
             for (var a = 0; a < keys.length; a++) {
                 this.datas[keys[a]] = '';
             }
             this.todo = 'Add';
+            this.currentSubject.subjects = [];
         },
 
         saveData(){
+            this.datas.subjects = this.currentSubject.subjects;
             if(this.todo == 'Add'){
                 axios.post(this.endPoint, this.datas)
                 .then((res) => {
@@ -335,6 +404,10 @@ export default {
 
             this.editableId = dataEdit.id;
             this.todo = 'Edit';
+
+            this.currentSubject.subjects = dataEdit.instructorSubjects;
+
+            
         },
 
         getProjects() {
@@ -374,6 +447,18 @@ export default {
         },
         getIndex(array, key, value) {
             return array.findIndex(i => i[key] == value)
+        },
+        containsObject(obj, list) {
+            var result = false;
+            if(list.length > 0){
+                list.forEach((object) => {
+                    if(object.id == obj.id){
+                        result = true;
+                        return true;
+                    }
+                });
+            }
+            return result;
         },
     }
 };

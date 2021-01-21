@@ -127,13 +127,12 @@ class SubjectsController extends Controller
     }
     
     public function fetch(Request $request){
-        $data = request()->validate([
-            'StudentType' => 'required',
-            'Level' => 'required',
-        ]);
 
         return Subject::select('*')
-            ->where('level_id', $request->Level)
+            ->when($request->Level, function ($query) use ($request) {
+                return $query->where('level_id', $request->Level);
+            })
+            ->with('levels')
             ->get();
     }
 }

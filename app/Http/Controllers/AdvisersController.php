@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Adviser;
 use App\User;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -78,8 +79,15 @@ class AdvisersController extends Controller
         $user->email = $request->email;
         $user->role_id = '4';
         $user->password = Hash::make($request->password);
+        $user->save();
 
-        return $user->save();
+        foreach($request->subjects as $subject){
+            $data = Subject::find($subject['id']);
+            $data->adviser_id = $user->id;
+            $data->save();
+        }
+
+        return $user;
     }
 
     /**
@@ -123,8 +131,18 @@ class AdvisersController extends Controller
         $user->gender = $request->gender;
         $user->contactno = $request->contactno;
         $user->email = $request->email;
+        $user->save();
+        
+        $data = Subject::where('adviser_id', '=', $user->id)
+            ->update(['adviser_id' => null]);
+            
+        foreach($request->subjects as $subject){
+            $data = Subject::find($subject['id']);
+            $data->adviser_id = $user->id;
+            $data->save();
+        }
 
-        return $user->save();
+        return $user;
     }
 
     /**
