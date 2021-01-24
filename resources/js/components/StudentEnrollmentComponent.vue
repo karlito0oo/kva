@@ -242,7 +242,7 @@
                       <select  class="form-control" v-model="datas.Section">
                           <option value='' disabled>Select Section</option>
                           <option v-for="section in sections" :value="section.id" :key="section.id">
-                              {{ section.code + ' (' + section.enrolled_students.length + ')'}}
+                              {{ section.code + ' (' + section.enrolled_students.length + '/' + settings.maxstudentsection + ')'}}
                           </option>
                       </select>
                   </div>
@@ -300,6 +300,7 @@ import Noty from 'noty';
                 disableButton: false,
                 editableEnrollment: '',
                 sections: {},
+                settings: this.settingsFetch(),
             }
         },
 
@@ -310,13 +311,29 @@ import Noty from 'noty';
 
         methods: {
 
+            settingsFetch(){
+                axios.post('/api/setting/fetch')
+                .then((res) => {
+                    this.settings = res.data
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            },
+
             enrollStudent(){
               axios.patch('/api/enrollments/submitEnrollment/'+this.enrollmentDetails.id, this.datas)
               .then((res) => {
-                  new Noty({type: 'success', text: 'Successfully enrolled student.', layout: 'topRight'}).show();
-                  window.setTimeout(function(){
-                      window.location.href = "/home/students";
-                  }, 2000);
+                  alert(res.data.result);
+                  if(!res.data.result){
+                    new Noty({killer: true, type: 'error', text: res.data.message, layout: 'topRight'}).show();
+                  }
+                  else{
+                    new Noty({type: 'success', text: 'Successfully pre-enrolled student.', layout: 'topRight'}).show();
+                    window.setTimeout(function(){
+                        window.location.href = "/home/students";
+                    }, 2000);
+                  }
               })
               .catch((err) => {
                   this.errors.record(err.response.data);

@@ -51,6 +51,7 @@ Route::get('/home/students/level/{level_id}', 'StudentsController@studentsHome')
 // Settings
 Route::resource('/api/settings', 'SettingsController');
 Route::get('/home/settings', 'SettingsController@pageHome');
+Route::post('/api/setting/fetch', 'SettingsController@fetch');
 
 // Subjects
 Route::resource('/api/subjects', 'SubjectsController');

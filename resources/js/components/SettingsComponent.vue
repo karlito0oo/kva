@@ -83,12 +83,19 @@
                                 </div>
                             </div>
                             <br>
-                            <!-- <div class="form-group row">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">Max. number of student per section </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="number" class="form-control" v-model="datas.maxstudentsection" placeholder="0">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">ID No. Prefix </label>
                                 <div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.id_no_prefix">
                                 </div>
-                            </div> -->
+                            </div>
 
                             
                         </div>

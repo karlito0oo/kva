@@ -4335,6 +4335,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -5132,7 +5139,8 @@ var Errors = /*#__PURE__*/function () {
       errors: new Errors(),
       disableButton: false,
       editableEnrollment: '',
-      sections: {}
+      sections: {},
+      settings: this.settingsFetch()
     };
   },
   mounted: function mounted() {
@@ -5140,25 +5148,45 @@ var Errors = /*#__PURE__*/function () {
     this.checkEnrollmentDetails();
   },
   methods: {
-    enrollStudent: function enrollStudent() {
+    settingsFetch: function settingsFetch() {
       var _this = this;
 
-      axios.patch('/api/enrollments/submitEnrollment/' + this.enrollmentDetails.id, this.datas).then(function (res) {
-        new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
-          type: 'success',
-          text: 'Successfully enrolled student.',
-          layout: 'topRight'
-        }).show();
-        window.setTimeout(function () {
-          window.location.href = "/home/students";
-        }, 2000);
+      axios.post('/api/setting/fetch').then(function (res) {
+        _this.settings = res.data;
       })["catch"](function (err) {
-        _this.errors.record(err.response.data);
+        console.log(err);
+      });
+    },
+    enrollStudent: function enrollStudent() {
+      var _this2 = this;
+
+      axios.patch('/api/enrollments/submitEnrollment/' + this.enrollmentDetails.id, this.datas).then(function (res) {
+        alert(res.data.result);
+
+        if (!res.data.result) {
+          new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+            killer: true,
+            type: 'error',
+            text: res.data.message,
+            layout: 'topRight'
+          }).show();
+        } else {
+          new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+            type: 'success',
+            text: 'Successfully pre-enrolled student.',
+            layout: 'topRight'
+          }).show();
+          window.setTimeout(function () {
+            window.location.href = "/home/students";
+          }, 2000);
+        }
+      })["catch"](function (err) {
+        _this2.errors.record(err.response.data);
 
         new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
           killer: true,
           type: 'error',
-          text: _this.errors.get('name'),
+          text: _this2.errors.get('name'),
           layout: 'topRight'
         }).show();
       });
@@ -5169,10 +5197,10 @@ var Errors = /*#__PURE__*/function () {
       this.sectionsFetch();
     },
     sectionsFetch: function sectionsFetch() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/sections/' + this.enrollmentDetails.level_id).then(function (res) {
-        _this2.sections = res.data;
+        _this3.sections = res.data;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -5191,20 +5219,20 @@ var Errors = /*#__PURE__*/function () {
       this.editableEnrollment = this.enrollmentDetails.id;
     },
     levelsFetch: function levelsFetch() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post('/api/levels/fetch').then(function (res) {
-        _this3.levels = res.data;
+        _this4.levels = res.data;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     showSubjects: function showSubjects() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post('/api/subjects/fetch', this.datas).then(function (res) {
-        _this4.subjects = res.data;
-        _this4.datas.Subjects = res.data;
+        _this5.subjects = res.data;
+        _this5.datas.Subjects = res.data;
 
         if (res.data.length == 0) {
           new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -5214,18 +5242,18 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         }
       })["catch"](function (err) {
-        _this4.errors.record(err.response.data);
+        _this5.errors.record(err.response.data);
 
         new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
           killer: true,
           type: 'error',
-          text: _this4.errors.get('name'),
+          text: _this5.errors.get('name'),
           layout: 'topRight'
         }).show();
       });
     },
     submitEnrollment: function submitEnrollment() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.editableEnrollment == '') {
         axios.post('/api/enrollments', this.datas).then(function (res) {
@@ -5246,12 +5274,12 @@ var Errors = /*#__PURE__*/function () {
             }).show();
           }
         })["catch"](function (err) {
-          _this5.errors.record(err.response.data);
+          _this6.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
             killer: true,
             type: 'error',
-            text: _this5.errors.get('name'),
+            text: _this6.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -5263,12 +5291,12 @@ var Errors = /*#__PURE__*/function () {
             layout: 'topRight'
           }).show();
         })["catch"](function (err) {
-          _this5.errors.record(err.response.data);
+          _this6.errors.record(err.response.data);
 
           new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
             killer: true,
             type: 'error',
-            text: _this5.errors.get('name'),
+            text: _this6.errors.get('name'),
             layout: 'topRight'
           }).show();
         });
@@ -5277,26 +5305,26 @@ var Errors = /*#__PURE__*/function () {
       this.checkEnrollmentDetails('hide');
     },
     checkEnrollmentDetails: function checkEnrollmentDetails() {
-      var _this6 = this;
+      var _this7 = this;
 
       var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       //datas needed for enrollment
       axios.post('/api/enrollments/checkEnrollmentDetails/', this.datas).then(function (res) {
-        _this6.enrollmentDetails = res.data;
+        _this7.enrollmentDetails = res.data;
 
-        if (_this6.enrollmentDetails) {
-          _this6.disableButton = true;
-          _this6.datas.StudentType = _this6.enrollmentDetails.student_type;
-          _this6.datas.Level = _this6.enrollmentDetails.level_id;
-          _this6.datas.balance = _this6.enrollmentDetails.balance;
+        if (_this7.enrollmentDetails) {
+          _this7.disableButton = true;
+          _this7.datas.StudentType = _this7.enrollmentDetails.student_type;
+          _this7.datas.Level = _this7.enrollmentDetails.level_id;
+          _this7.datas.balance = _this7.enrollmentDetails.balance;
 
-          _this6.showSubjects();
+          _this7.showSubjects();
 
-          for (var i = 0; i < _this6.enrollmentDetails.enrolled_subjects.length; i++) {
-            _this6.datas.Subjects.push(_this6.enrollmentDetails.enrolled_subjects[i].subject_id);
+          for (var i = 0; i < _this7.enrollmentDetails.enrolled_subjects.length; i++) {
+            _this7.datas.Subjects.push(_this7.enrollmentDetails.enrolled_subjects[i].subject_id);
           }
 
-          if (_this6.accessing == 'admin') {} else if (status == null) {
+          if (_this7.accessing == 'admin') {} else if (status == null) {
             new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
               killer: true,
               type: 'error',
@@ -5306,7 +5334,7 @@ var Errors = /*#__PURE__*/function () {
           }
         }
       })["catch"](function (err) {
-        _this6.errors.record(err.response.data);
+        _this7.errors.record(err.response.data);
       });
     }
   }
@@ -47999,7 +48027,77 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("br")
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("Max. number of student per section ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.maxstudentsection,
+                        expression: "datas.maxstudentsection"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", placeholder: "0" },
+                    domProps: { value: _vm.datas.maxstudentsection },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.datas,
+                          "maxstudentsection",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("ID No. Prefix ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.id_no_prefix,
+                        expression: "datas.id_no_prefix"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.datas.id_no_prefix },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "id_no_prefix", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
             ])
           ])
         ])
@@ -49864,6 +49962,8 @@ var render = function() {
                                   section.code +
                                     " (" +
                                     section.enrolled_students.length +
+                                    "/" +
+                                    _vm.settings.maxstudentsection +
                                     ")"
                                 ) +
                                 "\r\n                          "

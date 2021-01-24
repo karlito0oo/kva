@@ -8,6 +8,7 @@ use App\EnrolledSubject;
 use App\Setting;
 use App\User;
 use App\Level;
+use App\Section;
 use Illuminate\Http\Request;
 
 class EnrollmentsController extends Controller
@@ -110,7 +111,7 @@ class EnrollmentsController extends Controller
 
         return [
             'result' => true,
-        ];;
+        ];
     }
 
     /**
@@ -201,13 +202,21 @@ class EnrollmentsController extends Controller
         $data = request()->validate([
             'Section' => 'required',
         ]);
-
+        //check if !maxstudentsection
+        if(Setting::first()->maxstudentsection < count(Section::find($request->Section)->with('enrolledStudents')->first()->enrolledStudents)){
+            return [
+                'result' => false,
+                'message' => 'Maximum student per section exeeded.',
+            ];
+        }
 
         $data = Enrollment::find($id);
         $data->status = 'Enrolled';
         $data->section_id = $request->Section;
         $data->save();
 
-        return true;
+        return [
+            'result' => true,
+        ];
     }
 }

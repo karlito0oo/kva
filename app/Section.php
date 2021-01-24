@@ -6,6 +6,7 @@ use Auth;
 use App\Subject;
 use App\User;
 use App\Enrollment;
+use App\Setting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,7 +25,7 @@ class Section extends Model
     
     public function enrolledStudents()
     {
-        return $this->hasMany('App\Enrollment', 'section_id', 'id')->withTrashed();
+        return $this->hasMany('App\Enrollment', 'section_id', 'id')->where('enrollments.schoolyear_id', Setting::first()->schoolyear_id)->withTrashed();
     }
 
     public function getSubjectsAttribute(){

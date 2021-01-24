@@ -79,6 +79,7 @@ class SettingsController extends Controller
         $data->enrollmentStart = $request->enrollmentStart;
         $data->enrollmentEnd = $request->enrollmentEnd;
         $data->id_no_prefix = $request->id_no_prefix;
+        $data->maxstudentsection = $request->maxstudentsection;
 
         return $data->save();
     }
@@ -96,5 +97,9 @@ class SettingsController extends Controller
     
     public function pageHome(){
         return view('admin/settings');
+    }
+    
+    public function fetch(){
+        return Setting::first();
     }
 }
