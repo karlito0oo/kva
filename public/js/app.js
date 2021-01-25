@@ -2386,8 +2386,9 @@ var Errors = /*#__PURE__*/function () {
     getProjects: function getProjects() {
       var _this3 = this;
 
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.endPoint;
       this.tableData.draw++;
-      axios.get(this.endPoint, {
+      axios.get(url, {
         params: this.tableData
       }).then(function (response) {
         var data = response.data;
@@ -3523,8 +3524,9 @@ var Errors = /*#__PURE__*/function () {
     getProjects: function getProjects() {
       var _this2 = this;
 
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.endPoint;
       this.tableData.draw++;
-      axios.get(this.endPoint, {
+      axios.get(url, {
         params: this.tableData
       }).then(function (response) {
         var data = response.data;
@@ -5776,8 +5778,9 @@ var Errors = /*#__PURE__*/function () {
     getProjects: function getProjects() {
       var _this2 = this;
 
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.endPoint;
       this.tableData.draw++;
-      axios.get(this.endPoint, {
+      axios.get(url, {
         params: this.tableData
       }).then(function (response) {
         var data = response.data;
@@ -64722,8 +64725,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\Laravel App\kva\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\Laravel App\kva\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

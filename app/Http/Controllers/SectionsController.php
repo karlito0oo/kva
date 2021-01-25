@@ -173,7 +173,10 @@ class SectionsController extends Controller
         return Section::select('*')
             ->with('enrolledStudents')
             ->where('schoolyear_id', $level_id)
-            ->get();
+            
+        ->orderByRaw('LENGTH(code) asc')
+        ->orderBy('code', 'asc')
+        ->get();
     }
 
     public function updateAdvisers(Request $request){

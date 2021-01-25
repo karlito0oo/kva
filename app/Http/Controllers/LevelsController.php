@@ -124,6 +124,9 @@ class LevelsController extends Controller
     }
     
     public function fetch(){
-        return Level::all();
+        return Level::
+        orderByRaw('LENGTH(name) asc')
+        ->orderBy('name', 'asc')
+        ->get();
     }
 }

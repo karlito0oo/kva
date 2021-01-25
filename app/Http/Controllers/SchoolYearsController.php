@@ -118,6 +118,9 @@ class SchoolYearsController extends Controller
     }
     
     public function fetch(){
-        return SchoolYear::all();
+        return SchoolYear::
+        orderByRaw('LENGTH(name) asc')
+        ->orderBy('name', 'asc')
+        ->get();
     }
 }

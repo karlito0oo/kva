@@ -35,6 +35,7 @@ class SubjectsController extends Controller
 
         $query = Subject::select('subjects.*')->with('levels')
         ->join('levels', 'levels.id', 'subjects.level_id')
+        ->orderByRaw('LENGTH('.($column ? $columns[$column] : 'name').') ' . $dir)
         ->orderBy($columns[$column] , $dir);
 
         if ($searchValue) {
@@ -130,11 +131,14 @@ class SubjectsController extends Controller
     
     public function fetch(Request $request){
 
-        return Subject::select('*')
+        return Subject::select('subjects.*')
             ->when($request->Level, function ($query) use ($request) {
                 return $query->where('level_id', $request->Level);
             })
             ->with('levels')
+            ->join('levels', 'levels.id', 'subjects.level_id')
+            ->orderByRaw('LENGTH(levels.name) asc')
+            ->orderBy('levels.name')
             ->get();
     }
 }
