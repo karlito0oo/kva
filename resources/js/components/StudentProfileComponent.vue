@@ -39,14 +39,14 @@
                             <br>
 
 
-                            <h2 style="color:black;">Current Level</h2>
+                            <h2 style="color:black;">Grade Level</h2>
                             <span>{{ (user.currentEnrollment ? user.currentEnrollment.levelName : 'N/a') }}</span>
 
                             <br>
                             <br>
 
 
-                            <h2 style="color:black;">Current Section</h2>
+                            <h2 style="color:black;">Section Code</h2>
                             <span>{{ (user.currentEnrollment ? user.currentEnrollment.sectionName : 'N/a') }}</span>
 
                             <br>

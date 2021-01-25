@@ -45,7 +45,7 @@
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.name}}</td>
-                                        <td>{{project.description}}</td>
+                                        <!-- <td>{{project.description}}</td> -->
                                         <td>{{(project.prerequisite ? project.prerequisite.name : 'N/A')}}</td>
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
@@ -68,7 +68,7 @@
                 <div class="col-md-4">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="todo"></span> Levels</h2>
+                            <h2><span style="color:black;" v-html="todo"></span> Grade Level</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -90,17 +90,17 @@
 									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
 
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Level Name</label>
+											<label class="control-label col-md-3 col-sm-3 ">Grade Level</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" placeholder="Level Name" v-model="datas.name">
+												<input type="text" class="form-control" placeholder="Grade Level Name" v-model="datas.name">
 											</div>
 										</div>
-										<div class="form-group row ">
+										<!-- <div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Description</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" placeholder="Description" v-model="datas.description">
 											</div>
-										</div>
+										</div> -->
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Pre-requisite</label>
 											<div class="col-md-9 col-sm-9 ">
@@ -171,9 +171,9 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { label: 'Name', name: 'name' },
-            { label: 'Description', name: 'description'},
-            { label: 'Pre-requisite', name: 'prerequisite_id'},
+            { label: 'GRADE LEVEL', name: 'name' },
+            //{ label: 'Description', name: 'description'},
+            { label: 'PRE-REQUISITE', name: 'prerequisite_id'},
         ];
 
         columns.forEach((column) => {
@@ -205,7 +205,7 @@ export default {
             },
             datas: {
                 name: '',
-                description: '',
+                description: 'not null',
                 prerequisite_id: '',
 
             },

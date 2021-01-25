@@ -45,7 +45,7 @@
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.name}}</td>
-                                        <td>{{project.description}}</td>
+                                        <!-- <td>{{project.description}}</td> -->
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
@@ -89,17 +89,17 @@
 									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
 
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Name</label>
+											<label class="control-label col-md-3 col-sm-3 ">School Year</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.name">
 											</div>
 										</div>
-										<div class="form-group row ">
+										<!-- <div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Description</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.description">
 											</div>
-										</div>
+										</div> -->
 										
 
 										<div class="ln_solid"></div>
@@ -159,8 +159,8 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { label: 'Name', name: 'name' },
-            { label: 'Description', name: 'description'},
+            { label: 'SCHOOL YEAR', name: 'name' },
+            //{ label: 'Description', name: 'description'},
         ];
 
         columns.forEach((column) => {
@@ -178,7 +178,7 @@ export default {
                 length: 10,
                 search: '',
                 column: 0,
-                dir: 'desc',
+                dir: 'asc',
             },
             pagination: {
                 lastPage: '',
@@ -192,7 +192,7 @@ export default {
             },
             datas: {
                 name: '',
-                description: '',
+                description: 'not null',
 
             },
             todo: 'Add',

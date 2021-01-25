@@ -91,30 +91,30 @@
 									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
 
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Code</label>
+											<label class="control-label col-md-3 col-sm-3 ">Subject Code</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.code">
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Name</label>
+											<label class="control-label col-md-3 col-sm-3 ">Subject Name</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.name">
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Description</label>
+											<label class="control-label col-md-3 col-sm-3 ">Branches</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.description">
 											</div>
 										</div>
 
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Level</label>
+											<label class="control-label col-md-3 col-sm-3 ">Grade Level</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select class="form-control" v-model="datas.level_id">
-                                                    <option selected disabled>Choose option</option>
-                                                    <option v-for="level in levels" :value="level.id">
+                                                    <option selected disabled value="">Choose option</option>
+                                                    <option v-for="level in levels" :key="level.name" :value="level.id">
                                                         {{ level.name }}
                                                     </option>
                                                 </select>
@@ -179,10 +179,10 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { label: 'Code', name: 'code' },
-            { label: 'Name', name: 'name' },
-            { label: 'Description', name: 'description'},
-            { label: 'Level', name: 'level_name'},
+            { label: 'SUBJECT CODE', name: 'code' },
+            { label: 'SUBJECT NAME', name: 'name' },
+            { label: 'SUBJECT BRANCHES', name: 'description'},
+            { label: 'GRADE LEVEL', name: 'level_name'},
         ];
 
         columns.forEach((column) => {

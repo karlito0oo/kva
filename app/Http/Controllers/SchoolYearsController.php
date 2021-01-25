@@ -10,7 +10,7 @@ class SchoolYearsController extends Controller
     public function validateData(){
         return [
             'name' => 'required',
-            'description' => 'required',
+            //'description' => 'required',
         ];
     }
     /**
@@ -20,13 +20,13 @@ class SchoolYearsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'description'];
+        $columns = ['name'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
-
+        
         $query = SchoolYear::select('*')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
@@ -97,7 +97,7 @@ class SchoolYearsController extends Controller
         $data = SchoolYear::find($id);
 
         $data->name = $request->name;
-        $data->description = $request->description;
+        //$data->description = $request->description;
 
         return $data->save();
     }

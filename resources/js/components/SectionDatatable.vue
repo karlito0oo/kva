@@ -101,10 +101,10 @@
 									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
                                         
                                         <div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Level</label>
+											<label class="control-label col-md-3 col-sm-3 ">Grade Level</label>
 											<div class="col-md-9 col-sm-9 ">
 												<select class="form-control" v-model="datas.level_id">
-                                                    <option selected disabled value="">Choose option</option>
+                                                    <option selected disabled value="">Select Grade Level</option>
                                                     <option v-for="level in levels" :key="level.name" :value="level.id">
                                                         {{ level.name }}
                                                     </option>
@@ -115,13 +115,13 @@
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Section Code</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" placeholder="Level Name" v-model="datas.code">
+												<input type="text" class="form-control" placeholder="Section Code" v-model="datas.code">
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Description</label>
+											<label class="control-label col-md-3 col-sm-3 ">Section Name</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" placeholder="Description" v-model="datas.description">
+												<input type="text" class="form-control" placeholder="Section Name" v-model="datas.description">
 											</div>
 										</div>
 										
@@ -307,9 +307,10 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { label: 'Section', name: 'code' },
-            { label: 'Level', name: 'level' },
-            { label: (JSON.parse(this.user).role_id != 1 ? 'Description' : 'School year'), name: 'description'},
+            
+            { label: 'SECTION CODE', name: 'code' },
+            { label: 'GRADE LEVEL', name: 'level' },
+            { label: (JSON.parse(this.user).role_id != 1 ? 'SECTION NAME' : 'SCHOOL YEAR'), name: 'description'},
         ];
 
         columns.forEach((column) => {

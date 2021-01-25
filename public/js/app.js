@@ -2171,25 +2171,25 @@ var Errors = /*#__PURE__*/function () {
     var sortOrders = {};
     var columns = [{
       name: 'lname',
-      label: 'Last Name'
+      label: 'LAST NAME'
     }, {
       name: 'name',
-      label: 'First Name'
+      label: 'FIRST NAME'
     }, {
       name: 'middlename',
-      label: 'Middle Name'
+      label: 'MIDDLE NAME'
     }, {
       name: 'gender',
-      label: 'Gender'
+      label: 'GENDER'
     }, {
       name: 'birthday',
-      label: 'Birthday'
+      label: 'BIRTHDATE'
     }, {
       name: 'email',
-      label: 'Email'
+      label: 'EMAIL ADDRESS'
     }, {
       name: 'contactno',
-      label: 'Contact Number'
+      label: 'CONTACT NO.'
     }];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
@@ -2994,13 +2994,11 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     var sortOrders = {};
     var columns = [{
-      label: 'Name',
+      label: 'GRADE LEVEL',
       name: 'name'
-    }, {
-      label: 'Description',
-      name: 'description'
-    }, {
-      label: 'Pre-requisite',
+    }, //{ label: 'Description', name: 'description'},
+    {
+      label: 'PRE-REQUISITE',
       name: 'prerequisite_id'
     }];
     columns.forEach(function (column) {
@@ -3032,7 +3030,7 @@ var Errors = /*#__PURE__*/function () {
       },
       datas: {
         name: '',
-        description: '',
+        description: 'not null',
         prerequisite_id: ''
       },
       todo: 'Add',
@@ -3382,12 +3380,10 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     var sortOrders = {};
     var columns = [{
-      label: 'Name',
+      label: 'SCHOOL YEAR',
       name: 'name'
-    }, {
-      label: 'Description',
-      name: 'description'
-    }];
+    } //{ label: 'Description', name: 'description'},
+    ];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
     });
@@ -3403,7 +3399,7 @@ var Errors = /*#__PURE__*/function () {
         length: 10,
         search: '',
         column: 0,
-        dir: 'desc'
+        dir: 'asc'
       },
       pagination: {
         lastPage: '',
@@ -3417,7 +3413,7 @@ var Errors = /*#__PURE__*/function () {
       },
       datas: {
         name: '',
-        description: ''
+        description: 'not null'
       },
       todo: 'Add',
       editableId: '',
@@ -3912,13 +3908,13 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     var sortOrders = {};
     var columns = [{
-      label: 'Section',
+      label: 'SECTION CODE',
       name: 'code'
     }, {
-      label: 'Level',
+      label: 'GRADE LEVEL',
       name: 'level'
     }, {
-      label: JSON.parse(this.user).role_id != 1 ? 'Description' : 'School year',
+      label: JSON.parse(this.user).role_id != 1 ? 'SECTION NAME' : 'SCHOOL YEAR',
       name: 'description'
     }];
     columns.forEach(function (column) {
@@ -5606,28 +5602,28 @@ var Errors = /*#__PURE__*/function () {
     var sortOrders = {};
     var columns = [{
       name: 'lname',
-      label: 'Last Name'
+      label: 'LAST NAME'
     }, {
       name: 'name',
-      label: 'First Name'
+      label: 'FIRST NAME'
     }, {
       name: 'middlename',
-      label: 'Middle Name'
+      label: 'MIDDLE NAME'
     }, {
       name: 'name',
-      label: 'Grade'
+      label: 'GRADE LEVEL'
     }, {
       name: 'gender',
-      label: 'Gender'
+      label: 'GENDER'
     }, {
       name: 'birthday',
-      label: 'Birthday'
+      label: 'BIRTHDATE'
     }, {
       name: 'email',
-      label: 'Email'
+      label: 'EMAIL ADDRESS'
     }, {
       name: 'contactno',
-      label: 'Mobile Number'
+      label: 'CONTACT NO.'
     }];
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
@@ -6040,16 +6036,16 @@ var Errors = /*#__PURE__*/function () {
   data: function data() {
     var sortOrders = {};
     var columns = [{
-      label: 'Code',
+      label: 'SUBJECT CODE',
       name: 'code'
     }, {
-      label: 'Name',
+      label: 'SUBJECT NAME',
       name: 'name'
     }, {
-      label: 'Description',
+      label: 'SUBJECT BRANCHES',
       name: 'description'
     }, {
-      label: 'Level',
+      label: 'GRADE LEVEL',
       name: 'level_name'
     }];
     columns.forEach(function (column) {
@@ -44899,9 +44895,9 @@ var render = function() {
                               _vm._v("Choose option")
                             ]),
                             _vm._v(" "),
-                            _c("option", [_vm._v("Female")]),
+                            _c("option", [_vm._v("Male")]),
                             _vm._v(" "),
-                            _c("option", [_vm._v("Male")])
+                            _c("option", [_vm._v("Female")])
                           ]
                         )
                       ])
@@ -44911,7 +44907,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Birthday")]
+                        [_vm._v("Birthdate")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -44947,7 +44943,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Contact Number")]
+                        [_vm._v("Contact No.")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -44983,7 +44979,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Email")]
+                        [_vm._v("Email Address")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -45327,9 +45323,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Subject")]),
+        _c("th", [_vm._v("Subject Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Level")]),
+        _c("th", [_vm._v("Grade Level")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])
@@ -45477,7 +45473,7 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _c("th", [_vm._v("Action")])
+            _c("th", [_vm._v("ACTION")])
           ],
           2
         )
@@ -45941,8 +45937,6 @@ var render = function() {
                           return _c("tr", { key: project.id }, [
                             _c("td", [_vm._v(_vm._s(project.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(project.description))]),
-                            _vm._v(" "),
                             _c("td", [
                               _vm._v(
                                 _vm._s(
@@ -46012,7 +46006,7 @@ var render = function() {
                     staticStyle: { color: "black" },
                     domProps: { innerHTML: _vm._s(_vm.todo) }
                   }),
-                  _vm._v(" Levels")
+                  _vm._v(" Grade Level")
                 ]),
                 _vm._v(" "),
                 _vm._m(1),
@@ -46039,7 +46033,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Level Name")]
+                        [_vm._v("Grade Level")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -46053,7 +46047,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Level Name" },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Grade Level Name"
+                          },
                           domProps: { value: _vm.datas.name },
                           on: {
                             input: function($event) {
@@ -46061,42 +46058,6 @@ var render = function() {
                                 return
                               }
                               _vm.$set(_vm.datas, "name", $event.target.value)
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row " }, [
-                      _c(
-                        "label",
-                        { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Description")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.datas.description,
-                              expression: "datas.description"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Description" },
-                          domProps: { value: _vm.datas.description },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.datas,
-                                "description",
-                                $event.target.value
-                              )
                             }
                           }
                         })
@@ -46493,8 +46454,6 @@ var render = function() {
                           return _c("tr", { key: project.id }, [
                             _c("td", [_vm._v(_vm._s(project.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(project.description))]),
-                            _vm._v(" "),
                             _c("td", [
                               _c(
                                 "button",
@@ -46581,7 +46540,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Name")]
+                        [_vm._v("School Year")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -46603,42 +46562,6 @@ var render = function() {
                                 return
                               }
                               _vm.$set(_vm.datas, "name", $event.target.value)
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row " }, [
-                      _c(
-                        "label",
-                        { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Description")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.datas.description,
-                              expression: "datas.description"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.datas.description },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.datas,
-                                "description",
-                                $event.target.value
-                              )
                             }
                           }
                         })
@@ -47178,7 +47101,7 @@ var render = function() {
                         _c(
                           "label",
                           { staticClass: "control-label col-md-3 col-sm-3 " },
-                          [_vm._v("Level")]
+                          [_vm._v("Grade Level")]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -47225,7 +47148,7 @@ var render = function() {
                                     value: ""
                                   }
                                 },
-                                [_vm._v("Choose option")]
+                                [_vm._v("Select Grade Level")]
                               ),
                               _vm._v(" "),
                               _vm._l(_vm.levels, function(level) {
@@ -47268,7 +47191,10 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "text", placeholder: "Level Name" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Section Code"
+                            },
                             domProps: { value: _vm.datas.code },
                             on: {
                               input: function($event) {
@@ -47286,7 +47212,7 @@ var render = function() {
                         _c(
                           "label",
                           { staticClass: "control-label col-md-3 col-sm-3 " },
-                          [_vm._v("Description")]
+                          [_vm._v("Section Name")]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -47300,7 +47226,10 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "text", placeholder: "Description" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Section Name"
+                            },
                             domProps: { value: _vm.datas.description },
                             on: {
                               input: function($event) {
@@ -48519,7 +48448,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "col-form-label col-md-3 col-sm-3 " },
-                        [_vm._v("Birthday *")]
+                        [_vm._v("Birthdate *")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -49551,7 +49480,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "caption" }, [
-      _c("p", [_vm._v("Report Card")])
+      _c("p", [_vm._v("Report Card or Form 138")])
     ])
   },
   function() {
@@ -50376,7 +50305,7 @@ var render = function() {
             _c("br"),
             _vm._v(" "),
             _c("h2", { staticStyle: { color: "black" } }, [
-              _vm._v("Current Level")
+              _vm._v("Grade Level")
             ]),
             _vm._v(" "),
             _c("span", [
@@ -50394,7 +50323,7 @@ var render = function() {
             _c("br"),
             _vm._v(" "),
             _c("h2", { staticStyle: { color: "black" } }, [
-              _vm._v("Current Section")
+              _vm._v("Section Code")
             ]),
             _vm._v(" "),
             _c("span", [
@@ -51080,7 +51009,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Code")]
+                        [_vm._v("Subject Code")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -51112,7 +51041,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Name")]
+                        [_vm._v("Subject Name")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -51144,7 +51073,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Description")]
+                        [_vm._v("Branches")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -51180,7 +51109,7 @@ var render = function() {
                       _c(
                         "label",
                         { staticClass: "control-label col-md-3 col-sm-3 " },
-                        [_vm._v("Level")]
+                        [_vm._v("Grade Level")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
@@ -51219,14 +51148,19 @@ var render = function() {
                           [
                             _c(
                               "option",
-                              { attrs: { selected: "", disabled: "" } },
+                              {
+                                attrs: { selected: "", disabled: "", value: "" }
+                              },
                               [_vm._v("Choose option")]
                             ),
                             _vm._v(" "),
                             _vm._l(_vm.levels, function(level) {
                               return _c(
                                 "option",
-                                { domProps: { value: level.id } },
+                                {
+                                  key: level.name,
+                                  domProps: { value: level.id }
+                                },
                                 [
                                   _vm._v(
                                     "\n                                                        " +

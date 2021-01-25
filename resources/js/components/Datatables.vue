@@ -7,7 +7,7 @@
                     :style="'width:'+column.width+';'+'cursor:pointer;'">
                     {{column.label}}
                 </th>
-                <th>Action</th>
+                <th>ACTION</th>
             </tr>
         </thead>
         <slot></slot>

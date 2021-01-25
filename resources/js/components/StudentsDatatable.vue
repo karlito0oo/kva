@@ -119,14 +119,14 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { name: 'lname', label: 'Last Name'},
-            { name: 'name', label: 'First Name' },
-            { name: 'middlename', label: 'Middle Name'},
-            { name: 'name', label: 'Grade'},
-            { name: 'gender', label: 'Gender'},
-            { name: 'birthday', label: 'Birthday'},
-            { name: 'email', label: 'Email'},
-            { name: 'contactno', label: 'Mobile Number'},
+            { name: 'lname', label: 'LAST NAME'},
+            { name: 'name', label: 'FIRST NAME' },
+            { name: 'middlename', label: 'MIDDLE NAME'},
+            { name: 'name', label: 'GRADE LEVEL'},
+            { name: 'gender', label: 'GENDER'},
+            { name: 'birthday', label: 'BIRTHDATE'},
+            { name: 'email', label: 'EMAIL ADDRESS'},
+            { name: 'contactno', label: 'CONTACT NO.'},
         ];
 
         columns.forEach((column) => {

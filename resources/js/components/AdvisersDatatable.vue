@@ -116,25 +116,25 @@
 											<div class="col-md-9 col-sm-9 ">
 												<select class="form-control" v-model="datas.gender">
                                                     <option value="">Choose option</option>
-                                                    <option>Female</option>
                                                     <option>Male</option>
+                                                    <option>Female</option>
                                                 </select>
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Birthday</label>
+											<label class="control-label col-md-3 col-sm-3 ">Birthdate</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="date" class="form-control" v-model="datas.birthday">
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Contact Number</label>
+											<label class="control-label col-md-3 col-sm-3 ">Contact No.</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="number" class="form-control" v-model="datas.contactno">
 											</div>
 										</div>
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Email</label>
+											<label class="control-label col-md-3 col-sm-3 ">Email Address</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="email" class="form-control" v-model="datas.email">
 											</div>
@@ -168,8 +168,8 @@
                                             <table class="table is-bordered data-table">
                                                 <thead>
                                                     <tr>
-                                                       <th>Subject</th>
-                                                       <th>Level</th>
+                                                       <th>Subject Name</th>
+                                                       <th>Grade Level</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -240,13 +240,13 @@ export default {
         let sortOrders = {};
 
         let columns = [
-            { name: 'lname', label: 'Last Name'},
-            { name: 'name', label: 'First Name' },
-            { name: 'middlename', label: 'Middle Name'},
-            { name: 'gender', label: 'Gender'},
-            { name: 'birthday', label: 'Birthday'},
-            { name: 'email', label: 'Email'},
-            { name: 'contactno', label: 'Contact Number'},
+            { name: 'lname', label: 'LAST NAME'},
+            { name: 'name', label: 'FIRST NAME' },
+            { name: 'middlename', label: 'MIDDLE NAME'},
+            { name: 'gender', label: 'GENDER'},
+            { name: 'birthday', label: 'BIRTHDATE'},
+            { name: 'email', label: 'EMAIL ADDRESS'},
+            { name: 'contactno', label: 'CONTACT NO.'},
         ];
 
         columns.forEach((column) => {

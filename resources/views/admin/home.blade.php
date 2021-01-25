@@ -12,7 +12,7 @@
                   <!-- top tiles -->
                   <div class="tile_count">
                     <div class="col-md-2 col-sm-4  tile_stats_count">
-                      <span class="count_top"><i class="fa fa-user"></i> Current School Year</span>
+                      <span class="count_top"><i class="fa fa-user"></i> School Year</span>
                       <div class="count green" style="font-size:24px;">{{$data['schoolyear']}}</div>
                     </div>
                     <div class="col-md-2 col-sm-4  tile_stats_count">
@@ -24,11 +24,11 @@
                       <div class="count green">{{count($data['enrolledStudents'])}}</div>
                     </div>
                     <div class="col-md-2 col-sm-4  tile_stats_count">
-                      <span class="count_top"><i class="fa fa-user"></i> Instructors</span>
+                      <span class="count_top"><i class="fa fa-user"></i> Teachers</span>
                       <div class="count green">{{count($data['instructors'])}}</div>
                     </div>
                     <div class="col-md-2 col-sm-4  tile_stats_count">
-                      <span class="count_top"><i class="fa fa-user"></i> Pre-enrolled</span>
+                      <span class="count_top"><i class="fa fa-user"></i> Pre-enrolled Students</span>
                       <div class="count green">{{count($data['preEnrolledStudents'])}}</div>
                     </div>
                     <!-- <div class="col-md-2 col-sm-4  tile_stats_count">
