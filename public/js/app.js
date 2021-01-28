@@ -3864,6 +3864,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -3917,6 +3918,14 @@ var Errors = /*#__PURE__*/function () {
       label: JSON.parse(this.user).role_id != 1 ? 'SECTION NAME' : 'SCHOOL YEAR',
       name: 'description'
     }];
+
+    if (JSON.parse(this.user).role_id == 1) {
+      columns.push({
+        label: 'BALANCE',
+        name: 'balance'
+      });
+    }
+
     columns.forEach(function (column) {
       sortOrders[column.name] = -1;
     });
@@ -46908,8 +46917,23 @@ var render = function() {
                                 ? _c("td", [
                                     _vm._v(
                                       _vm._s(
-                                        project.studentSchoolyear
-                                          ? project.studentSchoolyear.name
+                                        project.studentEnrollmentDetails
+                                          ? project.studentEnrollmentDetails
+                                              .name
+                                          : "N/A"
+                                      )
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.accessing.role_id == 1
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        project.studentEnrollmentDetails
+                                          ? "P" +
+                                              project.studentEnrollmentDetails
+                                                .balance
                                           : "N/A"
                                       )
                                     )
@@ -48265,8 +48289,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.student.middleName,
-                              expression: "student.middleName"
+                              value: _vm.student.middlename,
+                              expression: "student.middlename"
                             }
                           ],
                           staticClass: "form-control has-feedback-left",
@@ -48275,7 +48299,7 @@ var render = function() {
                             id: "inputSuccess4",
                             placeholder: "Middle Name"
                           },
-                          domProps: { value: _vm.student.middleName },
+                          domProps: { value: _vm.student.middlename },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -48283,7 +48307,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.student,
-                                "middleName",
+                                "middlename",
                                 $event.target.value
                               )
                             }

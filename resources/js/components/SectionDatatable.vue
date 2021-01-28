@@ -47,7 +47,8 @@
                                         <td>{{project.code}}</td>
                                         <td>{{project.levels.name}}</td>
                                         <td v-if="accessing.role_id != 1">{{project.description}}</td>
-                                        <td v-if="accessing.role_id == 1">{{(project.studentSchoolyear ? project.studentSchoolyear.name : 'N/A')}}</td>
+                                        <td v-if="accessing.role_id == 1">{{(project.studentEnrollmentDetails ? project.studentEnrollmentDetails.name : 'N/A')}}</td>
+                                        <td v-if="accessing.role_id == 1">{{(project.studentEnrollmentDetails ? 'P'+project.studentEnrollmentDetails.balance : 'N/A')}}</td>
                                         <!-- Admin -->
                                         <td v-show="accessing.role_id == 3">
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
@@ -306,13 +307,15 @@ export default {
     data() {
         let sortOrders = {};
 
-        let columns = [
+        var columns = [
             
             { label: 'SECTION CODE', name: 'code' },
             { label: 'GRADE LEVEL', name: 'level' },
             { label: (JSON.parse(this.user).role_id != 1 ? 'SECTION NAME' : 'SCHOOL YEAR'), name: 'description'},
         ];
-
+        if(JSON.parse(this.user).role_id == 1){
+            columns.push({ label: 'BALANCE', name: 'balance' });
+        }
         columns.forEach((column) => {
            sortOrders[column.name] = -1;
         });

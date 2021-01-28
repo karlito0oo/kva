@@ -153,7 +153,7 @@ class EnrollmentsController extends Controller
         $data->level_id = $request->Level;
         $data->student_type = $request->StudentType;
         $data->student_id = $data->student_id;
-        $data->balance = $data->balance;
+        $data->balance = $request->balance;
         $data->status = 'Pre-Enrolled';
 
         $data->save();
@@ -212,6 +212,7 @@ class EnrollmentsController extends Controller
 
         $data = Enrollment::find($id);
         $data->status = 'Enrolled';
+        $data->balance = $request->balance;
         $data->section_id = $request->Section;
         $data->save();
 

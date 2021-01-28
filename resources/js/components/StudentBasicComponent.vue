@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Middle Name"  v-model="student.middleName">
+                                <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Middle Name"  v-model="student.middlename">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
 

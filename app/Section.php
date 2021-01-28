@@ -15,7 +15,7 @@ class Section extends Model
     use SoftDeletes;
 
     
-    protected $appends = ['subjects', 'adviserStudents', 'studentSchoolyear'];
+    protected $appends = ['subjects', 'adviserStudents', 'studentEnrollmentDetails'];
     
     public function levels()
     {
@@ -33,9 +33,9 @@ class Section extends Model
             ->get();
     }
 
-    public function getStudentSchoolyearAttribute(){
+    public function getStudentEnrollmentDetailsAttribute(){
         $student_id = Auth::user()->id;
-        return Enrollment::select('school_years.*')
+        return Enrollment::select('school_years.*', 'enrollments.balance')
             ->join('school_years', 'school_years.id', 'enrollments.schoolyear_id')
             ->where('enrollments.student_id', $student_id)
             ->where('enrollments.level_id', $this->level_id)

@@ -125,7 +125,7 @@ class UsersController extends Controller
 
         $data->name = $request->name;
         $data->lname = $request->lname;
-        $data->middleName = $request->middleName;
+        $data->middlename = $request->middlename;
         $data->email = $request->email;
         $data->address = $request->address;
         $data->contactno = $request->contactno;
