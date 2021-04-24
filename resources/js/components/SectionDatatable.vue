@@ -247,16 +247,32 @@
             </div>
             <div class="modal-body">
                 
-                
-										<div class="form-group row" v-for="subject in section.selectedStudentSubject" :key="subject.id">
-											<label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
-											<div class="col-md-6 col-sm-6 ">
-												 <select  class="form-control" v-model="subject.grade" :disabled="accessing.role_id == 1">
-                                                    <option :value=null disabled>{{ (accessing.role_id != 1 ? 'Select Grade' : 'No Grade') }}</option>
-                                                    <option>Passed</option>
-                                                    <option>Failed</option>
-                                                </select>
-										</div>
+                <div class="row" v-for="subject in section.selectedStudentSubject" :key="subject.id">
+                    <div class="col-md-3 col-sm-12  form-group">
+                        <label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-12  form-group">
+                        <input type="number" class="form-control" v-model="subject.g1" placeholder="First" @keyup="subject.grade = computeGrade(subject)">
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-12  form-group">
+                        <input type="number" class="form-control" v-model="subject.g2" placeholder="Second" @keyup="subject.grade = computeGrade(subject)">
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-12  form-group">
+                        <input type="number" class="form-control" v-model="subject.g3" placeholder="Third" @keyup="subject.grade = computeGrade(subject)">
+                    </div>
+                    
+                    <div class="col-md-2 col-sm-12  form-group">
+                        <input type="number" class="form-control" v-model="subject.g4" placeholder="Fourth" @keyup="subject.grade = computeGrade(subject)">
+                    </div>
+                    
+                    <div class="col-md-1 col-sm-12  form-group">
+                        <p :style="(subject.grade == 'Passed' ? 'color:green' : 'color:red')">{{subject.grade}}</p>
+                    </div>
+                </div>
+
             </div>
 
             
@@ -366,6 +382,13 @@ export default {
         }
     },
     methods: {
+        computeGrade(subject){
+            return  (
+                        (parseFloat(subject.g1) + parseFloat(subject.g2) + parseFloat(subject.g3) + parseFloat(subject.g4))
+                        / 4
+                    )
+                    >= 70 ? 'Passed' : 'Failed';
+        },
         updateStudentGrade(){
             axios.post(this.endPoint+'updateStudentGrade', this.section)
             .then((res) => {

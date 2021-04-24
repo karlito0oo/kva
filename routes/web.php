@@ -70,6 +70,9 @@ Route::post('/api/sections/updateAdvisers', 'SectionsController@updateAdvisers')
 Route::post('/api/sections/studentSubjects', 'SectionsController@studentSubjects');
 Route::post('/api/sections/updateStudentGrade', 'SectionsController@updateStudentGrade');
 
+// About Us
+Route::resource('/about-us', 'AboutUsController');
+
 
 //--------------------Students
 
@@ -78,3 +81,8 @@ Route::resource('/api/enrollments', 'EnrollmentsController');
 Route::get('/home/enrollments', 'EnrollmentsController@pageHome');
 Route::patch('/api/enrollments/submitEnrollment/{id}', 'EnrollmentsController@submitEnrollment');
 Route::post('/api/enrollments/checkEnrollmentDetails', 'EnrollmentsController@checkEnrollmentDetails');
+
+
+
+//Printable reports
+Route::get('print/exportStudents/{type}/{id}', 'PDFExportsController@exportStudents');

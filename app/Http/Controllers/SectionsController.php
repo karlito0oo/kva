@@ -193,7 +193,7 @@ class SectionsController extends Controller
 
         $user = Auth::user();
         $setting = Setting::find(1);
-        return User::select('subjects.*', 'enrolled_subjects.grade', 'enrolled_subjects.id as es_id')
+        return User::select('subjects.*', 'enrolled_subjects.grade', 'enrolled_subjects.id as es_id', 'enrolled_subjects.g1', 'enrolled_subjects.g2', 'enrolled_subjects.g3', 'enrolled_subjects.g4')
             ->distinct()
             ->join('enrollments', 'enrollments.student_id', 'users.id')
             ->join('enrolled_subjects', 'enrolled_subjects.enrollment_id', 'enrollments.id')
@@ -218,6 +218,10 @@ class SectionsController extends Controller
         foreach ($request->selectedStudentSubject as $subject){
             $currentSubject = EnrolledSubject::find($subject['es_id']);
             $currentSubject->grade = $subject['grade'];
+            $currentSubject->g1 = $subject['g1'];
+            $currentSubject->g2 = $subject['g2'];
+            $currentSubject->g3 = $subject['g3'];
+            $currentSubject->g4 = $subject['g4'];
             $currentSubject->save();
         }
         

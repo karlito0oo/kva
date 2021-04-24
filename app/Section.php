@@ -56,4 +56,18 @@ class Section extends Model
             ->where('enrollments.status', 'Enrolled')
             ->get();
     }
+
+    public static function activeSection(){
+        $schoolyear_id = Setting::first()->schoolyear_id;
+
+        return Level::select('sections.*')
+            ->join('enrollments', 'enrollments.level_id', 'levels.id')
+            ->join('sections', 'sections.level_id', 'levels.id')
+            ->where('enrollments.schoolyear_id', $schoolyear_id)
+            ->where('enrollments.status', 'Enrolled')
+            ->distinct()
+            ->orderByRaw('LENGTH(name)')
+            ->orderBy('name')
+            ->get();
+    }
 }

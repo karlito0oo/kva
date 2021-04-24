@@ -69,7 +69,6 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <br>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">Current School Year </label>
                                 <div class="col-md-9 col-sm-9 ">
@@ -82,22 +81,85 @@
                                     </select>
                                 </div>
                             </div>
-                            <br>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">Max. number of student per section </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="number" class="form-control" v-model="datas.maxstudentsection" placeholder="0">
                                 </div>
                             </div>
-                            <br>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3 ">ID No. Prefix </label>
                                 <div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" v-model="datas.id_no_prefix">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">Passing Grade <small>(out of 100)</small> </label>
+                                <div class="col-md-9 col-sm-9 ">
+												<input type="text" class="form-control" v-model="datas.passingGrade">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                            
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>School Information</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                    </div>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">About School </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <textarea class="form-control border-primary" name="ckEditorTextarea" id="aboutSchool" v-model="datas.data">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">Services Offered </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <textarea class="form-control border-primary" name="ckEditorTextarea" id="servicesOffered" v-model="datas.data">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">Rules and Regulation </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <textarea class="form-control border-primary" name="ckEditorTextarea" id="rulesRegulation" v-model="datas.data">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3 col-sm-3 ">Rules and Regulation </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <textarea class="form-control border-primary" name="ckEditorTextarea" id="guidelinesInstruction" v-model="datas.data">
+                                    </textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -149,6 +211,10 @@ import Noty from 'noty';
         mounted() {
             this.settingsFetch()
             this.schoolyearsFetch()
+            CKEDITOR.replace('aboutSchool')
+            CKEDITOR.replace('servicesOffered')
+            CKEDITOR.replace('rulesRegulation')
+            CKEDITOR.replace('guidelinesInstruction')
         },
 
         methods: {
@@ -157,6 +223,11 @@ import Noty from 'noty';
                 axios.get('/api/settings')
                 .then((res) => {
                     this.datas = res.data
+                    //to update ckeditor fields
+                    CKEDITOR.instances.aboutSchool.setData(this.datas.aboutSchool)
+                    CKEDITOR.instances.servicesOffered.setData(this.datas.servicesOffered)
+                    CKEDITOR.instances.rulesRegulation.setData(this.datas.rulesRegulation)
+                    CKEDITOR.instances.guidelinesInstruction.setData(this.datas.guidelinesInstruction)
                 })
                 .catch((err) => {
                     console.log(err);
@@ -174,6 +245,13 @@ import Noty from 'noty';
             },
 
             updateSettings(){
+                //update ckeditor fields
+                this.datas.aboutSchool = CKEDITOR.instances.aboutSchool.getData();
+                this.datas.servicesOffered = CKEDITOR.instances.servicesOffered.getData();
+                this.datas.rulesRegulation = CKEDITOR.instances.rulesRegulation.getData();
+                this.datas.guidelinesInstruction = CKEDITOR.instances.guidelinesInstruction.getData();
+
+
                 axios.patch('/api/settings/'+'1', this.datas)
                 .then((res) => {
                         new Noty({killer: true, type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();

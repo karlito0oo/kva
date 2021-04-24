@@ -3865,6 +3865,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -3975,6 +3991,9 @@ var Errors = /*#__PURE__*/function () {
     };
   },
   methods: {
+    computeGrade: function computeGrade(subject) {
+      return (parseFloat(subject.g1) + parseFloat(subject.g2) + parseFloat(subject.g3) + parseFloat(subject.g4)) / 4 >= 70 ? 'Passed' : 'Failed';
+    },
     updateStudentGrade: function updateStudentGrade() {
       var _this = this;
 
@@ -4349,6 +4368,68 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -4390,13 +4471,22 @@ var Errors = /*#__PURE__*/function () {
   mounted: function mounted() {
     this.settingsFetch();
     this.schoolyearsFetch();
+    CKEDITOR.replace('aboutSchool');
+    CKEDITOR.replace('servicesOffered');
+    CKEDITOR.replace('rulesRegulation');
+    CKEDITOR.replace('guidelinesInstruction');
   },
   methods: {
     settingsFetch: function settingsFetch() {
       var _this = this;
 
       axios.get('/api/settings').then(function (res) {
-        _this.datas = res.data;
+        _this.datas = res.data; //to update ckeditor fields
+
+        CKEDITOR.instances.aboutSchool.setData(_this.datas.aboutSchool);
+        CKEDITOR.instances.servicesOffered.setData(_this.datas.servicesOffered);
+        CKEDITOR.instances.rulesRegulation.setData(_this.datas.rulesRegulation);
+        CKEDITOR.instances.guidelinesInstruction.setData(_this.datas.guidelinesInstruction);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -4413,6 +4503,11 @@ var Errors = /*#__PURE__*/function () {
     updateSettings: function updateSettings() {
       var _this3 = this;
 
+      //update ckeditor fields
+      this.datas.aboutSchool = CKEDITOR.instances.aboutSchool.getData();
+      this.datas.servicesOffered = CKEDITOR.instances.servicesOffered.getData();
+      this.datas.rulesRegulation = CKEDITOR.instances.rulesRegulation.getData();
+      this.datas.guidelinesInstruction = CKEDITOR.instances.guidelinesInstruction.getData();
       axios.patch('/api/settings/' + '1', this.datas).then(function (res) {
         new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
           killer: true,
@@ -47549,109 +47644,167 @@ var render = function() {
             _c(
               "div",
               { staticClass: "modal-body" },
-              [
-                _vm._l(_vm.section.selectedStudentSubject, function(subject) {
-                  return _c(
-                    "div",
-                    { key: subject.id, staticClass: "form-group row" },
-                    [
-                      _c(
-                        "label",
-                        { staticClass: "control-label col-md-6 col-sm-6 " },
-                        [
-                          _vm._v(
-                            "[" +
-                              _vm._s(subject.code) +
-                              "] " +
-                              _vm._s(subject.name)
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6 col-sm-6 " }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: subject.grade,
-                                expression: "subject.grade"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { disabled: _vm.accessing.role_id == 1 },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  subject,
-                                  "grade",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              {
-                                attrs: { disabled: "" },
-                                domProps: { value: null }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.accessing.role_id != 1
-                                      ? "Select Grade"
-                                      : "No Grade"
-                                  )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Passed")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Failed")])
-                          ]
+              _vm._l(_vm.section.selectedStudentSubject, function(subject) {
+                return _c("div", { key: subject.id, staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-3 col-sm-12  form-group" }, [
+                    _c(
+                      "label",
+                      { staticClass: "control-label col-md-6 col-sm-6 " },
+                      [
+                        _vm._v(
+                          "[" +
+                            _vm._s(subject.code) +
+                            "] " +
+                            _vm._s(subject.name)
                         )
-                      ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2 col-sm-12  form-group" }, [
+                    _c("input", {
                       directives: [
                         {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.accessing.role_id != 1,
-                          expression: "accessing.role_id != 1"
+                          name: "model",
+                          rawName: "v-model",
+                          value: subject.g1,
+                          expression: "subject.g1"
                         }
                       ],
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.updateStudentGrade }
-                    },
-                    [_vm._v("Save")]
-                  )
+                      staticClass: "form-control",
+                      attrs: { type: "number", placeholder: "First" },
+                      domProps: { value: subject.g1 },
+                      on: {
+                        keyup: function($event) {
+                          subject.grade = _vm.computeGrade(subject)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(subject, "g1", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2 col-sm-12  form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: subject.g2,
+                          expression: "subject.g2"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", placeholder: "Second" },
+                      domProps: { value: subject.g2 },
+                      on: {
+                        keyup: function($event) {
+                          subject.grade = _vm.computeGrade(subject)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(subject, "g2", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2 col-sm-12  form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: subject.g3,
+                          expression: "subject.g3"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", placeholder: "Third" },
+                      domProps: { value: subject.g3 },
+                      on: {
+                        keyup: function($event) {
+                          subject.grade = _vm.computeGrade(subject)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(subject, "g3", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2 col-sm-12  form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: subject.g4,
+                          expression: "subject.g4"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", placeholder: "Fourth" },
+                      domProps: { value: subject.g4 },
+                      on: {
+                        keyup: function($event) {
+                          subject.grade = _vm.computeGrade(subject)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(subject, "g4", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1 col-sm-12  form-group" }, [
+                    _c(
+                      "p",
+                      {
+                        style:
+                          subject.grade == "Passed"
+                            ? "color:green"
+                            : "color:red"
+                      },
+                      [_vm._v(_vm._s(subject.grade))]
+                    )
+                  ])
                 ])
-              ],
-              2
-            )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.accessing.role_id != 1,
+                      expression: "accessing.role_id != 1"
+                    }
+                  ],
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.updateStudentGrade }
+                },
+                [_vm._v("Save")]
+              )
+            ])
           ])
         ])
       ]
@@ -47912,8 +48065,6 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "x_content" }, [
-              _c("br"),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
                   "label",
@@ -47983,8 +48134,6 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
                   "label",
@@ -48021,8 +48170,6 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
                   "label",
@@ -48049,6 +48196,183 @@ var render = function() {
                           return
                         }
                         _vm.$set(_vm.datas, "id_no_prefix", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.passingGrade,
+                        expression: "datas.passingGrade"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.datas.passingGrade },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "passingGrade", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "x_panel" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "x_content" }, [
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("About School ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.data,
+                        expression: "datas.data"
+                      }
+                    ],
+                    staticClass: "form-control border-primary",
+                    attrs: { name: "ckEditorTextarea", id: "aboutSchool" },
+                    domProps: { value: _vm.datas.data },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "data", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("Services Offered ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.data,
+                        expression: "datas.data"
+                      }
+                    ],
+                    staticClass: "form-control border-primary",
+                    attrs: { name: "ckEditorTextarea", id: "servicesOffered" },
+                    domProps: { value: _vm.datas.data },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "data", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("Rules and Regulation ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.data,
+                        expression: "datas.data"
+                      }
+                    ],
+                    staticClass: "form-control border-primary",
+                    attrs: { name: "ckEditorTextarea", id: "rulesRegulation" },
+                    domProps: { value: _vm.datas.data },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "data", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  { staticClass: "col-form-label col-md-3 col-sm-3 " },
+                  [_vm._v("Rules and Regulation ")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datas.data,
+                        expression: "datas.data"
+                      }
+                    ],
+                    staticClass: "form-control border-primary",
+                    attrs: {
+                      name: "ckEditorTextarea",
+                      id: "guidelinesInstruction"
+                    },
+                    domProps: { value: _vm.datas.data },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.datas, "data", $event.target.value)
                       }
                     }
                   })
@@ -48084,6 +48408,72 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "x_title" }, [
       _c("h2", [_vm._v("General Settings")]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
+        _c("li", [
+          _c("a", { staticClass: "collapse-link" }, [
+            _c("i", { staticClass: "fa fa-chevron-up" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "dropdown" }, [
+          _c(
+            "a",
+            {
+              staticClass: "dropdown-toggle",
+              attrs: {
+                href: "#",
+                "data-toggle": "dropdown",
+                role: "button",
+                "aria-expanded": "false"
+              }
+            },
+            [_c("i", { staticClass: "fa fa-wrench" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenuButton" }
+            },
+            [
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 1")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+                _vm._v("Settings 2")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { staticClass: "close-link" }, [
+            _c("i", { staticClass: "fa fa-close" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "col-form-label col-md-3 col-sm-3 " }, [
+      _vm._v("Passing Grade "),
+      _c("small", [_vm._v("(out of 100)")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "x_title" }, [
+      _c("h2", [_vm._v("School Information")]),
       _vm._v(" "),
       _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
         _c("li", [
@@ -64683,8 +65073,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\Laravel App\kva\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\Laravel App\kva\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

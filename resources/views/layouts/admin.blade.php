@@ -1,6 +1,7 @@
 
 @php
   $levels = \App\Level::activeLevel();
+  $sections = \App\Section::activeSection();
 @endphp
 
 <!DOCTYPE html>
@@ -118,6 +119,41 @@
                   <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Section</a></li>
 
                   @endif
+
+                  <li><a href="{{ url('/about-us') }}"><i class="fa fa-info-circle"></i> About KVA</a></li>
+                    
+                </ul>
+              </div>
+
+              <div class="menu_section">
+                <h3>Printable Reports</h3>
+                <ul class="nav side-menu">
+
+                  @if(Auth::user()->role_id == 3)
+                  <li><a><i class="fa fa-group"></i> Students <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <!-- All students -->
+                        <li><a href="{{ url('/print/exportStudents/all/na') }}">All Students</a></li>
+                        <!-- Per Level -->
+                        </li><li class=""><a>Per level<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu" style="display: none;">
+                            @foreach($levels as $level)
+                              <li><a href="{{ url('/print/exportStudents/level/' . $level->id) }}">{{$level->name}}</a></li>
+                            @endforeach
+                          </ul>
+                        </li>
+                        <!-- Per Section -->
+                        </li><li class=""><a>Per Section<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu" style="display: none;">
+                            @foreach($sections as $section)
+                              <li><a href="{{ url('/home/students/section/' . $section->id) }}">{{$section->code}}</a></li>
+                            @endforeach
+                          </ul>
+                        </li>
+                    </ul>
+                  </li>
+                  @endif
+
                     
                 </ul>
               </div>
@@ -182,7 +218,8 @@
         <!-- /footer content -->
       </div>
     </div>
-
+     
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
     <!-- Vue app.ks -->
     <script src="{{ asset('js/app.js') }}"></script>
 

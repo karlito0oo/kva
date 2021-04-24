@@ -80,6 +80,13 @@ class SettingsController extends Controller
         $data->enrollmentEnd = $request->enrollmentEnd;
         $data->id_no_prefix = $request->id_no_prefix;
         $data->maxstudentsection = $request->maxstudentsection;
+        $data->passingGrade = $request->passingGrade;
+
+        
+        $data->aboutSchool = $request->aboutSchool;
+        $data->servicesOffered = $request->servicesOffered;
+        $data->rulesRegulation = $request->rulesRegulation;
+        $data->guidelinesInstruction = $request->guidelinesInstruction;
 
         return $data->save();
     }

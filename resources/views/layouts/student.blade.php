@@ -66,7 +66,7 @@ $settings = \App\Setting::first();
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="{{ url('/home/sections') }}"><i class="fa fa-history"></i> Enrollment History</a></li>
-                   
+                  <li><a href="{{ url('/about-us') }}"><i class="fa fa-info-circle"></i> About KVA</a></li>
                 </ul>
               </div>
 

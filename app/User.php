@@ -63,12 +63,36 @@ class User extends Authenticatable implements MustVerifyEmail
         return Subject::where('adviser_id', $this->id)->with('levels')->get();
     }
 
-    public static function enrolledStudents(){
+    public static function enrolledStudents($type = null, $id = null){
         $schoolyear_id = Setting::find(1)->schoolyear_id;
-        return Enrollment::select('enrollments.*', 'levels.name as levelName')
+        return Enrollment::select(
+            'enrollments.*', 
+            'levels.name as levelName', 
+            'users.name', 
+            'users.middlename', 
+            'users.lname', 
+            'users.email', 
+            'users.contactno',
+            'users.guardianContactNo',
+            'sections.code as sectionCode'
+        )
         ->join('levels', 'levels.id', 'enrollments.level_id')
+        ->join('users', 'users.id', 'enrollments.student_id')
+        ->join('sections', 'sections.id', 'enrollments.section_id')
         ->where('enrollments.schoolyear_id', $schoolyear_id)
         ->where('enrollments.status', 'Enrolled')
+        //get by section
+        ->when($type == 'section', function ($query) use ($id) {
+            $query->where('enrollments.section_id', $id);
+            return $query;
+        })
+        //get by level
+        ->when($type == 'level', function ($query) use ($id) {
+            $query->where('enrollments.level_id', $id);
+            return $query;
+        })
+        ->orderBy('levels.name')
+        ->orderBy('sections.code')
         ->get();
     }
 
