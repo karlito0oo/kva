@@ -125,20 +125,20 @@
                 </ul>
               </div>
 
+              @if(Auth::user()->role_id == 3)
               <div class="menu_section">
                 <h3>Printable Reports</h3>
                 <ul class="nav side-menu">
 
-                  @if(Auth::user()->role_id == 3)
                   <li><a><i class="fa fa-group"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <!-- All students -->
-                        <li><a href="{{ url('/print/exportStudents/all/na') }}">All Students</a></li>
+                        <li><a href="{{ url('/print/exportStudents/all/na/0') }}">All Students</a></li>
                         <!-- Per Level -->
                         </li><li class=""><a>Per level<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
                             @foreach($levels as $level)
-                              <li><a href="{{ url('/print/exportStudents/level/' . $level->id) }}">{{$level->name}}</a></li>
+                              <li><a href="{{ url('/print/exportStudents/level/' . $level->id) . '/0'}}">{{$level->name}}</a></li>
                             @endforeach
                           </ul>
                         </li>
@@ -146,17 +146,15 @@
                         </li><li class=""><a>Per Section<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
                             @foreach($sections as $section)
-                              <li><a href="{{ url('/home/students/section/' . $section->id) }}">{{$section->code}}</a></li>
+                              <li><a href="{{ url('/home/students/section/' . $section->id) . '/0' }}">{{$section->code}}</a></li>
                             @endforeach
                           </ul>
                         </li>
                     </ul>
                   </li>
-                  @endif
-
-                    
                 </ul>
               </div>
+              @endif
 
             </div>
             <!-- /sidebar menu -->

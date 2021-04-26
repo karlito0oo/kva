@@ -94,6 +94,7 @@
                 <br />
 
                 <div>
+                  <img src="{{asset('images/kvalogo.jfif')}}" alt="" style="border-radius: 50%;">
                   <h1>Karunungan Village Academy</h1>
                   <p>©2020 All Rights Reserved.</p>
                 </div>

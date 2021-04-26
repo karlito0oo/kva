@@ -20,72 +20,43 @@
 
     <!-- Custom Theme Style -->
     <link href="{{url('template/build/css/custom.min.css')}}" rel="stylesheet">
+
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+      }
+
+      .login {
+        background-image: url("{{asset('images/systemImages/wallpaper2.jpg')}}") !important;/* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }  
+
+      .login-box{
+        width: 500px;
+        background: rgba(0,0,0,0.8);
+        margin: 12% auto;
+        padding: 50px 0;
+        color: white;
+        box-shadow: 0 0 20px 2px rgba(0,0,0,0.5);
+        margin-top: 150px;
+      }
+
+    </style>
   </head>
 
   <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
-      <div class="login_wrapper">
-
-        <!-- <div class="animate form login_form">
-          <section class="login_content">
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-              <h1>Login Form</h1>
-              <div>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-              </div>
-              <div>
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-              </div>
-              <div>
-                <button type="submit" class="btn btn-default submi">
-                                    {{ __('Login') }}
-                                </button>
-                @if (Route::has('password.request'))
-                    <a class="reset_pass" href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
-                    </a>
-                @endif
-              </div>
-
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1>Karunungan Village Academy</h1>
-                  <p>©2020 All Rights Reserved.</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div> -->
-
-        <div id="register" class="animate form login_form">
+    <div class="login-box">
           <section class="login_content">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
               <h1>Create Account</h1>
-              <div>
+              <div class="pl-5 pr-5">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="First name">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -93,7 +64,7 @@
                     </span>
                 @enderror
               </div>
-              <div>
+              <div class="pl-5 pr-5">
                 <input id="name" type="text" class="form-control @error('lname') is-invalid @enderror" name="lname" value="{{ old('lname') }}" required autocomplete="lname" autofocus placeholder="Last name">
                 @error('lname')
                     <span class="invalid-feedback" role="alert">
@@ -101,7 +72,7 @@
                     </span>
                 @enderror
               </div>
-              <div>
+              <div class="pl-5 pr-5">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"  placeholder="Email">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -109,7 +80,7 @@
                     </span>
                 @enderror
               </div>
-              <div>
+              <div class="pl-5 pr-5">
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -117,7 +88,7 @@
                     </span>
                 @enderror
               </div>
-              <div>
+              <div class="pl-5 pr-5">
               <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -127,7 +98,7 @@
               </div>
 
               <div>
-                <button type="submit" class="btn btn-default submit">
+                <button type="submit" class="btn btn-link submit">
                     {{ __('Register') }}
                 </button>
               </div>
@@ -149,9 +120,7 @@
               </div>
             </form>
           </section>
-        </div>
-
-      </div>
     </div>
+    
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,17 +20,39 @@
 
     <!-- Custom Theme Style -->
     <link href="{{url('template/build/css/custom.min.css')}}" rel="stylesheet">
+
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+      }
+
+      .login {
+        background-image: url("{{asset('images/systemImages/wallpaper2.jpg')}}");/* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }  
+
+      .login-box{
+        width: 500px;
+        background: rgba(0,0,0,0.8);
+        margin: 12% auto;
+        padding: 50px 0;
+        color: white;
+        box-shadow: 0 0 20px 2px rgba(0,0,0,0.5);
+        margin-top: 150px;
+      }
+
+    </style>
   </head>
 
   <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
-      <div class="login_wrapper">
-
-        <div id="register" class="animate form login_form">
-          <section class="login_content">
+    <div class="login-box">
+    <section class="login_content">
                <form method="POST" action="{{ route('password.email') }}">
                 @csrf
               <h1>Reset Password</h1>
@@ -43,7 +63,7 @@
                     </div>
                 @endif
 
-              <div>
+              <div class="pl-5 pr-5">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -54,7 +74,7 @@
               
 
               <div>
-                <button type="submit" class="btn btn-default submit">
+                <button type="submit" class="btn btn-link submit">
                    {{ __('Send Password Reset Link') }}
                 </button>
               </div>
@@ -72,9 +92,8 @@
               </div>
             </form>
           </section>
-        </div>
-
-      </div>
     </div>
+    
   </body>
 </html>
+
