@@ -51150,11 +51150,11 @@ var render = function() {
                                       "a",
                                       {
                                         staticClass: "dropdown-item",
-                                        attrs: { href: "#" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteData(project)
-                                          }
+                                        attrs: {
+                                          href:
+                                            "/print/exportRegForm/" +
+                                            project.id +
+                                            "/1"
                                         }
                                       },
                                       [_vm._v("Print Reg From")]

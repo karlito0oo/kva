@@ -61,7 +61,7 @@
                                                     <a class="dropdown-item" href="#" @click="deleteData(project)">Delete</a>
                                                     <hr>
                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#goodMoralModal" @click="selectedStudent = project.id">Print Good Moral</a>
-                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Print Reg From</a>
+                                                    <a class="dropdown-item" :href="'/print/exportRegForm/' + project.id + '/1'">Print Reg From</a>
                                                 </div>
                                             </div>
                                         </td>

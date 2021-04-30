@@ -104,4 +104,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ->where('enrollments.status', 'Pre-Enrolled')
         ->get();
     }
+
+    public static function enrolledSubjects($enrollment_id){
+        $schoolyear_id = Setting::find(1)->schoolyear_id;
+        return Subject::select('subjects.*', 'users.name as fName', 'users.lname')
+        ->join('enrolled_subjects', 'enrolled_subjects.subject_id', 'subjects.id')
+        ->leftJoin('users', 'users.id', 'subjects.adviser_id')
+        ->where('enrolled_subjects.enrollment_id', $enrollment_id)
+        ->get();
+    }
 }

@@ -87,3 +87,4 @@ Route::post('/api/enrollments/checkEnrollmentDetails', 'EnrollmentsController@ch
 //Printable reports
 Route::get('print/exportStudents/{type}/{id}/{preview}', 'PDFExportsController@exportStudents');
 Route::get('print/exportGoodmoral/{id}/{requestor}/{preview}', 'PDFExportsController@exportStudentGoodMoral');
+Route::get('print/exportRegForm/{id}/{preview}', 'PDFExportsController@exportStudentRegForm');

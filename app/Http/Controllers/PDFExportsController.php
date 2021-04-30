@@ -46,4 +46,25 @@ class PDFExportsController extends Controller
         ]);
         return $pdf->download($student->name . ' ' . $student->lname . ' - Good Moral.pdf');
     }
+
+    public function exportStudentRegForm($id = null, $preview = 0){
+        
+        $student = User::find($id);
+        $SY = SchoolYear::find(Setting::first()->schoolyear_id);
+        //preview
+        if ($preview){
+            return view('PDFExport/studentRegForm', [
+                'student' => $student,
+                'SY' => $SY,
+                'subjects' => User::enrolledSubjects($student->currentEnrollment->id),
+            ]);
+        }
+        //download pdf
+        $pdf = PDF::loadView('PDFExport/studentRegForm', [
+            'student' => $student,
+            'SY' => $SY,
+            'subjects' => User::enrolledSubjects($student->currentEnrollment->id),
+        ]);
+        return $pdf->download($student->name . ' ' . $student->lname . ' - Registration Form.pdf');
+    }
 }
