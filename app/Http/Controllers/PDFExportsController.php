@@ -13,6 +13,9 @@ class PDFExportsController extends Controller
     public function exportStudents($type = 'all', $id = null, $preview = 0){
         
         $students = User::enrolledStudents($type, $id);
+        if($type == 'all'){
+            $students = User::allStudents();
+        }
         //preview
         if ($preview){
             return view('PDFExport/students', [

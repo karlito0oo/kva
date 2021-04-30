@@ -14,7 +14,28 @@
     <title>Students</title>
 </head>
 <body>
-
+    @php
+        $levels = $students->filter(function ($student) {
+            return $student->levelName;
+        });
+    @endphp
+    <table  width="100%">
+        <!-- Header -->
+        <tr>
+            <td width="30%">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="{{asset('images/kvalogo.jfif')}}" alt="" style="border-radius: 50%;">
+            </td>
+            <th width="40%">
+                <center>
+                    Karunungan Village Academy  <br>
+                    Teacher's Village, G.M.A., Cavite
+                </center>
+            </th>
+            <td width="30%"></td>
+        </tr>
+    </table>
+        <hr>
     <table class="table">
         <thead>
             <tr>
@@ -37,8 +58,8 @@
                     <td>{{$student->email}}</td>
                     <td>{{$student->contactno ?? 'N/A'}}</td>
                     <td>{{$student->guardianContactNo ?? 'N/A'}}</td>
-                    <td>{{$student->levelName}}</td>
-                    <td>{{$student->sectionCode}}</td>
+                    <td>{{$student->levelName ?? 'N/A'}}</td>
+                    <td>{{$student->sectionCode ?? 'N/A'}}</td>
                 </tr>
             @endforeach
         </tbody>
