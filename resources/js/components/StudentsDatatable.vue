@@ -60,8 +60,8 @@
                                                     <a class="dropdown-item" :href="'/api/students/' + project.id">Update</a>
                                                     <a class="dropdown-item" href="#" @click="deleteData(project)">Delete</a>
                                                     <hr>
-                                                    <a class="dropdown-item" :href="'/api/students/' + project.id">Print Reg Form</a>
-                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Print Good Moral</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#goodMoralModal" @click="selectedStudent = project.id">Print Good Moral</a>
+                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Print Reg From</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -83,7 +83,30 @@
     </div>
 
         
-
+    <div class="modal fade" id="goodMoralModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Generate Good Moral</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row ">
+                    <label class="control-label col-md-3 col-sm-3 ">Requestor</label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control" v-model="requestor">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-primary" :href="'/print/exportGoodmoral/' + selectedStudent + '/' + requestor + '/0'">Generate</a>
+            </div>
+            </div>
+        </div>
+    </div>
 
     </div>
 </template>
@@ -141,6 +164,8 @@ export default {
            sortOrders[column.name] = -1;
         });
         return {
+            requestor: '',
+            selectedStudent: '',
             projects: [],
             columns: columns,
             sortKey: 'lname',

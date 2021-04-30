@@ -5666,6 +5666,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -5741,6 +5764,8 @@ var Errors = /*#__PURE__*/function () {
       sortOrders[column.name] = -1;
     });
     return {
+      requestor: '',
+      selectedStudent: '',
       projects: [],
       columns: columns,
       sortKey: 'lname',
@@ -51108,10 +51133,17 @@ var render = function() {
                                       {
                                         staticClass: "dropdown-item",
                                         attrs: {
-                                          href: "/api/students/" + project.id
+                                          href: "#",
+                                          "data-toggle": "modal",
+                                          "data-target": "#goodMoralModal"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.selectedStudent = project.id
+                                          }
                                         }
                                       },
-                                      [_vm._v("Print Reg Form")]
+                                      [_vm._v("Print Good Moral")]
                                     ),
                                     _vm._v(" "),
                                     _c(
@@ -51125,7 +51157,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [_vm._v("Print Good Moral")]
+                                      [_vm._v("Print Reg From")]
                                     )
                                   ]
                                 )
@@ -51156,7 +51188,94 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "goodMoralModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group row " }, [
+                  _c(
+                    "label",
+                    { staticClass: "control-label col-md-3 col-sm-3 " },
+                    [_vm._v("Requestor")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9 col-sm-9 " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.requestor,
+                          expression: "requestor"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.requestor },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.requestor = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      type: "button",
+                      href:
+                        "/print/exportGoodmoral/" +
+                        _vm.selectedStudent +
+                        "/" +
+                        _vm.requestor +
+                        "/0"
+                    }
+                  },
+                  [_vm._v("Generate")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -51209,6 +51328,31 @@ var staticRenderFns = [
           _c("i", { staticClass: "fa fa-close" })
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Generate Good Moral")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
