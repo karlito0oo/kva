@@ -5658,6 +5658,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors = /*#__PURE__*/function () {
   function Errors() {
     _classCallCheck(this, Errors);
@@ -51038,49 +51046,90 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(project.contactno))]),
                             _vm._v(" "),
                             _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-success btn-sm",
-                                  attrs: {
-                                    href: "/api/admin/enrollment/" + project.id
-                                  }
-                                },
-                                [
-                                  _c("span", { staticClass: "fa fa-plus" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(
-                                          !project.currentEnrollment
-                                            ? "Enroll"
-                                            : "Update Enrollment"
+                              _c("div", { staticClass: "dropdownn" }, [
+                                _c("span", [
+                                  _c("i", { staticClass: "fa fa-ellipsis-v" })
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "dropdown-contentt" },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: {
+                                          href:
+                                            "/api/admin/enrollment/" +
+                                            project.id
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            !project.currentEnrollment
+                                              ? "Enroll"
+                                              : "Update Enrollment"
+                                          )
                                         )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: {
+                                          href: "/api/students/" + project.id
+                                        }
+                                      },
+                                      [_vm._v("Update")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteData(project)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Delete")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("hr"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: {
+                                          href: "/api/students/" + project.id
+                                        }
+                                      },
+                                      [_vm._v("Print Reg Form")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteData(project)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Print Good Moral")]
                                     )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteData(project)
-                                    }
-                                  }
-                                },
-                                [_c("span", { staticClass: "fa fa-trash" })]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-info btn-sm",
-                                  attrs: { href: "/api/students/" + project.id }
-                                },
-                                [_c("span", { staticClass: "fa fa-edit" })]
-                              )
+                                  ]
+                                )
+                              ])
                             ])
                           ])
                         }),

@@ -53,9 +53,17 @@
                                         <td>{{project.email}}</td>
                                         <td>{{project.contactno}}</td>
                                         <td>
-                                            <a :href="'/api/admin/enrollment/'+project.id" class="btn btn-success btn-sm"><span class="fa fa-plus"> {{(!project.currentEnrollment ? 'Enroll' : 'Update Enrollment')}}</span></a>
-                                            <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
-                                            <a :href="'/api/students/' + project.id" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></a>
+                                            <div class="dropdownn">
+                                                <span><i class="fa fa-ellipsis-v"></i></span>
+                                                <div class="dropdown-contentt">
+                                                    <a class="dropdown-item" :href="'/api/admin/enrollment/'+project.id">{{(!project.currentEnrollment ? 'Enroll' : 'Update Enrollment')}}</a>
+                                                    <a class="dropdown-item" :href="'/api/students/' + project.id">Update</a>
+                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Delete</a>
+                                                    <hr>
+                                                    <a class="dropdown-item" :href="'/api/students/' + project.id">Print Reg Form</a>
+                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Print Good Moral</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

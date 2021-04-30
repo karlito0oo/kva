@@ -39,6 +39,28 @@
      h2 {
       color:black;
      }
+     .dropdownn {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  text-align: center;
+  }
+  
+  .dropdown-contentt {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+  }
+  
+  .dropdownn:hover .dropdown-contentt {
+    display: block;
+  }
+
     </style>
   </head>
 
