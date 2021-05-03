@@ -429,7 +429,7 @@ import Noty from 'noty';
 
             checkEnrollmentDetails(status = null){
               //datas needed for enrollment
-                axios.post('/api/enrollments/checkEnrollmentDetails/', this.datas)
+                axios.post('/api/enrollments/checkEnrollmentDetails', this.datas)
                 .then((res) => {
                     this.enrollmentDetails = res.data;
                     if(this.enrollmentDetails){

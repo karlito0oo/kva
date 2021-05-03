@@ -201,7 +201,7 @@ export default {
             },
             todo: 'Add',
             editableId: '',
-            endPoint: '/api/users/',
+            endPoint: '/api/users',
             pageName: 'Student',
             errors: new Errors(),
             currentLevel: (this.level ? JSON.parse(this.level) : null),
@@ -231,7 +231,7 @@ export default {
                 });
             }
             else if(this.todo == 'Edit'){
-                axios.patch(this.endPoint+this.editableId, this.datas)
+                axios.patch(this.endPoint+'/'+this.editableId, this.datas)
                 .then((res) => {
                     new Noty({killer: true, type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                     this.getProjects();
@@ -255,7 +255,7 @@ export default {
                 buttons: [
                     {
                         addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty) {
-                            axios.delete(endPoint+dataDelete.id)
+                            axios.delete(endPoint+'/'+dataDelete.id)
                             .then((res) => {
                                 self.getProjects();
                                 self.clearFields();

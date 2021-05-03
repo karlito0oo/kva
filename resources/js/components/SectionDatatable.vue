@@ -367,7 +367,7 @@ export default {
             },
             todo: 'Add',
             editableId: '',
-            endPoint: '/api/sections/',
+            endPoint: '/api/sections',
             errors: new Errors(),
             levels: this.levelsFetch(),
             advisers: this.fetchAdvisers(),
@@ -390,7 +390,7 @@ export default {
                     >= 70 ? 'Passed' : 'Failed';
         },
         updateStudentGrade(){
-            axios.post(this.endPoint+'updateStudentGrade', this.section)
+            axios.post(this.endPoint+'/'+'updateStudentGrade', this.section)
             .then((res) => {
                 new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                 $('#studentSubjectsModal').modal('hide');
@@ -425,7 +425,7 @@ export default {
             this.section.selectedSection = section;
         },
         updateAdvisers(){
-            axios.post(this.endPoint+'updateAdvisers', this.section)
+            axios.post(this.endPoint+'/'+'updateAdvisers', this.section)
             .then((res) => {
                 new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                 $('#subjectsModal').modal('hide');
@@ -480,7 +480,7 @@ export default {
                 });
             }
             else if(this.todo == 'Edit'){
-                axios.patch(this.endPoint+this.editableId, this.datas)
+                axios.patch(this.endPoint+'/'+this.editableId, this.datas)
                 .then((res) => {
                     new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
                     this.getProjects();
@@ -502,7 +502,7 @@ export default {
                 buttons: [
                     {
                         addClass: 'btn btn-danger btn-sm', text: 'Ok', onClick: function($noty) {
-                            axios.delete(self.endPoint+dataDelete.id)
+                            axios.delete(self.endPoint+'/'+dataDelete.id)
                             .then((res) => {
                                 self.getProjects();
                                 new Noty({type: 'success', text: 'Successfully removed.', layout: 'topRight'}).show();
