@@ -29,7 +29,7 @@ class Section extends Model
     }
 
     public function getSubjectsAttribute(){
-        return Subject::where('level_id', $this->level_id)->with('adviser')
+        return Subject::where('level_id', $this->level_id)->with('adviser')->withTrashed()
             ->get();
     }
 

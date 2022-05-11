@@ -155,7 +155,7 @@
                   <li><a><i class="fa fa-group"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <!-- All students -->
-                        <li><a href="{{ url('/print/exportStudents/all/na/0') }}">All Students</a></li>
+                        <li><a href="{{ url('/print/exportStudents/all/na/1') }}" target="_blank">All Students</a></li>
                         <!-- Per Level -->
                         </li><li class=""><a>Per level<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
@@ -168,7 +168,7 @@
                         </li><li class=""><a>Per Section<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
                             @foreach($sections as $section)
-                              <li><a href="{{ url('/home/students/section/' . $section->id) . '/0' }}">{{$section->code}}</a></li>
+                              <li><a href="{{ url('/print/exportStudents/section/' . $section->id) . '/0' }}">{{$section->code}}</a></li>
                             @endforeach
                           </ul>
                         </li>

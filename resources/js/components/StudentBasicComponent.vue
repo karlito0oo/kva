@@ -197,13 +197,16 @@
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
                                         <div class="tools tools-bottom" style="height:100%;">
-                                            <a href="#"><i class="fa fa-eye"></i></a>
-                                            <a href="#" @click.prevent="uploadImage('studentPSA')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
-                                        </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>PSA Birth Certificate</p>
+                                        <p>PSA Birth Certificate
+
+                                            <a v-bind:href=" (student.birthCertificate ? '/images/studentPSA/' + student.birthCertificate : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
+                                            <a href="#" style="float:right;" @click.prevent="uploadImage('studentPSA')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        
+                                        </p>
                                     </div>
                                     </div>
                                 </div>
@@ -215,13 +218,15 @@
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
                                         <div class="tools tools-bottom" style="height:100%;">
-                                            <a href="#"><i class="fa fa-eye"></i></a>
-                                            <a href="#" @click.prevent="uploadImage('studentGoodMoral')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                            
                                         </div>
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>Good Moral</p>
+                                        <p>Good Moral 
+                                            <a v-bind:href=" (student.goodmoral ? '/images/studentGoodMoral/' + student.goodmoral : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
+                                            <a href="#" style="float:right;" @click.prevent="uploadImage('studentGoodMoral')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        </p>
                                     </div>
                                     </div>
                                 </div>
@@ -233,13 +238,14 @@
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
                                         <div class="tools tools-bottom" style="height:100%;">
-                                            <a href="#"><i class="fa fa-eye"></i></a>
-                                            <a href="#" @click.prevent="uploadImage('studentReportCard')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
-                                        </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>Report Card or Form 138</p>
+                                        <p>Report Card or Form 138
+                                            <a v-bind:href=" (student.reportCard ? '/images/studentReportCard/' + student.reportCard : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
+                                            <a href="#" style="float:right;" @click.prevent="uploadImage('studentReportCard')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
+                                        </p>
                                     </div>
                                     </div>
                                 </div>

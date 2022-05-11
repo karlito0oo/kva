@@ -146,7 +146,7 @@
                             </div>
                             <br>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Rules and Regulation </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">Rules and Regulations </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <textarea class="form-control border-primary" name="ckEditorTextarea" id="rulesRegulation" v-model="datas.data">
                                     </textarea>
@@ -154,7 +154,7 @@
                             </div>
                             <br>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Rules and Regulation </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">Guidelines and Instructions </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <textarea class="form-control border-primary" name="ckEditorTextarea" id="guidelinesInstruction" v-model="datas.data">
                                     </textarea>

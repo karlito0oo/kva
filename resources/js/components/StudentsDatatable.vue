@@ -61,7 +61,7 @@
                                                     <a class="dropdown-item" href="#" @click="deleteData(project)">Delete</a>
                                                     <hr>
                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#goodMoralModal" @click="selectedStudent = project.id">Print Good Moral</a>
-                                                    <a class="dropdown-item" :href="'/print/exportRegForm/' + project.id + '/1'">Print Reg From</a>
+                                                    <a class="dropdown-item" :href="'/print/exportRegForm/' + project.id + '/0'">Print Reg From</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -154,7 +154,7 @@ export default {
             { name: 'name', label: 'FIRST NAME' },
             { name: 'middlename', label: 'MIDDLE NAME'},
             { name: 'name', label: 'GRADE LEVEL'},
-            { name: 'gender', label: 'GENDER'},
+            { name: 'gender', label: 'SEX'},
             { name: 'birthday', label: 'BIRTHDATE'},
             { name: 'email', label: 'EMAIL ADDRESS'},
             { name: 'contactno', label: 'CONTACT NO.'},

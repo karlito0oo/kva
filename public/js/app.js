@@ -2231,7 +2231,7 @@ var Errors = /*#__PURE__*/function () {
       },
       todo: 'Add',
       editableId: '',
-      endPoint: '/api/advisers/',
+      endPoint: '/api/advisers',
       pageName: 'Teacher',
       errors: new Errors(),
       currentSubject: {
@@ -2315,7 +2315,7 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         });
       } else if (this.todo == 'Edit') {
-        axios.patch(this.endPoint + this.editableId, this.datas).then(function (res) {
+        axios.patch(this.endPoint + '/' + this.editableId, this.datas).then(function (res) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             killer: true,
             type: 'success',
@@ -2349,7 +2349,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"](endPoint + dataDelete.id).then(function (res) {
+            axios["delete"](endPoint + '/' + dataDelete.id).then(function (res) {
               self.getProjects();
               self.clearFields();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
@@ -3417,7 +3417,7 @@ var Errors = /*#__PURE__*/function () {
       },
       todo: 'Add',
       editableId: '',
-      endPoint: '/api/school-years/',
+      endPoint: '/api/school-years',
       errors: new Errors()
     };
   },
@@ -3455,7 +3455,7 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         });
       } else if (this.todo == 'Edit') {
-        axios.patch(this.endPoint + this.editableId, this.datas).then(function (res) {
+        axios.patch(this.endPoint + '/' + this.editableId, this.datas).then(function (res) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'success',
             text: 'Successfully updated.',
@@ -3486,7 +3486,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"](endPoint + dataDelete.id).then(function (res) {
+            axios["delete"](endPoint + '/' + dataDelete.id).then(function (res) {
               self.getProjects();
               self.clearFields();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
@@ -3976,7 +3976,7 @@ var Errors = /*#__PURE__*/function () {
       },
       todo: 'Add',
       editableId: '',
-      endPoint: '/api/sections/',
+      endPoint: '/api/sections',
       errors: new Errors(),
       levels: this.levelsFetch(),
       advisers: this.fetchAdvisers(),
@@ -3997,7 +3997,7 @@ var Errors = /*#__PURE__*/function () {
     updateStudentGrade: function updateStudentGrade() {
       var _this = this;
 
-      axios.post(this.endPoint + 'updateStudentGrade', this.section).then(function (res) {
+      axios.post(this.endPoint + '/' + 'updateStudentGrade', this.section).then(function (res) {
         new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
           type: 'success',
           text: 'Successfully updated.',
@@ -4046,7 +4046,7 @@ var Errors = /*#__PURE__*/function () {
     updateAdvisers: function updateAdvisers() {
       var _this3 = this;
 
-      axios.post(this.endPoint + 'updateAdvisers', this.section).then(function (res) {
+      axios.post(this.endPoint + '/' + 'updateAdvisers', this.section).then(function (res) {
         new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
           type: 'success',
           text: 'Successfully updated.',
@@ -4118,7 +4118,7 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         });
       } else if (this.todo == 'Edit') {
-        axios.patch(this.endPoint + this.editableId, this.datas).then(function (res) {
+        axios.patch(this.endPoint + '/' + this.editableId, this.datas).then(function (res) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'success',
             text: 'Successfully updated.',
@@ -4148,7 +4148,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"](self.endPoint + dataDelete.id).then(function (res) {
+            axios["delete"](self.endPoint + '/' + dataDelete.id).then(function (res) {
               self.getProjects();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
                 type: 'success',
@@ -4548,6 +4548,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5411,7 +5417,7 @@ var Errors = /*#__PURE__*/function () {
 
       var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       //datas needed for enrollment
-      axios.post('/api/enrollments/checkEnrollmentDetails/', this.datas).then(function (res) {
+      axios.post('/api/enrollments/checkEnrollmentDetails', this.datas).then(function (res) {
         _this7.enrollmentDetails = res.data;
 
         if (_this7.enrollmentDetails) {
@@ -5800,7 +5806,7 @@ var Errors = /*#__PURE__*/function () {
       },
       todo: 'Add',
       editableId: '',
-      endPoint: '/api/users/',
+      endPoint: '/api/users',
       pageName: 'Student',
       errors: new Errors(),
       currentLevel: this.level ? JSON.parse(this.level) : null
@@ -5842,7 +5848,7 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         });
       } else if (this.todo == 'Edit') {
-        axios.patch(this.endPoint + this.editableId, this.datas).then(function (res) {
+        axios.patch(this.endPoint + '/' + this.editableId, this.datas).then(function (res) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             killer: true,
             type: 'success',
@@ -5876,7 +5882,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"](endPoint + dataDelete.id).then(function (res) {
+            axios["delete"](endPoint + '/' + dataDelete.id).then(function (res) {
               self.getProjects();
               self.clearFields();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
@@ -6220,7 +6226,7 @@ var Errors = /*#__PURE__*/function () {
       },
       todo: 'Add',
       editableId: '',
-      endPoint: '/api/subjects/',
+      endPoint: '/api/subjects',
       errors: new Errors(),
       levels: this.levelsFetch()
     };
@@ -6259,7 +6265,7 @@ var Errors = /*#__PURE__*/function () {
           }).show();
         });
       } else if (this.todo == 'Edit') {
-        axios.patch(this.endPoint + this.editableId, this.datas).then(function (res) {
+        axios.patch(this.endPoint + '/' + this.editableId, this.datas).then(function (res) {
           new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
             type: 'success',
             text: 'Successfully updated.',
@@ -6290,7 +6296,7 @@ var Errors = /*#__PURE__*/function () {
           addClass: 'btn btn-danger btn-sm',
           text: 'Ok',
           onClick: function onClick($noty) {
-            axios["delete"](endPoint + dataDelete.id).then(function (res) {
+            axios["delete"](endPoint + '/' + dataDelete.id).then(function (res) {
               self.getProjects();
               self.clearFields();
               new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
@@ -49493,55 +49499,50 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "mask",
-                                      staticStyle: { height: "100%" }
-                                    },
-                                    [
-                                      _c("p"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "tools tools-bottom",
-                                          staticStyle: { height: "100%" }
-                                        },
-                                        [
-                                          _vm._m(2),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              attrs: {
-                                                href: "#",
-                                                onclick:
-                                                  "$('#requirementsImage').click()"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.uploadImage(
-                                                    "studentPSA"
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "fa fa-upload"
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
+                                  _vm._m(2)
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(3)
+                              _c("div", { staticClass: "caption" }, [
+                                _c("p", [
+                                  _vm._v(
+                                    "PSA Birth Certificate\n\n                                            "
+                                  ),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: _vm.student.birthCertificate
+                                          ? "/images/studentPSA/" +
+                                            _vm.student.birthCertificate
+                                          : "/images/noimageavailable.jpg",
+                                        target: "_blank"
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-eye" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: "#",
+                                        onclick:
+                                          "$('#requirementsImage').click()"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.uploadImage("studentPSA")
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-upload" })]
+                                  )
+                                ])
+                              ])
                             ]
                           )
                         ]
@@ -49582,55 +49583,52 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "mask",
-                                      staticStyle: { height: "100%" }
-                                    },
-                                    [
-                                      _c("p"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "tools tools-bottom",
-                                          staticStyle: { height: "100%" }
-                                        },
-                                        [
-                                          _vm._m(4),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              attrs: {
-                                                href: "#",
-                                                onclick:
-                                                  "$('#requirementsImage').click()"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.uploadImage(
-                                                    "studentGoodMoral"
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "fa fa-upload"
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
+                                  _vm._m(3)
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(5)
+                              _c("div", { staticClass: "caption" }, [
+                                _c("p", [
+                                  _vm._v(
+                                    "Good Moral \n                                            "
+                                  ),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: _vm.student.goodmoral
+                                          ? "/images/studentGoodMoral/" +
+                                            _vm.student.goodmoral
+                                          : "/images/noimageavailable.jpg",
+                                        target: "_blank"
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-eye" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: "#",
+                                        onclick:
+                                          "$('#requirementsImage').click()"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.uploadImage(
+                                            "studentGoodMoral"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-upload" })]
+                                  )
+                                ])
+                              ])
                             ]
                           )
                         ]
@@ -49671,55 +49669,52 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "mask",
-                                      staticStyle: { height: "100%" }
-                                    },
-                                    [
-                                      _c("p"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "tools tools-bottom",
-                                          staticStyle: { height: "100%" }
-                                        },
-                                        [
-                                          _vm._m(6),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              attrs: {
-                                                href: "#",
-                                                onclick:
-                                                  "$('#requirementsImage').click()"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  $event.preventDefault()
-                                                  return _vm.uploadImage(
-                                                    "studentReportCard"
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "fa fa-upload"
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
+                                  _vm._m(4)
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(7)
+                              _c("div", { staticClass: "caption" }, [
+                                _c("p", [
+                                  _vm._v(
+                                    "Report Card or Form 138\n                                            "
+                                  ),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: _vm.student.reportCard
+                                          ? "/images/studentReportCard/" +
+                                            _vm.student.reportCard
+                                          : "/images/noimageavailable.jpg",
+                                        target: "_blank"
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-eye" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticStyle: { float: "right" },
+                                      attrs: {
+                                        href: "#",
+                                        onclick:
+                                          "$('#requirementsImage').click()"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.uploadImage(
+                                            "studentReportCard"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-upload" })]
+                                  )
+                                ])
+                              ])
                             ]
                           )
                         ]
@@ -49730,7 +49725,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "ln_solid" }),
                 _vm._v(" "),
-                _vm._m(8)
+                _vm._m(5)
               ]
             )
           ])
@@ -49886,48 +49881,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fa fa-eye" })
+    return _c("div", { staticClass: "mask", staticStyle: { height: "100%" } }, [
+      _c("p"),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "tools tools-bottom",
+        staticStyle: { height: "100%" }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "caption" }, [
-      _c("p", [_vm._v("PSA Birth Certificate")])
+    return _c("div", { staticClass: "mask", staticStyle: { height: "100%" } }, [
+      _c("p"),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "tools tools-bottom",
+        staticStyle: { height: "100%" }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fa fa-eye" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "caption" }, [
-      _c("p", [_vm._v("Good Moral")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fa fa-eye" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "caption" }, [
-      _c("p", [_vm._v("Report Card or Form 138")])
+    return _c("div", { staticClass: "mask", staticStyle: { height: "100%" } }, [
+      _c("p"),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "tools tools-bottom",
+        staticStyle: { height: "100%" }
+      })
     ])
   },
   function() {
@@ -51154,7 +51140,7 @@ var render = function() {
                                           href:
                                             "/print/exportRegForm/" +
                                             project.id +
-                                            "/1"
+                                            "/0"
                                         }
                                       },
                                       [_vm._v("Print Reg From")]
@@ -65266,8 +65252,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\Laravel App\kva\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\Laravel App\kva\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\user\Documents\System\kva\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
