@@ -33,9 +33,16 @@ $settings = \App\Setting::first();
     <link href="{{asset('template/build/css/custom.min.css')}}" rel="stylesheet">
 
     <style>
-     h2 {
+h2 {
       color:black;
-     },
+     }
+  td:empty::after {
+      content: "N/A";
+  }
+
+  .side-menu, .x_title {
+    text-transform: uppercase;
+  }
     </style>
   </head>
 
@@ -61,12 +68,19 @@ $settings = \App\Setting::first();
                 </ul>
               </div>
 
-              
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
                     <li><a href="{{ url('/home/sections') }}"><i class="fa fa-history"></i> Enrollment History</a></li>
                   <li><a href="{{ url('/about-us') }}"><i class="fa fa-info-circle"></i> About KVA</a></li>
+                </ul>
+              </div>
+
+              <div class="menu_section">
+                <h3>Printable Reports</h3>
+                <ul class="nav side-menu">
+                    <li><a href="{{ url('/home/requests') }}"><i class="fa fa-file"></i> Request Credentials</a></li>
+                    <li><a class="confirmDownload" data-url="{{asset('docs/DepedRequirements.pdf')}}"> <i class="fa fa-download"></i>DepEd Requirements</a></li>
                 </ul>
               </div>
 
@@ -180,3 +194,23 @@ $settings = \App\Setting::first();
 	
   </body>
 </html>
+
+<script>
+    $('.confirmDownload').click(function () {
+        var url = $(this).data('url');
+        noty({
+          text: 'Are you sure to download this list?',
+          buttons: [
+            {addClass: 'btn btn-primary', text: 'Yes', onClick: function($noty) {
+                window.open(url);
+                $noty.close();
+              }
+            },
+            {addClass: 'btn btn-danger', text: 'No', onClick: function($noty) {
+                $noty.close();
+              }
+            }
+          ]
+        });
+    });
+    </script>

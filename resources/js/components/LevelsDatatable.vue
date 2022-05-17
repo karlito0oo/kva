@@ -9,19 +9,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Grade Levels</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -33,7 +20,7 @@
                                 </div>
 
                                 
-                                <div class="col-md-1 col-sm-1  form-group has-feedback">
+                                <div class="col-md-2 col-sm-2  form-group has-feedback">
                                     <select class="form-control" id="gender" v-model="tableData.length" @change="getProjects()">
                                         <option disabled value = "" selected>Paginate by</option>
                                         <option v-for="(records, index) in perPage" :key="index" :value="records">{{records}}</option>
@@ -46,10 +33,11 @@
                                     <tr v-for="project in projects" :key="project.id">
                                         <td>{{project.name}}</td>
                                         <!-- <td>{{project.description}}</td> -->
-                                        <td>{{(project.prerequisite ? project.prerequisite.name : 'N/A')}}</td>
+                                        <!-- <td>{{(project.prerequisite ? project.prerequisite.name : 'N/A')}}</td> -->
                                         <td>
                                             <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
                                             <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
+                                            <a target="_blank" :href="'/print/grade-fees/' + project.id"><button class="btn btn-success btn-sm"><span class="fa fa-print"></span></button></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -69,19 +57,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="todo"></span> Grade Level</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -95,13 +70,94 @@
 												<input type="text" class="form-control" placeholder="Grade Level Name" v-model="datas.name">
 											</div>
 										</div>
+                                        <hr>
+
+                                        <h2>&nbsp;Fees</h2>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Registration</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.registration">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Tution</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.tuition">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Insurance</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.insurance">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Library</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.library">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Science Laboratory</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.science">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Computer Laboratory</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.computer">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Athletics</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.athletics">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Miscellaneous</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.misc">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">Books</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.books">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">School Uniform</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.school_uniform">
+											</div>
+										</div>
+                                        
+										<div class="form-group row ">
+											<label class="control-label col-md-3 col-sm-3 ">P.E. Uniform</label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="number" class="form-control" placeholder="P0.00" v-model="datas.pe_uniform">
+											</div>
+										</div>
+
 										<!-- <div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Description</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="text" class="form-control" placeholder="Description" v-model="datas.description">
 											</div>
 										</div> -->
-										<div class="form-group row ">
+										<!-- <div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Pre-requisite</label>
 											<div class="col-md-9 col-sm-9 ">
                                                 <select  class="form-control" v-model="datas.prerequisite_id">
@@ -111,7 +167,7 @@
                                                     </option>
                                                 </select>
 											</div>
-										</div>
+										</div> -->
 										
 
 										<div class="ln_solid"></div>
@@ -173,7 +229,7 @@ export default {
         let columns = [
             { label: 'GRADE LEVEL', name: 'name' },
             //{ label: 'Description', name: 'description'},
-            { label: 'PRE-REQUISITE', name: 'prerequisite_id'},
+            // { label: 'PRE-REQUISITE', name: 'prerequisite_id'},
         ];
 
         columns.forEach((column) => {
@@ -207,6 +263,17 @@ export default {
                 name: '',
                 description: 'not null',
                 prerequisite_id: '',
+                registration: '',
+                tuition: '',
+                insurance: '',
+                library: '',
+                science: '',
+                computer: '',
+                athletics: '',
+                misc: '',
+                books: '',
+                school_uniform: '',
+                pe_uniform: '',
 
             },
             todo: 'Add',

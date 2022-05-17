@@ -14,9 +14,11 @@ class ImageUploadController extends Controller
         $exploded = explode(',', $request->image);
 
         $decoded = base64_decode($exploded[1]);
-
         if(str_contains($exploded[0], 'jpeg')){
             $extension = 'jpg';
+        }
+        else if(str_contains($exploded[0], 'pdf')){
+            $extension = 'pdf';
         }
         else{
             $extension = 'png';

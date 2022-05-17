@@ -65,6 +65,7 @@ class Section extends Model
             ->join('sections', 'sections.level_id', 'levels.id')
             ->where('enrollments.schoolyear_id', $schoolyear_id)
             ->where('enrollments.status', 'Enrolled')
+            ->whereNull('sections.deleted_at')
             ->distinct()
             ->orderByRaw('LENGTH(name)')
             ->orderBy('name')

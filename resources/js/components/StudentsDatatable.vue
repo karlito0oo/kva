@@ -9,19 +9,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="pageName"></span>s <small>({{ (currentLevel ? currentLevel.name : 'All') }})</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -33,7 +20,7 @@
                                 </div>
 
                                 
-                                <div class="col-md-1 col-sm-1  form-group has-feedback">
+                                <div class="col-md-2 col-sm-2  form-group has-feedback">
                                     <select class="form-control" id="gender" v-model="tableData.length" @change="getProjects()">
                                         <option disabled value = "" selected>Paginate by</option>
                                         <option v-for="(records, index) in perPage" :key="index" :value="records">{{records}}</option>
@@ -53,15 +40,15 @@
                                         <td>{{project.email}}</td>
                                         <td>{{project.contactno}}</td>
                                         <td>
-                                            <div class="dropdownn">
-                                                <span><i class="fa fa-ellipsis-v"></i></span>
-                                                <div class="dropdown-contentt">
-                                                    <a class="dropdown-item" :href="'/api/admin/enrollment/'+project.id">{{(!project.currentEnrollment ? 'Enroll' : 'Update Enrollment')}}</a>
-                                                    <a class="dropdown-item" :href="'/api/students/' + project.id">Update</a>
-                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">Delete</a>
+                                            <div class="dropdown">
+                                                <button class="dropbtn"><i class="fa fa-ellipsis-v"></i></button>
+                                                <div class="dropdown-content">
+                                                    <a class="dropdown-item" :href="'/api/admin/enrollment/'+project.id">{{(!project.currentEnrollment ? 'ENROLL' : 'UPDATE ENROLLMENT')}}</a>
+                                                    <a class="dropdown-item" :href="'/api/students/' + project.id">UPDATE USER PROFILE</a>
+                                                    <a class="dropdown-item" href="#" @click="deleteData(project)">DELETE USER</a>
                                                     <hr>
-                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#goodMoralModal" @click="selectedStudent = project.id">Print Good Moral</a>
-                                                    <a class="dropdown-item" :href="'/print/exportRegForm/' + project.id + '/0'">Print Reg From</a>
+                                                    <a class="dropdown-item" :href="'/print/exportGoodmoral/' + project.id + '/0'">PRINT GOOD MORAL</a>
+                                                    <a v-if="project.currentEnrollment" class="dropdown-item" :href="'/print/exportRegForm/' + project.id + '/0'">PRINT ENROLLMENT FORM</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -82,31 +69,6 @@
         </div>
     </div>
 
-        
-    <div class="modal fade" id="goodMoralModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Generate Good Moral</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row ">
-                    <label class="control-label col-md-3 col-sm-3 ">Requestor</label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" v-model="requestor">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a type="button" class="btn btn-primary" :href="'/print/exportGoodmoral/' + selectedStudent + '/' + requestor + '/0'">Generate</a>
-            </div>
-            </div>
-        </div>
-    </div>
 
     </div>
 </template>

@@ -5,33 +5,20 @@
 
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> Student Details</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
+                    <h2> STUDENT DETAILS</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
                     <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="home" aria-selected="true">Basic Info</a>
+                        <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="home" aria-selected="true">Basic Informationn</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" id="guardian-tab" data-toggle="tab" href="#guadian" role="tab" aria-controls="profile" aria-selected="false">Guardian</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" id="school-tab" data-toggle="tab" href="#school" role="tab" aria-controls="profile" aria-selected="false">Prev. Schools</a>
+                        <a class="nav-link" id="school-tab" data-toggle="tab" href="#school" role="tab" aria-controls="profile" aria-selected="false">Previous Schools</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" id="requirements-tab" data-toggle="tab" href="#requirements" role="tab" aria-controls="profile" aria-selected="false">Requirements</a>
@@ -57,7 +44,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input type="tel" class="form-control" id="inputSuccess5" placeholder="Email" v-model="student.email">
+                                <input disabled type="tel" class="form-control" id="inputSuccess5" placeholder="Email" v-model="student.email">
                                 <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
                             </div>
                             
@@ -78,19 +65,19 @@
                             <br><br>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Birthdate *</label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">BIRTHDATE</label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="date" class="form-control" v-model="student.birthday">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Birth place *</label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">BIRTH PLACE</label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Birth place" v-model="student.birthplace">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Gender *</label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">GENDER</label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <select name="" id=""  class="form-control" v-model="student.gender">
                                         <option :value=null>Select Gender</option>
@@ -100,7 +87,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Civil Status </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">CIVIL STATUS </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <select name="" id=""  class="form-control" v-model="student.civilStatus">
                                         <option :value=null>Select Civil Status</option>
@@ -114,7 +101,7 @@
 
                             
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3">Religion </label>
+                                <label class="col-form-label col-md-3 col-sm-3">RELIGION </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Religion" v-model="student.religion">
                                 </div>
@@ -122,7 +109,7 @@
 
                             
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Nationality *</label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">NATIONALITY</label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Nationality" v-model="student.nationality">
                                 </div>
@@ -134,19 +121,19 @@
                       <div class="tab-pane fade" id="guadian" role="tabpanel" aria-labelledby="guadian-tab">
                             <br>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Guardian Name * </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">GUARDIAN NAME </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Guardian Name" v-model="student.guardianName">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Guardian Contact No. * </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">GUARDIAN CONTACT NO. </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="number" class="form-control" placeholder="Guardian Contact No." v-model="student.guardianContactNo">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Address * </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">ADDRESS </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Address" v-model="student.guardianAddress">
                                 </div>
@@ -157,13 +144,13 @@
                       <div class="tab-pane fade" id="school" role="tabpanel" aria-labelledby="school-tab">
                             <br>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Elementary </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">ELEMENTARY </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Elementary" v-model="student.elementary">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Address </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">ADDRESS </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Address" v-model="student.elementaryAddress">
                                 </div>
@@ -171,13 +158,13 @@
 
                             <br>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Highschool </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">HIGHSCHOOL </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="High school" v-model="student.highschool">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Address </label>
+                                <label class="col-form-label col-md-3 col-sm-3 ">ADDRESS </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input type="text" class="form-control" placeholder="Address" v-model="student.highschoolAddress">
                                 </div>
@@ -187,13 +174,14 @@
 
                       <div class="tab-pane fade" id="requirements" role="tabpanel" aria-labelledby="requirements-tab">
                             
-                            <input id="requirementsImage" type="file" @change="requirementChanged" accept="image/*" style="display:none;">
+                            <input id="requirementsImage" type="file" @change="requirementChanged" accept="application/pdf" style="display:none;">
 
                             <div class="row">
                                 <div class="col-md-4" style="height:100%;">
                                     <div class="thumbnail" style="height:100%;">
+                                    <a v-if="student.birthCertificate" :href="('/images/studentPSA/' + student.birthCertificate)" target="_blank">{{student.lname + ", " + student.name + " - PSA"}}</a>
                                     <div class="image view view-first" style="height:100%;">
-                                        <img style="width: 100%; display: block;" v-bind:src=" (student.birthCertificate ? '/images/studentPSA/' + student.birthCertificate : '/images/noimageavailable.jpg')" alt="image" />
+                                        <img v-if="!student.birthCertificate" style="width: 100%; display: block;" v-bind:src="'/images/studentPSA/images/noimageavailable.jpg'" alt="image" />
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
                                         <div class="tools tools-bottom" style="height:100%;">
@@ -201,7 +189,7 @@
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>PSA Birth Certificate
+                                        <p>PSA BIRTH CERTIFICATE
 
                                             <a v-bind:href=" (student.birthCertificate ? '/images/studentPSA/' + student.birthCertificate : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
                                             <a href="#" style="float:right;" @click.prevent="uploadImage('studentPSA')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
@@ -213,7 +201,8 @@
 
                                 <div class="col-md-4" style="height:100%;">
                                     <div class="thumbnail" style="height:100%;">
-                                    <div class="image view view-first" style="height:100%;">
+                                    <a v-if="student.goodmoral" :href="('/images/studentPSA/' + student.birthCertificate)" target="_blank">{{student.lname + ", " + student.name + " - Good Moral"}}</a>
+                                    <div v-if="!student.goodmoral" class="image view view-first" style="height:100%;">
                                         <img style="width: 100%; display: block;" v-bind:src=" (student.goodmoral ? '/images/studentGoodMoral/' + student.goodmoral : '/images/noimageavailable.jpg')" alt="image" />
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
@@ -223,7 +212,7 @@
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>Good Moral 
+                                        <p>GOOD MORAL 
                                             <a v-bind:href=" (student.goodmoral ? '/images/studentGoodMoral/' + student.goodmoral : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
                                             <a href="#" style="float:right;" @click.prevent="uploadImage('studentGoodMoral')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
                                         </p>
@@ -233,8 +222,9 @@
 
                                 <div class="col-md-4" style="height:100%;">
                                     <div class="thumbnail" style="height:100%;">
+                                    <a v-if="student.reportCard" :href="('/images/studentPSA/' + student.birthCertificate)" target="_blank">{{student.lname + ", " + student.name + " - Report Card"}}</a>
                                     <div class="image view view-first" style="height:100%;">
-                                        <img style="width: 100%; display: block;" v-bind:src=" (student.reportCard ? '/images/studentReportCard/' + student.reportCard : '/images/noimageavailable.jpg')" alt="image" />
+                                        <img v-if="!student.reportCard" style="width: 100%; display: block;" v-bind:src=" (student.reportCard ? '/images/studentReportCard/' + student.reportCard : '/images/noimageavailable.jpg')" alt="image" />
                                         <div class="mask"  style="height:100%;">
                                         <p> </p>
                                         <div class="tools tools-bottom" style="height:100%;">
@@ -242,7 +232,7 @@
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <p>Report Card or Form 138
+                                        <p>REPORT CARD OR FORM 138
                                             <a v-bind:href=" (student.reportCard ? '/images/studentReportCard/' + student.reportCard : '/images/noimageavailable.jpg')" target="_blank" style="float:right;"><i class="fa fa-eye"></i></a>
                                             <a href="#" style="float:right;" @click.prevent="uploadImage('studentReportCard')" onclick="$('#requirementsImage').click()"><i class="fa fa-upload"></i></a>
                                         </p>
@@ -257,7 +247,7 @@
                       <div class="ln_solid"></div>
                             <div class="form-group row">
                                 <div class="col-md-9 col-sm-9  offset-md-3">
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <center><button type="submit" class="btn btn-success">Save</button></center>
                                 </div>
                             </div>
                     </div>

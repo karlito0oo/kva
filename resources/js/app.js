@@ -42,6 +42,8 @@ Vue.component('enrollment-datatable', require('./components/EnrollmentDatatable.
 
 Vue.component('sections-datatable', require('./components/SectionDatatable.vue').default);
 
+Vue.component('requests-datatable', require('./components/RequestsDatatable.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

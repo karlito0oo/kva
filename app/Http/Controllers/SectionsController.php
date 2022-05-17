@@ -21,7 +21,7 @@ class SectionsController extends Controller
             'code' => 'required',
             'description' => 'required',
             'level_id' => 'required',
-            'code' => 'required|unique:subjects,code' . $ext,
+            'code' => 'required|unique:sections,code' . $ext,
         ];
     }
     /**
@@ -96,7 +96,6 @@ class SectionsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate($this->validateData());
-        
         $schoolyear_id = Setting::find(1)->schoolyear_id;
 
         $data = new Section();

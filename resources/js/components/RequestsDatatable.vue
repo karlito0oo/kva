@@ -5,10 +5,10 @@
         <div class="right_col" role="main">
         <div class="">
             <div class="row">
-                <div class="col-md-8">
+                <div :class="isAdmin == '1' ? 'col-md-12' : 'col-md-8'">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Subjects</h2>
+                            <h2>Credentials Request</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -31,13 +31,19 @@
                             <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                                 <tbody>
                                     <tr v-for="project in projects" :key="project.id">
-                                        <td>{{project.code}}</td>
-                                        <td>{{project.name}}</td>
-                                        <td>{{project.description}}</td>
-                                        <td>{{project.levels.name}}</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
-                                            <button class="btn btn-info btn-sm" @click="editData(project)"><span class="fa fa-edit"></span></button>
+                                        <td v-if="isAdmin == '1'">{{project.users.name + ' ' + project.users.lname}}</td>
+                                        <td v-if="isAdmin == '1'">{{project.users.currentEnrollment ? project.users.currentEnrollment.levelName : "N/A"}}</td>
+                                        <td v-if="isAdmin == '1'">{{project.users.currentEnrollment ? project.users.currentEnrollment.sectionName : "N/A"}}</td>
+                                        <td>{{project.type}}</td>
+                                        <td>{{project.created_at}}</td>
+                                        <td style="text-transform: uppercase">{{project.status}}</td>
+
+                                        <td v-if="project.status == 'pending'">
+                                            <button v-if="isAdmin == '0'" class="btn btn-danger btn-sm" @click="deleteData(project)"><span class="fa fa-trash"></span></button>
+                                            <button v-if="isAdmin == '1'" class="btn btn-success btn-sm" @click="approveRequest(project)"><span class="fa fa-check"></span></button>
+                                        </td>
+                                        <td v-if="project.status == 'approved'">
+                                            <a target="_blank" :href="project.type == 'Good Moral' ? '/print/exportGoodmoral/' + project.users.id + '/0' : '/print/exportRegForm/' + project.users.id + '/0'"><button class="btn btn-success btn-sm"><span class="fa fa-print"></span></button></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -53,10 +59,10 @@
 
 
                 
-                <div class="col-md-4">
+                <div class="col-md-4" v-if="isAdmin == '0'">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2><span style="color:black;" v-html="todo"></span> Subject</h2>
+                            <h2><span style="color:black;" v-html="todo"></span> Request</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -65,32 +71,12 @@
 									<form class="form-horizontal form-label-left" @submit.prevent="saveData()">
 
 										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Subject Code</label>
+											<label class="control-label col-md-3 col-sm-3 ">Type</label>
 											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.code">
-											</div>
-										</div>
-										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Subject Name</label>
-											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.name">
-											</div>
-										</div>
-										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Branches</label>
-											<div class="col-md-9 col-sm-9 ">
-												<input type="text" class="form-control" v-model="datas.description">
-											</div>
-										</div>
-
-										<div class="form-group row ">
-											<label class="control-label col-md-3 col-sm-3 ">Grade Level</label>
-											<div class="col-md-9 col-sm-9 ">
-												<select class="form-control" v-model="datas.level_id">
-                                                    <option selected disabled value="">Choose option</option>
-                                                    <option v-for="level in levels" :key="level.name" :value="level.id">
-                                                        {{ level.name }}
-                                                    </option>
+												<select class="form-control" v-model="datas.type">
+                                                    <option value="">Choose option</option>
+                                                    <option>Good Moral</option>
+                                                    <option v-if="isEnrolled == '1'">Enrollment Form</option>
                                                 </select>
 											</div>
 										</div>
@@ -145,18 +131,29 @@ import Pagination from './DatatablePagination.vue';
 import Noty from 'noty';
 export default {
     components: { datatable: Datatable, pagination: Pagination },
+       
+    props: ['isEnrolled', 'isAdmin'],
+
     created() {
         this.getProjects();
 
     },
     data() {
         let sortOrders = {};
-
-        let columns = [
-            { label: 'SUBJECT CODE', name: 'code' },
-            { label: 'SUBJECT NAME', name: 'name' },
-            { label: 'SUBJECT BRANCHES', name: 'description'},
-            { label: 'GRADE LEVEL', name: 'level_name'},
+        
+        let columns = this.isAdmin == "0" ? [
+            { label: 'TYPE', name: 'type' },
+            { label: 'DATE', name: 'created_at' },
+            { label: 'STATUS', name: 'status' },
+            //{ label: 'Description', name: 'description'},
+        ] : [
+            { label: 'STUDENT NAME', name: 'type' },
+            { label: 'LEVEL', name: 'type' },
+            { label: 'SECTION', name: 'type' },
+            { label: 'TYPE', name: 'type' },
+            { label: 'DATE', name: 'created_at' },
+            { label: 'STATUS', name: 'status' },
+            //{ label: 'Description', name: 'description'},
         ];
 
         columns.forEach((column) => {
@@ -165,7 +162,7 @@ export default {
         return {
             projects: [],
             columns: columns,
-            sortKey: 'code',
+            sortKey: 'name',
             sortOrders: sortOrders,
             showActionTable: true,
             perPage: ['10', '20', '30'],
@@ -173,7 +170,7 @@ export default {
                 draw: 0,
                 length: 10,
                 search: '',
-                column: 3,
+                column: 0,
                 dir: 'asc',
             },
             pagination: {
@@ -187,17 +184,14 @@ export default {
                 to: ''
             },
             datas: {
-                name: '',
-                description: '',
-                code: '',
-                level_id: '',
+                type: '',
 
             },
+            user:{},
             todo: 'Add',
             editableId: '',
-            endPoint: '/api/subjects',
+            endPoint: '/api/requests',
             errors: new Errors(),
-            levels: this.levelsFetch(),
         }
     },
     methods: {
@@ -223,19 +217,6 @@ export default {
                     new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                 });
             }
-            else if(this.todo == 'Edit'){
-                axios.patch(this.endPoint+'/'+this.editableId, this.datas)
-                .then((res) => {
-                    new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
-                    this.getProjects();
-                    this.clearFields();
-                })
-                .catch((err) => {
-                    this.errors.record(err.response.data);
-                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
-                });
-            }
-            
         },
 
         deleteData(dataDelete){
@@ -265,27 +246,34 @@ export default {
                     }
                 ]
             });
-
-            
         },
-        editData(dataEdit){
 
-            const keys = Object.keys(this.datas);
-            for (var a = 0; a < keys.length; a++) {
-                this.datas[keys[a]] = dataEdit[keys[a]];
-            }
-
-            this.editableId = dataEdit.id;
-            this.todo = 'Edit';
-        },
-        
-        levelsFetch(){
-            axios.post('/api/levels/fetch')
-            .then((res) => {
-                this.levels = res.data
-            })
-            .catch((err) => {
-                console.log(err);
+        approveRequest(dataDelete){
+            var self = this;
+            var endPoint = this.endPoint;
+            new Noty({
+                text: 'Do you want to approve this?',
+                type: 'success', 
+                buttons: [
+                    {
+                        addClass: 'btn btn-success btn-sm', text: 'Ok', onClick: function($noty) {
+                            axios.patch(endPoint+'/'+dataDelete.id)
+                            .then((res) => {
+                                self.getProjects();
+                                self.clearFields();
+                                new Noty({type: 'success', text: 'Successfully approved.', layout: 'topRight'}).show();
+                            })
+                            .catch((err) => {
+                                console.log(err); 
+                            });
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-primary btn-sm', text: 'Cancel', onClick: function($noty) {
+                            $noty.close();
+                        }
+                    }
+                ]
             });
         },
 

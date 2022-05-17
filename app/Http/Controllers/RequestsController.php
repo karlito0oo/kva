@@ -1,19 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Level;
+use App\Request as CredentialRequest;
 use Illuminate\Http\Request;
+use Auth;
 
-class LevelsController extends Controller
+class RequestsController extends Controller
 {
-
-    public function validateData(){
-        return [
-            'name' => 'required',
-            'description' => 'required',
-        ];
-    }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,22 +15,25 @@ class LevelsController extends Controller
      */
     public function index(Request $request)
     {
-        $columns = ['name', 'description', 'prerequisite_id'];
+        $columns = ['type', 'status'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
         
-        $query = Level::select('*')
-        ->orderByRaw('LENGTH('.($column ? $columns[$column] : 'name').') ' . $dir)
-        ->orderBy(($column ? $columns[$column] : 'name'), $dir)->with('prerequisite');
+        $query = CredentialRequest::select('*')->with('users')->orderBy($columns[$column], $dir);
+
+        $user = Auth::user();
+
+        if($user->role_id == 1){
+            $query->where('user_id', $user->id);
+        }
 
         if ($searchValue) {
             $query->where(function($query) use ($searchValue) {
                 $query->where('name', 'like', '%' . $searchValue . '%')
-                ->orWhere('description', 'like', '%' . $searchValue . '%')
-                ->orWhere('prerequisite_id', 'like', '%' . $searchValue . '%');
+                ->orWhere('type', 'like', '%' . $searchValue . '%');
             });
         }
 
@@ -62,8 +59,15 @@ class LevelsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate($this->validateData());
-        return Level::create($request->all());
+        $user = Auth::user();
+
+        $credentialRequest = new CredentialRequest();
+        $credentialRequest->user_id = $user->id;
+        $credentialRequest->type = $request->type;
+        $credentialRequest->status = "pending";
+        $credentialRequest->save();
+
+        return $credentialRequest;
     }
 
     /**
@@ -85,7 +89,6 @@ class LevelsController extends Controller
      */
     public function edit($id, Request $request)
     {
-        //
     }
 
     /**
@@ -95,27 +98,14 @@ class LevelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = request()->validate($this->validateData());
 
-        $data = Level::find($id);
+        $credentialRequest = CredentialRequest::find($id);
+        $credentialRequest->status = "approved";
+        $credentialRequest->save();
 
-        $data->name = $request->name;
-        $data->description = $request->description;
-        $data->registration = $request->registration;
-        $data->tuition = $request->tuition;
-        $data->insurance = $request->insurance;
-        $data->library = $request->library;
-        $data->science = $request->science;
-        $data->computer = $request->computer;
-        $data->athletics = $request->athletics;
-        $data->misc = $request->misc;
-        $data->books = $request->books;
-        $data->school_uniform = $request->school_uniform;
-        $data->pe_uniform = $request->pe_uniform;
-
-        return $data->save();
+        return $credentialRequest;
     }
 
     /**
@@ -126,17 +116,16 @@ class LevelsController extends Controller
      */
     public function destroy($id)
     {
-        return Level::find($id)->delete();
+        return CredentialRequest::find($id)->delete();
     }
 
-    public function levelsHome(){
-        return view('admin/levels');
+    public function pageHome(){
+        return view('admin/requests');
     }
     
     public function fetch(){
-        return Level::
-        orderByRaw('LENGTH(name) asc')
-        ->orderBy('name', 'asc')
+        return CredentialRequest::
+        orderBy('created_at', 'desc')
         ->get();
     }
 }

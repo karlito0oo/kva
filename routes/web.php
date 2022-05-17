@@ -58,6 +58,10 @@ Route::resource('/api/subjects', 'SubjectsController');
 Route::get('/home/subjects', 'SubjectsController@pageHome');
 Route::post('/api/subjects/fetch', 'SubjectsController@fetch');
 
+// Request
+Route::resource('/api/requests', 'RequestsController');
+Route::get('/home/requests', 'RequestsController@pageHome');
+
 // Enrollment
 Route::resource('/api/admin/enrollment', 'EnrollmentAdminController');
 Route::get('/home/admin/enrollment', 'EnrollmentAdminController@pageHome');
@@ -86,5 +90,6 @@ Route::post('/api/enrollments/checkEnrollmentDetails', 'EnrollmentsController@ch
 
 //Printable reports
 Route::get('print/exportStudents/{type}/{id}/{preview}', 'PDFExportsController@exportStudents');
-Route::get('print/exportGoodmoral/{id}/{requestor}/{preview}', 'PDFExportsController@exportStudentGoodMoral');
+Route::get('print/exportGoodmoral/{id}/{preview}', 'PDFExportsController@exportStudentGoodMoral');
 Route::get('print/exportRegForm/{id}/{preview}', 'PDFExportsController@exportStudentRegForm');
+Route::get('print/grade-fees/{id}', 'PDFExportsController@exportGradeFees');

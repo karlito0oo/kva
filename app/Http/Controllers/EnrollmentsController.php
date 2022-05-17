@@ -193,6 +193,7 @@ class EnrollmentsController extends Controller
             ->with('EnrolledSubjects')
             ->where('schoolyear_id', $schoolyear_id)
             ->with('student')
+            ->with('level')
             ->where('student_id', $request->student_id)->first();
 
             
@@ -203,7 +204,7 @@ class EnrollmentsController extends Controller
             'Section' => 'required',
         ]);
         //check if !maxstudentsection
-        if(Setting::first()->maxstudentsection < count(Section::find($request->Section)->with('enrolledStudents')->first()->enrolledStudents)){
+        if(Setting::first()->maxstudentsection <= Enrollment::where('section_id', $request->Section)->where('status', 'Enrolled')->count()){
             return [
                 'result' => false,
                 'message' => 'Maximum student per section exeeded.',

@@ -9,19 +9,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2> Sections</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -33,7 +20,7 @@
                                 </div>
 
                                 
-                                <div class="col-md-1 col-sm-1  form-group has-feedback">
+                                <div class="col-md-2 col-sm-2  form-group has-feedback">
                                     <select class="form-control" id="gender" v-model="tableData.length" @change="getProjects()">
                                         <option disabled value = "" selected>Paginate by</option>
                                         <option v-for="(records, index) in perPage" :key="index" :value="records">{{records}}</option>
@@ -62,6 +49,7 @@
                                         <!-- Student -->
                                         <td v-show="accessing.role_id == 1">
                                             <button class="btn btn-info btn-sm" @click="showStudentSubjects(project, 'student')">Subjects</button>
+                                            <a target="_blank" :href="'/print/grade-fees/' + project.level_id"><button class="btn btn-success btn-sm">Fees</button></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -81,19 +69,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="todo"></span> Section</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -147,19 +122,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;"></span> Students <small>{{(this.section.selectedSection ? '(' + this.section.selectedSection.levels.name + ' ' + this.section.selectedSection.code + ')' : '')}}</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -216,7 +178,7 @@
 											<label class="control-label col-md-6 col-sm-6 ">[{{subject.code}}] {{subject.name}}</label>
 											<div class="col-md-6 col-sm-6 ">
 												 <select  class="form-control" v-model="subject.adviser_id" disabled>
-                                                    <option :value=null disabled>No adviser</option>
+                                                    <option :value=null disabled>NO TEACHER</option>
                                                     <option v-for="adviser in advisers" :value="adviser.id" :key="adviser.id">
                                                         {{ adviser.lname + ', ' + adviser.name}}
                                                     </option>
@@ -253,19 +215,19 @@
                     </div>
                     
                     <div class="col-md-2 col-sm-12  form-group">
-                        <input type="number" class="form-control" v-model="subject.g1" placeholder="First" @keyup="subject.grade = computeGrade(subject)">
+                        <input type="number" class="form-control" :disabled="accessing.role_id == 1" v-model="subject.g1" placeholder="First" @keyup="subject.grade = computeGrade(subject)">
                     </div>
                     
                     <div class="col-md-2 col-sm-12  form-group">
-                        <input type="number" class="form-control" v-model="subject.g2" placeholder="Second" @keyup="subject.grade = computeGrade(subject)">
+                        <input type="number" class="form-control" :disabled="accessing.role_id == 1" v-model="subject.g2" placeholder="Second" @keyup="subject.grade = computeGrade(subject)">
                     </div>
                     
                     <div class="col-md-2 col-sm-12  form-group">
-                        <input type="number" class="form-control" v-model="subject.g3" placeholder="Third" @keyup="subject.grade = computeGrade(subject)">
+                        <input type="number" class="form-control" :disabled="accessing.role_id == 1" v-model="subject.g3" placeholder="Third" @keyup="subject.grade = computeGrade(subject)">
                     </div>
                     
                     <div class="col-md-2 col-sm-12  form-group">
-                        <input type="number" class="form-control" v-model="subject.g4" placeholder="Fourth" @keyup="subject.grade = computeGrade(subject)">
+                        <input type="number" class="form-control" :disabled="accessing.role_id == 1" v-model="subject.g4" placeholder="Fourth" @keyup="subject.grade = computeGrade(subject)">
                     </div>
                     
                     <div class="col-md-1 col-sm-12  form-group">
@@ -379,9 +341,19 @@ export default {
                 selectedStudentSubject: '',
             },
             accessing: JSON.parse(this.user),
+            settings: this.settingsFetch(),
         }
     },
     methods: {
+        settingsFetch(){
+            axios.post('/api/setting/fetch')
+            .then((res) => {
+                this.settings = res.data
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        },
         computeGrade(subject){
             return  (
                         (parseFloat(subject.g1) + parseFloat(subject.g2) + parseFloat(subject.g3) + parseFloat(subject.g4))
@@ -467,29 +439,34 @@ export default {
         },
 
         saveData(){
-            if(this.todo == 'Add'){
-                axios.post(this.endPoint, this.datas)
-                .then((res) => {
-                    new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
-                    this.getProjects();
-                    this.clearFields();
-                })
-                .catch((err) => {
-                    this.errors.record(err.response.data);
-                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
-                });
+            if(!this.settings.schoolyear_id){
+                new Noty({killer: true, type: 'warning', text: 'No school year selected.', layout: 'topRight'}).show();
             }
-            else if(this.todo == 'Edit'){
-                axios.patch(this.endPoint+'/'+this.editableId, this.datas)
-                .then((res) => {
-                    new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
-                    this.getProjects();
-                    this.clearFields();
-                })
-                .catch((err) => {
-                    this.errors.record(err.response.data);
-                    new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
-                });
+            else{
+                if(this.todo == 'Add'){
+                    axios.post(this.endPoint, this.datas)
+                    .then((res) => {
+                        new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                        this.getProjects();
+                        this.clearFields();
+                    })
+                    .catch((err) => {
+                        this.errors.record(err.response.data);
+                        new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                    });
+                }
+                else if(this.todo == 'Edit'){
+                    axios.patch(this.endPoint+'/'+this.editableId, this.datas)
+                    .then((res) => {
+                        new Noty({type: 'success', text: 'Successfully updated.', layout: 'topRight'}).show();
+                        this.getProjects();
+                        this.clearFields();
+                    })
+                    .catch((err) => {
+                        this.errors.record(err.response.data);
+                        new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                    });
+                }
             }
             
         },

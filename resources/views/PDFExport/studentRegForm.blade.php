@@ -14,7 +14,7 @@
     <title>Good Moral</title>
     <style>
         table, th, td {
-            /* border: 1px solid black; */
+            /* border: 1px solid black; padding-left: 10px; */
         }
     </style>
 </head>
@@ -37,8 +37,7 @@
         
         <!-- Header -->
         <tr>
-            <td>&nbsp; &nbsp; &nbsp; &nbsp;Name: {{$student->lname . ', ' . $student->name . ' ' . $student->middlename}}</td>
-            <td></td>
+            <td colspan="2">&nbsp; &nbsp; &nbsp; &nbsp;Name: {{$student->lname . ', ' . $student->name . ' ' . $student->middlename}}</td>
             <td>Level: {{$student->currentEnrollment->sectionName}}</td>
         </tr>
         <tr>
@@ -52,7 +51,7 @@
 
         <tr>
             <td colspan="3">
-                <center><h3>REGISTRATION FORM</h3></center>
+                <center><h3>ENROLLMENT FORM</h3></center>
             </td>
         </tr>
 
@@ -63,10 +62,10 @@
             <th>INSTRUCTOR</th>
         </tr>
         @foreach($subjects as $subject)
-            <tr style="border: 1px solid black;">
-                <td style="border: 1px solid black;">&nbsp;&nbsp;{{$subject->name}}</td>
-                <td style="border: 1px solid black;">&nbsp;&nbsp;{{$subject->description}}</td>
-                <td style="border: 1px solid black;">&nbsp;&nbsp;{{($subject->name ? $subject->lname . ', ' . $subject->fName : 'To be advised')}}</td>
+            <tr style="border: 1px solid black; padding-left: 10px;">
+                <td style="border: 1px solid black; padding-left: 10px;">{{$subject->name}}</td>
+                <td style="border: 1px solid black; padding-left: 10px;">{{$subject->code}}</td>
+                <td style="border: 1px solid black; padding-left: 10px;">{{($subject->fName ? $subject->lname . ', ' . $subject->fName : 'To be advised')}}</td>
             </tr>
         @endforeach
         

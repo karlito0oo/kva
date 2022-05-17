@@ -9,19 +9,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="pageName"></span>s</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -33,7 +20,7 @@
                                 </div>
 
                                 
-                                <div class="col-md-1 col-sm-1  form-group has-feedback">
+                                <div class="col-md-2 col-sm-2  form-group has-feedback">
                                     <select class="form-control" id="gender" v-model="tableData.length" @change="getProjects()">
                                         <option disabled value = "" selected>Paginate by</option>
                                         <option v-for="(records, index) in perPage" :key="index" :value="records">{{records}}</option>
@@ -73,19 +60,6 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2><span style="color:black;" v-html="todo"></span> <span style="color:black;" v-html="pageName"></span> </h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Settings 1</a>
-                                        <a class="dropdown-item" href="#">Settings 2</a>
-                                    </div>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">

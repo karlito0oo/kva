@@ -46,10 +46,10 @@
                 <TH>CONTACT #</TH>
                 <TH>GUARDIAN #</TH>
                 <TH>LEVEL</TH>
-                <TH>CODE</TH>
+                <TH>SECTION</TH>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-transform: uppercase; font-weight: bold;">
             @foreach($students as $student)
                 <tr>
                     <td>{{$student->lname}}</td>

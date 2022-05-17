@@ -11,10 +11,10 @@ class Level extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'name', 'description', 'prerequisite_id',
+        'name', 'description', 'prerequisite_id', 'registration', 'tuition', 'insurance', 'library', 'science', 'computer', 'athletics', 'misc', 'books', 'school_uniform', 'pe_uniform',
     ];
 
-    
+    protected $appends = ['totalFees'];
     
     public function prerequisite()
     {
@@ -32,5 +32,10 @@ class Level extends Model
             ->orderByRaw('LENGTH(name)')
             ->orderBy('name')
             ->get();
+    }
+
+    public function getTotalFeesAttribute(){
+        $total = $this->registration + $this->tuition + $this->insurance + $this->library + $this->science + $this->computer + $this->athletics + $this->misc + $this->books + $this->school_uniform + $this->pe_uniform;
+        return number_format($total, 2);
     }
 }

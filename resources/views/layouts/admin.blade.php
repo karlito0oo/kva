@@ -36,29 +36,51 @@
     <link href="{{asset('template/build/css/custom.min.css')}}" rel="stylesheet">
 
     <style>
-     h2 {
+     /* Dropdown Button */
+.dropbtn {
+  background-color: transparent;
+  color: black;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0; 
+  left: auto;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+  
+h2 {
       color:black;
      }
-     .dropdownn {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-  text-align: center;
+  td:empty::after {
+      content: "N/A";
   }
-  
-  .dropdown-contentt {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 1;
-  }
-  
-  .dropdownn:hover .dropdown-contentt {
-    display: block;
+
+  .side-menu, .x_title {
+    text-transform: uppercase;
   }
 
     </style>
@@ -135,6 +157,8 @@
                   <li><a href="{{ url('/home/sections') }}"><i class="fa fa-list-alt"></i> Sections</a></li>
 
                   <li><a href="{{ url('/home/school-years') }}"><i class="fa fa-book"></i> School Years</a></li>
+                  
+                  <li><a href="{{ url('/home/requests') }}"><i class="fa fa-file"></i> Request Credentials</a></li>
 
                   @elseif(Auth::user()->role_id == 4)
 
@@ -155,12 +179,13 @@
                   <li><a><i class="fa fa-group"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <!-- All students -->
-                        <li><a href="{{ url('/print/exportStudents/all/na/1') }}" target="_blank">All Students</a></li>
+                        <li><a class="confirmDownload" data-url="{{ url('/print/exportStudents/all/na/0') }}">All Students<span class="fa fa-download"></span></a></li>
                         <!-- Per Level -->
-                        </li><li class=""><a>Per level<span class="fa fa-chevron-down"></span></a>
+                        </li
+                        ><li class=""><a>Per level<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
                             @foreach($levels as $level)
-                              <li><a href="{{ url('/print/exportStudents/level/' . $level->id) . '/0'}}">{{$level->name}}</a></li>
+                              <li><a class="confirmDownload" data-url="{{ url('/print/exportStudents/level/' . $level->id) . '/0'}}">{{$level->name}}<span class="fa fa-download"></span></a></li>
                             @endforeach
                           </ul>
                         </li>
@@ -168,7 +193,7 @@
                         </li><li class=""><a>Per Section<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu" style="display: none;">
                             @foreach($sections as $section)
-                              <li><a href="{{ url('/print/exportStudents/section/' . $section->id) . '/0' }}">{{$section->code}}</a></li>
+                              <li><a class="confirmDownload" data-url="{{ url('/print/exportStudents/section/' . $section->id) . '/0' }}">{{$section->code}}<span class="fa fa-download"></a></li>
                             @endforeach
                           </ul>
                         </li>
@@ -282,7 +307,48 @@
     <script src="{{asset('template/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
     <!-- Custom Theme Scripts -->
+    <script src="{{asset('template/vendors/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('template/vendors/morris.js/morris.min.js')}}"></script>
     <script src="{{asset('template/build/js/custom.min.js')}}"></script>
-	
+
   </body>
+    <script>
+    if ($('#student_chart').length) {
+        Morris.Bar({
+            element: 'student_chart',
+            data: [
+                { device: 'Total Student', geekbench: "{{!empty($data) ? count($data['students']) : 0}}" },
+                { device: 'Total Teachers', geekbench: "{{!empty($data) ? count($data['instructors']) : 0}}" },
+                { device: 'Enrolled', geekbench: "{{!empty($data) ? count($data['enrolledStudents']) : 0}}" },
+                { device: 'Pre-enrolled', geekbench: "{{!empty($data) ? count($data['preEnrolledStudents']) : 0}}" },
+            ],
+            xkey: 'device',
+            ykeys: ['geekbench'],
+            labels: ['Count'],
+            barRatio: 0.4,
+            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            xLabelAngle: 0,
+            hideHover: 'auto',
+            resize: true
+        });
+
+    }
+    $('.confirmDownload').click(function () {
+        var url = $(this).data('url');
+        noty({
+          text: 'Are you sure to download this list?',
+          buttons: [
+            {addClass: 'btn btn-primary', text: 'Yes', onClick: function($noty) {
+                window.open(url);
+                $noty.close();
+              }
+            },
+            {addClass: 'btn btn-danger', text: 'No', onClick: function($noty) {
+                $noty.close();
+              }
+            }
+          ]
+        });
+    });
+    </script>
 </html>

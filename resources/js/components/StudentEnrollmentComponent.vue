@@ -6,19 +6,6 @@
               <div class="x_panel tile fixed_height_400">
                 <div class="x_title">
                   <h2>Registrations <small>{{ currentStudent.lname }}, {{ currentStudent.name }}</small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -65,19 +52,6 @@
               <div class="x_panel tile fixed_height_400">
                 <div class="x_title">
                   <h2>Subjects to enroll</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -105,108 +79,95 @@
 
 
 
-            <div class="col-md-3 col-sm-3 ">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>Guides</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <div class="dashboard-widget-content">
-
-                    <ul class="list-unstyled timeline widget">
-                      <!-- <li>
-                        <div class="block">
-                          <div class="block_content">
-                            <h2 class="title">
-                                <a>INSTRUCTION</a>
-                            </h2>
-                            <div class="byline">
-                            </div>
-                            <p class="excerpt">
-                                After submitting your registration in this app, proceed to registrars office and submit all the requirements. This registration will expire within 5 working days.
-                            </p>
-                          </div>
-                        </div>
-                      </li> -->
-                      <li>
-                        <div class="block">
-                          <div class="block_content">
-                            <h2 class="title">
-                                REQUIREMENTS
-                            </h2>
-                            <div class="byline">
-                              <span>Transferee</span>
-                            </div>
-                            <p class="excerpt">
-                                - Form 137 <br>
-                                - Good moral <br>
-                                - PSA Birth Certificate
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <!-- <li>
-                        <div class="block">
-                          <div class="block_content">
-                            <h2 class="title">
-                                AGREEMENTS
-                            </h2>
-                            <div class="byline">
-                            </div>
-                            <p class="excerpt">
-                            Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </p>
-                          </div>
-                        </div>
-                      </li> -->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-
-              
             
-
-
-          </div>
 
           <div class="col-md-3 col-sm-3" v-if="enrollmentDetails.status == 'Enrolled'">
               <div class="x_panel">
                 <div class="x_title">
                   <h2>Payment</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   
-                    <div class="form-group row ">
+    <table  width="100%">
+
+        <!-- Body -->
+        <tr>
+            <th>PARTICULARS</th>
+            <th>CASH</th>
+        </tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Registration</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.registration}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Tuition Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.tuition}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Insurance Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.insurance}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Library Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.library}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Science Laboratory Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.science}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Computer Laboratory Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.computer}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Athletics Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.athletics}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Miscellaneous Fee</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.misc}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">Books</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.books}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">School Uniform</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.school_uniform}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">P.E. Uniform</td>
+    <td style="border: 1px solid black; padding-left: 10px;">P{{enrollmentDetails.level.pe_uniform}}</td>
+</tr>
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;">_</td>
+    <td style="border: 1px solid black; padding-left: 10px;">_</td>
+</tr>
+
+
+
+<tr style="border: 1px solid black; padding-left: 10px;">
+    <td style="border: 1px solid black; padding-left: 10px;"><b>Total</b></td>
+    <td style="border: 1px solid black; padding-left: 10px;"><b>P{{enrollmentDetails.level.totalFees}}</b></td>
+</tr>
+
+       
+
+    </table>
+                    <div class="form-group row pt-3">
 											<label class="control-label col-md-3 col-sm-3 ">Remaining balance</label>
 											<div class="col-md-9 col-sm-9 ">
 												<input type="number" class="form-control" placeholder="0" v-model="datas.balance">
@@ -324,7 +285,6 @@ import Noty from 'noty';
             enrollStudent(){
               axios.patch('/api/enrollments/submitEnrollment/'+this.enrollmentDetails.id, this.datas)
               .then((res) => {
-                  alert(res.data.result);
                   if(!res.data.result){
                     new Noty({killer: true, type: 'error', text: res.data.message, layout: 'topRight'}).show();
                   }
@@ -401,12 +361,12 @@ import Noty from 'noty';
                 if(this.editableEnrollment == ''){
                     axios.post('/api/enrollments', this.datas)
                     .then((res) => {
-                        console.log(res.data);
                         if(!res.data.result){
                           new Noty({killer: true, type: 'error', text: res.data.message, layout: 'topRight'}).show();
                         }
                         else{
                           new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                          this.checkEnrollmentDetails('hide');
                         }
                     })
                     .catch((err) => {
@@ -418,13 +378,13 @@ import Noty from 'noty';
                   axios.patch('/api/enrollments/'+this.editableEnrollment, this.datas)
                     .then((res) => {
                         new Noty({type: 'success', text: 'Successfully saved.', layout: 'topRight'}).show();
+                        this.checkEnrollmentDetails('hide');
                     })
                     .catch((err) => {
                         this.errors.record(err.response.data);
                         new Noty({killer: true, type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
                     });
                 }
-                this.checkEnrollmentDetails('hide');
             },
 
             checkEnrollmentDetails(status = null){
@@ -432,6 +392,7 @@ import Noty from 'noty';
                 axios.post('/api/enrollments/checkEnrollmentDetails', this.datas)
                 .then((res) => {
                     this.enrollmentDetails = res.data;
+                    console.log(res.data);
                     if(this.enrollmentDetails){
                       this.disableButton = true;
                       this.datas.StudentType = this.enrollmentDetails.student_type;

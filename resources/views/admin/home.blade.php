@@ -47,10 +47,22 @@
           </div>
           <br />
 
-          
-
-
-          
+          <div class="row">
+              <!-- bar chart -->
+              <div class="col-md-12 col-sm-12  ">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Bar Chart </h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div id="student_chart" style="width:100%; height:500px;"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /bar charts -->
+            </div>
         </div>
         <!-- /page content -->
 @endsection
+

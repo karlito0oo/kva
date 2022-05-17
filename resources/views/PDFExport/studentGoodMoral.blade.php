@@ -61,7 +61,7 @@
 
                     <br><br><br>
                     &nbsp; &nbsp; &nbsp; &nbsp;
-                        This certification is issued upon the request of {{$requestor}} for whatever legal purpose it may serve him.
+                        This certification is issued upon the request of {{$student->name . ' ' . $student->lname}} for whatever legal purpose it may serve him.
                 </p>
             </td>
         </tr>
