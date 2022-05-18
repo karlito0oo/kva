@@ -15,7 +15,7 @@ class PDFExportsController extends Controller
         
         $students = User::enrolledStudents($type, $id);
         if($type == 'all'){
-            $students = User::all();
+            $students = User::take(500)->orderBy('lname')->get();
         }
         //preview
         if (false){
