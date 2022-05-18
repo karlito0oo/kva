@@ -38,6 +38,12 @@ class RequestsController extends Controller
         }
 
         $projects = $query->paginate($length);
+        $arr = [];
+        foreach($projects as $project){
+            if(!empty($project->users)){
+                array_push($arr, $project);
+            }
+        }
         return ['data' => $projects, 'draw' => $request->input('draw')];
     }
 
