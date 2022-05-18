@@ -6670,11 +6670,11 @@ var Errors = /*#__PURE__*/function () {
     getLoggedinUser: function getLoggedinUser() {
       var _this = this;
 
+      var self = this;
       axios.post('/api/loggedinUser').then(function (res) {
         _this.user = res.data;
 
         if (_this.accessing == 'student') {
-          console.log(_this.user.name);
           axios.patch('../api/users/' + _this.user.id, _this.user).then(function (res) {})["catch"](function (err) {
             _this.errors.record(err.response.data);
 
@@ -6684,6 +6684,34 @@ var Errors = /*#__PURE__*/function () {
               layout: 'topRight'
             }).show();
           });
+
+          if (!_this.user.is_fully_verified) {
+            new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+              text: 'We detected that your email address is not fully verified, verify it now?',
+              type: 'warning',
+              buttons: [{
+                addClass: 'btn btn-success btn-sm',
+                text: 'Yes',
+                onClick: function onClick($noty) {
+                  axios.get('/api/students/send-fully-verify-link/' + self.user.id).then(function (res) {
+                    new noty__WEBPACK_IMPORTED_MODULE_0___default.a({
+                      type: 'success',
+                      text: 'We sent an email to verify your account.',
+                      layout: 'topRight'
+                    }).show();
+                  })["catch"](function (err) {
+                    console.log(err);
+                  });
+                }
+              }, {
+                addClass: 'btn btn-primary btn-sm',
+                text: 'No',
+                onClick: function onClick($noty) {
+                  $noty.close();
+                }
+              }]
+            });
+          }
         }
       })["catch"](function (err) {
         alert(err);

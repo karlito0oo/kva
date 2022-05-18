@@ -49,20 +49,46 @@ import Noty from 'noty';
         
         methods: {
             getLoggedinUser(){
+                var self = this;
                 axios.post('/api/loggedinUser')
                 .then((res) => {
                     this.user = res.data;
 
                     if(this.accessing == 'student'){
-                        console.log(this.user.name);
                         axios.patch('../api/users/'+this.user.id, this.user)
-                            .then((res) => {
-                            })
-                            .catch((err) => {
-                                this.errors.record(err.response.data);
-                                new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
-                            });
+                        .then((res) => {
+                        })
+                        .catch((err) => {
+                            this.errors.record(err.response.data);
+                            new Noty({type: 'error', text: this.errors.get('name'), layout: 'topRight'}).show();
+                        });
+
+                        if(!this.user.is_fully_verified){
+                            new Noty({
+                            text: 'We detected that your email address is not fully verified, verify it now?',
+                            type: 'warning', 
+                            buttons: [
+                                {
+                                    addClass: 'btn btn-success btn-sm', text: 'Yes', onClick: function($noty) {
+                                        axios.get('/api/students/send-fully-verify-link/'+self.user.id)
+                                        .then((res) => {
+                                            new Noty({type: 'success', text: 'We sent an email to verify your account.', layout: 'topRight'}).show();
+                                        })
+                                        .catch((err) => {
+                                            console.log(err); 
+                                        });
+                                    }
+                                },
+                                {
+                                    addClass: 'btn btn-primary btn-sm', text: 'No', onClick: function($noty) {
+                                        $noty.close();
+                                    }
+                                }
+                            ]
+                        });
+                        }
                     }
+                    
                 })
                 .catch((err) => {
                     alert(err);

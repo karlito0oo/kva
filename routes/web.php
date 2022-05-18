@@ -45,6 +45,8 @@ Route::post('/api/levels/fetch', 'LevelsController@fetch');
 
 // Students
 Route::resource('/api/students', 'StudentsController');
+Route::get('/api/students/send-fully-verify-link/{id}', 'StudentsController@sendFullyVerifyLink');
+Route::get('/api/students/fully-verify/{id}', 'StudentsController@fullyVerify');
 Route::get('/home/students', 'StudentsController@studentsHome');
 Route::get('/home/students/level/{level_id}', 'StudentsController@studentsHome');
 

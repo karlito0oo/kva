@@ -7,6 +7,8 @@ use App\User;
 use App\Setting;
 use App\Level;
 use Illuminate\Http\Request;
+use App\Mail\FullyVerifyMail;
+use Illuminate\Support\Facades\Mail;
 
 class StudentsController extends Controller
 {
@@ -137,4 +139,20 @@ class StudentsController extends Controller
             'level' => Level::find($level_id),
         ]);
     }
+
+    public function sendFullyVerifyLink($id){
+        $student = User::find($id);
+        return Mail::to($student->email)->send(new FullyVerifyMail($student));;
+    }
+
+    public function fullyVerify($id){
+
+        $student = User::find($id);
+        
+        $student->is_fully_verified = true;
+        $student->save();
+
+        return redirect('/home');
+    }
+    
 }
