@@ -15,10 +15,10 @@ class PDFExportsController extends Controller
         
         $students = User::enrolledStudents($type, $id);
         if($type == 'all'){
-            $students = User::allStudents();
+            $students = User::all();
         }
         //preview
-        if ($preview){
+        if (false){
             return view('PDFExport/students', [
                 'students' => $students,
             ]);
@@ -27,6 +27,7 @@ class PDFExportsController extends Controller
         $pdf = PDF::loadView('PDFExport/students', [
             'students' => $students,
         ])->setPaper('a4', 'landscape');
+
         return $pdf->download('Students.pdf');
     }
 
